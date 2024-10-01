@@ -2,7 +2,8 @@ import { validateRequest } from "@/auth";
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import streamServerClient from "@/lib/stream";
-import { Bookmark, Home } from "lucide-react";
+import { Bookmark } from "lucide-react";
+import { CiGrid41 } from "react-icons/ci";
 import Link from "next/link";
 import MessagesButton from "./MessagesButton";
 import NotificationsButton from "./NotificationsButton";
@@ -35,8 +36,8 @@ export default async function MenuBar({ className }: MenuBarProps) {
         asChild
       >
         <Link href="/">
-          <Home />
-          <span className="hidden lg:inline">Home</span>
+          <CiGrid41 className="w-7 h-7"/>
+        <span className="hidden lg:inline">Feed</span>
         </Link>
       </Button>
       <NotificationsButton
