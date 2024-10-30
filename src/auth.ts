@@ -1,5 +1,5 @@
-import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { GitHub, Google } from "arctic";
+import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia, Session, User } from "lucia";
 import { cookies } from "next/headers";
 import { cache } from "react";
