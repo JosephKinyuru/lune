@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 
-export default function GoogleSignInButton() {
+export default function GoogleSignInButton({text} : {text: string}) {
   return (
     <Button
       variant="outline"
       className="bg-white text-black hover:bg-gray-100 hover:text-black"
       asChild
     >
-      <a href="/login/google" className="flex w-full items-center gap-2">
+      <a href="/google" className="flex w-full items-center gap-2">
         <GoogleIcon />
-        Sign in with Google
+        {text}
       </a>
     </Button>
   );

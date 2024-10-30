@@ -1,20 +1,24 @@
 "use server";
 
-import { lucia } from "@/auth";
 import prisma from "@/lib/prisma";
 import streamServerClient from "@/lib/stream";
 import { signUpSchema, SignUpValues } from "@/lib/validation";
 import { hash } from "@node-rs/argon2";
-import { generateIdFromEntropySize } from "lucia";
 import { isRedirectError } from "next/dist/client/components/redirect";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { rateLimitByKey } from "@/lib/limiter";
+import { generateUniqueUsername } from "@/lib/utils";
+import { lucia } from "@/auth";
+import { cookies } from "next/headers";
 
 export async function signUp(
   credentials: SignUpValues,
 ): Promise<{ error: string }> {
   try {
-    const { username, email, password } = signUpSchema.parse(credentials);
+    const { email, password, full_name, date_of_birth } =
+      signUpSchema.parse(credentials);
+
+    await rateLimitByKey({ key: email, limit: 1, window: 30000 });
 
     const passwordHash = await hash(password, {
       memoryCost: 19456,
@@ -23,22 +27,7 @@ export async function signUp(
       parallelism: 1,
     });
 
-    const userId = generateIdFromEntropySize(10);
-
-    const existingUsername = await prisma.user.findFirst({
-      where: {
-        username: {
-          equals: username,
-          mode: "insensitive",
-        },
-      },
-    });
-
-    if (existingUsername) {
-      return {
-        error: "Username already taken",
-      };
-    }
+    const userId = crypto.randomUUID();
 
     const existingEmail = await prisma.user.findFirst({
       where: {
@@ -51,17 +40,20 @@ export async function signUp(
 
     if (existingEmail) {
       return {
-        error: "Email already taken",
+        error: "Email is already in use.",
       };
     }
+
+    const username = await generateUniqueUsername(full_name);
 
     await prisma.$transaction(async (tx) => {
       await tx.user.create({
         data: {
           id: userId,
           username,
-          displayName: username,
+          displayName: full_name,
           email,
+          dateOfBirth: date_of_birth,
           passwordHash,
         },
       });
@@ -72,13 +64,13 @@ export async function signUp(
       });
     });
 
-    const session = await lucia.createSession(userId, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    );
+   const session = await lucia.createSession(userId, {});
+   const sessionCookie = lucia.createSessionCookie(session.id);
+   (await cookies()).set(
+     sessionCookie.name,
+     sessionCookie.value,
+     sessionCookie.attributes,
+   );
 
     return redirect("/");
   } catch (error) {

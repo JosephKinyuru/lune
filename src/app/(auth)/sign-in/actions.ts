@@ -1,23 +1,26 @@
 "use server";
 
-import { lucia } from "@/auth";
 import prisma from "@/lib/prisma";
-import { loginSchema, LoginValues } from "@/lib/validation";
+import { signinSchema, SigninValues } from "@/lib/validation";
 import { verify } from "@node-rs/argon2";
 import { isRedirectError } from "next/dist/client/components/redirect";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { rateLimitByKey } from "@/lib/limiter";
+import { cookies } from "next/headers";
+import { lucia } from "@/auth";
 
-export async function login(
-  credentials: LoginValues,
-): Promise<{ error: string }> {
+export async function signIn(
+  credentials: SigninValues,
+): Promise<{ success?: boolean; error?: string }> {
   try {
-    const { username, password } = loginSchema.parse(credentials);
+    const { email, password } = signinSchema.parse(credentials);
+
+    await rateLimitByKey({ key: email, limit: 3, window: 10000 });
 
     const existingUser = await prisma.user.findFirst({
       where: {
-        username: {
-          equals: username,
+        email: {
+          equals: email,
           mode: "insensitive",
         },
       },
@@ -44,13 +47,15 @@ export async function login(
 
     const session = await lucia.createSession(existingUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
+    (await cookies()).set(
       sessionCookie.name,
       sessionCookie.value,
       sessionCookie.attributes,
     );
 
     return redirect("/");
+
+    return { success: true }; 
   } catch (error) {
     if (isRedirectError(error)) throw error;
     console.error(error);
