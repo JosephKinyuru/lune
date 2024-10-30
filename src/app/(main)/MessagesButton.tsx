@@ -4,14 +4,15 @@ import { Button } from "@/components/ui/button";
 import kyInstance from "@/lib/ky";
 import { MessageCountInfo } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
-import { Mail } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import Link from "next/link";
 
 interface MessagesButtonProps {
   initialState: MessageCountInfo;
+  showString: boolean;
 }
 
-export default function MessagesButton({ initialState }: MessagesButtonProps) {
+export default function MessagesButton({ initialState, showString = true }: MessagesButtonProps) {
   const { data } = useQuery({
     queryKey: ["unread-messages-count"],
     queryFn: () =>
@@ -29,14 +30,14 @@ export default function MessagesButton({ initialState }: MessagesButtonProps) {
     >
       <Link href="/messages">
         <div className="relative">
-          <Mail />
+          <MessageSquare />
           {!!data.unreadCount && (
             <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1 text-xs font-medium tabular-nums text-primary-foreground">
               {data.unreadCount}
             </span>
           )}
         </div>
-        <span className="hidden lg:inline">Messages</span>
+        {showString && <span className="hidden lg:inline">Messages</span>}
       </Link>
     </Button>
   );

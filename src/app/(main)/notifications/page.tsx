@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Notifications from "./Notifications";
-import TrendsSidebar from "@/components/TrendsSidebar";
 
 export const metadata: Metadata = {
   title: "Notifications",
@@ -15,7 +14,6 @@ export default function Page() {
         </div>
         <Notifications />
       </div>
-      <TrendsSidebar />
     </main>
   );
 }

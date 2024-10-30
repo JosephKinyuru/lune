@@ -1,60 +1,69 @@
-import { validateRequest } from "@/auth";
-import { Button } from "@/components/ui/button";
-import prisma from "@/lib/prisma";
-import streamServerClient from "@/lib/stream";
-import { Bookmark } from "lucide-react";
-import { CiGrid41 } from "react-icons/ci";
+"use client";
+
 import Link from "next/link";
-import MessagesButton from "./MessagesButton";
-import NotificationsButton from "./NotificationsButton";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+
+import { LuCompass } from "react-icons/lu";
+import { HiOutlineUserGroup } from "react-icons/hi2";
+import { BsBoxFill } from "react-icons/bs";
+import { CiGrid41 } from "react-icons/ci";
+import { Film } from "lucide-react";
 
 interface MenuBarProps {
   className?: string;
 }
 
-export default async function MenuBar({ className }: MenuBarProps) {
-  const { user } = await validateRequest();
+export const sidebarLinks = [
+  {
+    icon: <CiGrid41 className="h-7 w-7" />,
+    route: "/",
+    label: "Feed",
+  },
+  {
+    icon: <LuCompass className="h-7 w-7" />,
+    route: "/discover",
+    label: "Discover",
+  },
+  {
+    icon: <HiOutlineUserGroup className="h-7 w-7" />,
+    route: "/friends",
+    label: "Friends",
+  },
+  {
+    icon: <BsBoxFill className="h-7 w-7" />,
+    route: "/communities",
+    label: "Communitiy",
+  },
+  {
+    icon: <Film className="h-7 w-7" />,
+    route: "/videos",
+    label: "Videos",
+  },
+];
 
-  if (!user) return null;
-
-  const [unreadNotificationsCount, unreadMessagesCount] = await Promise.all([
-    prisma.notification.count({
-      where: {
-        recipientId: user.id,
-        read: false,
-      },
-    }),
-    (await streamServerClient.getUnreadCount(user.id)).total_unread_count,
-  ]);
+export default function MenuBar({ className }: MenuBarProps) {
+  const pathname = usePathname();
 
   return (
     <div className={className}>
-      <Button
-        variant="ghost"
-        className="flex items-center justify-start gap-3"
-        title="Home"
-        asChild
-      >
-        <Link href="/">
-          <CiGrid41 className="w-7 h-7"/>
-        <span className="hidden lg:inline">Feed</span>
-        </Link>
-      </Button>
-      <NotificationsButton
-        initialState={{ unreadCount: unreadNotificationsCount }}
-      />
-      <MessagesButton initialState={{ unreadCount: unreadMessagesCount }} />
-      <Button
-        variant="ghost"
-        className="flex items-center justify-start gap-3"
-        title="Bookmarks"
-        asChild
-      >
-        <Link href="/bookmarks">
-          <Bookmark />
-          <span className="hidden lg:inline">Bookmarks</span>
-        </Link>
-      </Button>
+      {sidebarLinks.map((link) => {
+        const isActive =
+          (pathname.includes(link.route) && link.route.length > 1) ||
+          pathname === link.route;
+
+        return (
+          <Button
+            variant="ghost"
+            className={`hover:none flex items-center justify-start gap-2 outline-none focus:outline-none ${isActive && "text-primary"}`}
+            title={link.label}
+            asChild
+            key={link.label}
+          >
+            <Link href={link.route}>{link.icon}</Link>
+          </Button>
+        );
+      })}
     </div>
   );
 }
