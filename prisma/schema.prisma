@@ -5,14 +5,14 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -22,8 +22,15 @@ model User {
   email                 String?        @unique
   passwordHash          String?
   googleId              String?        @unique
+  githubId              String?        @unique
   avatarUrl             String?
+  dateOfBirth           DateTime?
   bio                   String?
+  website               String?
+  verified              Boolean        @default(false)
+  isBanned              Boolean        @default(false)
+  isSuspended           Boolean        @default(false)
+  isPrivate             Boolean        @default(false)
   sessions              Session[]
   posts                 Post[]
   following             Follow[]       @relation("Following")
@@ -34,7 +41,8 @@ model User {
   receivedNotifications Notification[] @relation("Recipient")
   issuedNotifications   Notification[] @relation("Issuer")
 
-  createdAt DateTime @default(now())
+  createdAt          DateTime            @default(now())
+  ResetPasswordToken ResetPasswordToken?
 
   @@map("users")
 }
@@ -46,6 +54,29 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
+}
+
+model ResetPasswordToken {
+  id             Int      @id @default(autoincrement())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token          String   @unique
+  tokenExpiresAt DateTime
+  otp            String
+  otpExpiresAt   DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model VerifyEmailToken {
+  id             String   @id @default(cuid())
+  email          String
+  token          String   @unique
+  tokenExpiresAt DateTime
+  otp            String
+  otpExpiresAt   DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Follow {
