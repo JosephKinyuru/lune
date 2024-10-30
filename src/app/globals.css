@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "~stream-chat-react/dist/css/v2/index.css";
+@import '~stream-chat-react/dist/css/v2/index.css';
 
 @layer base {
   :root {
@@ -41,7 +41,7 @@
     --background: 20 14.3% 4.1%;
     --foreground: 0 0% 95%;
 
-    --card: 0 0% 20%;
+    --card: 216 11% 8%;
     --card-foreground: 0 0% 95%;
 
     --popover: 0 0% 9%;
