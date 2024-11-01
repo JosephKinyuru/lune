@@ -24,42 +24,42 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const sidebarLinks = [
   {
-    icon: <CiGrid41 className="h-7 w-7" />,
+    icon: <CiGrid41 className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/",
     label: "Feed",
   },
   {
-    icon: <LuCompass className="h-7 w-7" />,
+    icon: <LuCompass className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/discover",
     label: "Discover",
   },
   {
-    icon: <HiOutlineUserGroup className="h-7 w-7" />,
+    icon: <HiOutlineUserGroup className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/friends",
     label: "Friends",
   },
   {
-    icon: <BsBoxFill className="h-7 w-7" />,
+    icon: <BsBoxFill className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/communities",
     label: "Communitiy",
   },
   {
-    icon: <CiBookmark className="h-7 w-7" />,
+    icon: <CiBookmark className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/bookmarks",
     label: "Bookmarks",
   },
   {
-    icon: <Film className="h-7 w-7" />,
+    icon: <Film className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/videos",
     label: "Videos",
   },
   {
-    icon: <BiStoreAlt className="h-7 w-7" />,
+    icon: <BiStoreAlt className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/marketplace",
     label: "Marketplace",
   },
   {
-    icon: <IoSettingsOutline className="h-7 w-7" />,
+    icon: <IoSettingsOutline className="h-5 w-5 lg:h-7 lg:w-7" />,
     route: "/settings",
     label: "Settings",
   },
@@ -157,7 +157,7 @@ const LeftSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <section className="sticky left-0 top-0 z-20 flex h-screen w-full max-w-64 flex-col justify-between overflow-auto border-r bg-card px-4 pb-5 pt-24 dark:border-r-[#1F1F22] dark:bg-[#121417] max-xl:w-20 max-xl:px-2 max-md:hidden">
+    <section className="sticky left-0 top-0 z-20 flex h-screen max-h-screen w-full max-w-64 flex-col justify-between overflow-auto border-r bg-card px-4 pb-5 pt-24 dark:border-r-[#1F1F22] dark:bg-[#121417] max-xl:w-20 max-xl:px-2 max-md:hidden">
       <UserCard />
 
       <div className="flex w-full flex-1 flex-col gap-2">

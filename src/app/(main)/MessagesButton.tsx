@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import kyInstance from "@/lib/ky";
 import { MessageCountInfo } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
-import { MessageSquare } from "lucide-react";
+import { Send } from "lucide-react";
 import Link from "next/link";
 
 interface MessagesButtonProps {
@@ -30,7 +30,7 @@ export default function MessagesButton({ initialState, showString = true }: Mess
     >
       <Link href="/messages">
         <div className="relative">
-          <MessageSquare />
+          <Send />
           {!!data.unreadCount && (
             <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1 text-xs font-medium tabular-nums text-primary-foreground">
               {data.unreadCount}

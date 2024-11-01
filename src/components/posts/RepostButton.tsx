@@ -1,6 +1,6 @@
 import { useToast } from "@/hooks/use-toast";
 import kyInstance from "@/lib/ky";
-import { LikeInfo } from "@/lib/types";
+import { RepostInfo } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
   QueryKey,
@@ -8,7 +8,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { Heart } from "lucide-react";
+import { Repeat2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -16,40 +16,42 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface LikeButtonProps {
+interface RepostButtonProps {
   postId: string;
-  initialState: LikeInfo;
+  initialState: RepostInfo;
 }
 
-export default function LikeButton({ postId, initialState }: LikeButtonProps) {
+export default function RepostButton({ postId, initialState }: RepostButtonProps) {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
 
-  const queryKey: QueryKey = ["like-info", postId];
+  const queryKey: QueryKey = ["repost-info", postId];
 
   const { data } = useQuery({
     queryKey,
     queryFn: () =>
-      kyInstance.get(`/api/posts/${postId}/likes`).json<LikeInfo>(),
+      kyInstance.get(`/api/posts/${postId}/repost`).json<RepostInfo>(),
     initialData: initialState,
     staleTime: Infinity,
   });
 
   const { mutate } = useMutation({
     mutationFn: () =>
-      data.isLikedByUser
-        ? kyInstance.delete(`/api/posts/${postId}/likes`)
-        : kyInstance.post(`/api/posts/${postId}/likes`),
+      data.isRepostedByUser
+        ? kyInstance.delete(`/api/posts/${postId}/reposts`)
+        : kyInstance.post(`/api/posts/${postId}/reposts`),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
-      const previousState = queryClient.getQueryData<LikeInfo>(queryKey);
+      const previousState = queryClient.getQueryData<RepostInfo>(queryKey);
 
-      queryClient.setQueryData<LikeInfo>(queryKey, () => ({
-        likes:
-          (previousState?.likes || 0) + (previousState?.isLikedByUser ? -1 : 1),
-        isLikedByUser: !previousState?.isLikedByUser,
+      queryClient.setQueryData<RepostInfo>(queryKey, () => ({
+        reposts:
+          (previousState?.reposts || 0) +
+          (previousState?.isRepostedByUser ? -1 : 1),
+        isReposted: !previousState?.isRepostedByUser,
+        isRepostedByUser: !previousState?.isRepostedByUser, 
       }));
 
       return { previousState };
@@ -72,17 +74,18 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
             onClick={() => mutate()}
             className={cn(
               "flex items-center gap-[6px]",
-              data.isLikedByUser ? "text-red-500" : "hover:text-pink-600",
+              data.isRepostedByUser ? "text-emerald-400" : "hover:text-emerald-400",
             )}
           >
-            <Heart
+            <Repeat2
               className={cn(
-                "size-5",
-                data.isLikedByUser && "fill-red-500 text-red-500",
+                "size-6",
+                data.isRepostedByUser && "text-emerald-400",
               )}
             />
+
             <span className="text-sm font-medium tabular-nums">
-              {data.likes}
+              {data.reposts}
             </span>
           </button>
         </TooltipTrigger>
@@ -90,7 +93,7 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
           className="rounded-sm bg-card-foreground dark:text-black"
           side="bottom"
         >
-          <p className="font-semibold tracking-tight">Like</p>
+          <p className="font-semibold tracking-tight">Repost</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

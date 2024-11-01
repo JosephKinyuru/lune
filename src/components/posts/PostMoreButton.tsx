@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import DeletePostDialog from "./DeletePostDialog";
+import { cn } from "@/lib/utils";
 
 interface PostMoreButtonProps {
   post: PostData;

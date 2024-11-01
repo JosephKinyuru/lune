@@ -9,6 +9,13 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { Bookmark } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 
 interface BookmarkButtonProps {
   postId: string;
@@ -65,12 +72,26 @@ export default function BookmarkButton({
 
   return (
     <button onClick={() => mutate()} className="flex items-center gap-2">
-      <Bookmark
-        className={cn(
-          "size-5",
-          data.isBookmarkedByUser && "fill-primary text-primary",
-        )}
-      />
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Bookmark
+              className={cn(
+                "size-5",
+                data.isBookmarkedByUser && "fill-primary text-primary",
+              )}
+            />
+          </TooltipTrigger>
+          <TooltipContent
+            className="rounded-sm bg-card-foreground dark:text-black"
+            side="bottom"
+          >
+            <p className="font-semibold tracking-tight">
+              {data.isBookmarkedByUser ? "Bookmarked" : "Bookmark"}
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </button>
   );
 }

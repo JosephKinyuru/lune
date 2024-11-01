@@ -16,27 +16,27 @@ interface MenuBarProps {
 
 export const sidebarLinks = [
   {
-    icon: <CiGrid41 className="h-7 w-7" />,
+    icon: <CiGrid41 className="h-6 w-6" />,
     route: "/",
     label: "Feed",
   },
   {
-    icon: <LuCompass className="h-7 w-7" />,
+    icon: <LuCompass className="h-6 w-6" />,
     route: "/discover",
     label: "Discover",
   },
   {
-    icon: <HiOutlineUserGroup className="h-7 w-7" />,
+    icon: <HiOutlineUserGroup className="h-6 w-6" />,
     route: "/friends",
     label: "Friends",
   },
   {
-    icon: <BsBoxFill className="h-7 w-7" />,
+    icon: <BsBoxFill className="h-6 w-6" />,
     route: "/communities",
     label: "Communitiy",
   },
   {
-    icon: <Film className="h-7 w-7" />,
+    icon: <Film className="h-6 w-6" />,
     route: "/videos",
     label: "Videos",
   },

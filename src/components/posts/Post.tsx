@@ -2,9 +2,9 @@
 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
-import { cn, formatRelativeDate } from "@/lib/utils";
+import { cn, copyToClipboard, formatRelativeDate } from "@/lib/utils";
 import { Media } from "@prisma/client";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Link as HLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -15,6 +15,13 @@ import UserTooltip from "../UserTooltip";
 import BookmarkButton from "./BookmarkButton";
 import LikeButton from "./LikeButton";
 import PostMoreButton from "./PostMoreButton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import RepostButton from "./RepostButton";
 
 interface PostProps {
   post: PostData;
@@ -26,7 +33,7 @@ export default function Post({ post }: PostProps) {
   const [showComments, setShowComments] = useState(false);
 
   return (
-    <article className="group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm">
+    <article className="group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm dark:border-2 dark:border-[#1F1F22]">
       <div className="flex justify-between gap-3">
         <div className="flex flex-wrap gap-3">
           <UserTooltip user={post.user}>
@@ -79,15 +86,27 @@ export default function Post({ post }: PostProps) {
             post={post}
             onClick={() => setShowComments(!showComments)}
           />
+          <RepostButton
+            postId={post.id}
+            initialState={{
+              reposts: post._count.reposts,
+              isRepostedByUser: post.reposts.some((repost) => repost.userId === user.id),
+            }}
+          />
         </div>
-        <BookmarkButton
-          postId={post.id}
-          initialState={{
-            isBookmarkedByUser: post.bookmarks.some(
-              (bookmark) => bookmark.userId === user.id,
-            ),
-          }}
-        />
+        <div className="flex items-center gap-5">
+          <LinkButton
+            link={`${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`}
+          />
+          <BookmarkButton
+            postId={post.id}
+            initialState={{
+              isBookmarkedByUser: post.bookmarks.some(
+                (bookmark) => bookmark.userId === user.id,
+              ),
+            }}
+          />
+        </div>
       </div>
       {showComments && <Comments post={post} />}
     </article>
@@ -152,12 +171,59 @@ interface CommentButtonProps {
 
 function CommentButton({ post, onClick }: CommentButtonProps) {
   return (
-    <button onClick={onClick} className="flex items-center gap-2">
-      <MessageSquare className="size-5" />
-      <span className="text-sm font-medium tabular-nums">
-        {post._count.comments}{" "}
-        <span className="hidden sm:inline">comments</span>
-      </span>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            onClick={onClick}
+            className="flex items-center gap-[6px] hover:text-primary/80"
+          >
+            <MessageSquare className="size-5" />
+            <span className="text-sm font-medium tabular-nums">
+              {post._count.comments}
+            </span>
+          </button>
+        </TooltipTrigger>
+        <TooltipContent
+          className="rounded-sm bg-card-foreground dark:text-black"
+          side="bottom"
+        >
+          <p className="font-semibold tracking-tight">Comment</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+interface LinkButtonProps {
+  link: string;
+}
+
+function LinkButton({ link }: LinkButtonProps) {
+  const [buttonText, setButtonText] = useState("Copy Link");
+  
+  return (
+    <button
+      onClick={async () => {
+        await navigator.clipboard.writeText(link);
+        setButtonText("Link copied!");
+        setTimeout(() => setButtonText("Copy Link"), 2500);
+      }}
+      className="flex items-center gap-[6px] hover:text-primary/60"
+    >
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <HLink className="size-5 hover:text-primary" />
+          </TooltipTrigger>
+          <TooltipContent
+            className="rounded-sm bg-card-foreground dark:text-black"
+            side="bottom"
+          >
+            <p className="font-semibold tracking-tight">{buttonText}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </button>
   );
 }
