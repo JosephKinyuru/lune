@@ -4,7 +4,7 @@ import { FollowerInfo } from "@/lib/types";
 
 export async function GET(
   req: Request,
-  { params: { userId } }: { params: { userId: string } },
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   try {
     const { user: loggedInUser } = await validateRequest();
@@ -12,6 +12,8 @@ export async function GET(
     if (!loggedInUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const { userId } = await params;
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
