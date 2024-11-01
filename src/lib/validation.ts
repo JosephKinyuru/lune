@@ -26,8 +26,8 @@ export type SignUpFormValues = z.infer<typeof signUpFormSchema>;
 
 export const signUpSchema = z.object({
   email: requiredString.email("Invalid email address"),
-  full_name: requiredString.min(5, "Must be at least 5 characters"),
-  password: requiredString.min(8, "Must be at least 8 characters"),
+  full_name: requiredString.min(5, "Name must be at least 5 characters"),
+  password: requiredString.min(8, "Password must be at least 8 characters"),
   date_of_birth: z.date(),
 });
 
@@ -41,7 +41,7 @@ export type ConfirmEmailValues = z.infer<typeof confirmEmailSchema>;
 
 export const signinSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 export type SigninValues = z.infer<typeof signinSchema>;
@@ -54,9 +54,11 @@ export type ForgotValues = z.infer<typeof forgotSchema>;
 
 export const resetPasswordSchema = z
   .object({
-    password: z.string().min(8),
+    password: z.string().min(8, "Password must be at least 8 characters"),
     email: z.string(),
-    passwordConfirmation: z.string().min(8),
+    passwordConfirmation: z
+      .string()
+      .min(8, "Password must be at least 8 characters"),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: "Passwords don't match",
