@@ -67,11 +67,11 @@ export async function createTransaction<T extends typeof prisma>(
 }
 
 export async function generateUniqueUsername(fullName: string) {
-  const baseUsername = fullName.toLowerCase().replace(/\s+/g, ""); 
+  const baseUsername = fullName.toLowerCase().replace(/\s+/g, "");
 
   const appendRandom = (username: string) => {
-    const randomString = randomBytes(2).toString("hex"); 
-    return `${username}${randomString}`; 
+    const randomString = randomBytes(2).toString("hex");
+    return `${username}${randomString}`;
   };
 
   let username = baseUsername;
@@ -85,9 +85,28 @@ export async function generateUniqueUsername(fullName: string) {
     if (!existingUser) {
       isUnique = true;
     } else {
-      username = appendRandom(baseUsername); 
+      username = appendRandom(baseUsername);
     }
   }
 
   return username;
+}
+
+export async function copyToClipboard({
+  link,
+}: {
+  link: string;
+}): Promise<boolean> {
+  try {
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(link);
+      return true; 
+    } else {
+      console.error("Clipboard API not supported on this browser.");
+      return false; 
+    }
+  } catch (error) {
+    console.error("Failed to copy: ", error);
+    return false; 
+  }
 }
