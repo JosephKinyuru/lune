@@ -33,6 +33,7 @@ model User {
   isPrivate             Boolean        @default(false)
   sessions              Session[]
   posts                 Post[]
+  reposts               Repost[]
   following             Follow[]       @relation("Following")
   followers             Follow[]       @relation("Followers")
   likes                 Like[]
@@ -99,10 +100,22 @@ model Post {
   bookmarks           Bookmark[]
   comments            Comment[]
   linkedNotifications Notification[]
-
-  createdAt DateTime @default(now())
+  reposts             Repost[]       @relation("OriginalPost")
+  createdAt           DateTime       @default(now())
 
   @@map("posts")
+}
+
+model Repost {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId       String
+  originalPost Post     @relation("OriginalPost", fields: [postId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  
+  @@unique([userId, postId])
+  @@map("reposts")
 }
 
 model Media {
@@ -178,4 +191,5 @@ enum NotificationType {
   LIKE
   FOLLOW
   COMMENT
+  REPOST
 }
