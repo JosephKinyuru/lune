@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
 
-export function getIp() {
-  const forwardedFor = headers().get("x-forwarded-for");
-  const realIp = headers().get("x-real-ip");
+export async function getIp() {
+  const forwardedFor = (await headers()).get("x-forwarded-for");
+  const realIp = (await headers()).get("x-real-ip");
 
   if (forwardedFor) {
     return forwardedFor.split(",")[0].trim();
