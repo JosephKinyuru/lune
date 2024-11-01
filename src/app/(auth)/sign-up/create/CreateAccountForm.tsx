@@ -121,7 +121,10 @@ export default function SignUpForm({ email }: { email: string }) {
             <FormItem className="space-y-1">
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input className="h-10" {...field} />
+                <Input
+                  className="h-10 shadow-lg dark:shadow-none xl:h-11"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -134,7 +137,10 @@ export default function SignUpForm({ email }: { email: string }) {
             <FormItem className="space-y-1">
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <PasswordInput {...field} />
+                <PasswordInput
+                  {...field}
+                  className="h-10 shadow-lg dark:shadow-none xl:h-11"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -148,7 +154,7 @@ export default function SignUpForm({ email }: { email: string }) {
               control={form.control}
               name="month"
               render={({ field }) => (
-                <FormItem className="block h-10 w-1/3 space-y-1 rounded-sm bg-background">
+                <FormItem className="block h-10 w-2/4 space-y-1 rounded-sm bg-background shadow-lg dark:shadow-none">
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className="h-full w-full">
@@ -173,7 +179,7 @@ export default function SignUpForm({ email }: { email: string }) {
               control={form.control}
               name="day"
               render={({ field }) => (
-                <FormItem className="block h-10 w-1/3 space-y-1 rounded-sm bg-background">
+                <FormItem className="block h-10 w-1/4 space-y-1 rounded-sm bg-background shadow-lg dark:shadow-none">
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className="h-full w-full">
@@ -207,7 +213,7 @@ export default function SignUpForm({ email }: { email: string }) {
               control={form.control}
               name="year"
               render={({ field }) => (
-                <FormItem className="block h-10 w-1/3 space-y-1 rounded-sm bg-background">
+                <FormItem className="block h-10 w-1/4 space-y-1 rounded-sm bg-background shadow-lg dark:shadow-none">
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className="h-full w-full">

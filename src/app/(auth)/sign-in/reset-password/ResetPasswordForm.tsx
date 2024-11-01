@@ -81,7 +81,11 @@ export default function ResetPasswordForm({ email }: { email: string }) {
                   <FormItem className="space-y-1">
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input {...field} className="w-full" type="password" />
+                      <Input
+                        {...field}
+                        className="w-full shadow-lg dark:shadow-none xl:h-11"
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -95,7 +99,11 @@ export default function ResetPasswordForm({ email }: { email: string }) {
                   <FormItem className="space-y-1">
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <Input {...field} className="w-full" type="password" />
+                      <Input
+                        {...field}
+                        className="w-full shadow-lg dark:shadow-none xl:h-11"
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,7 +112,7 @@ export default function ResetPasswordForm({ email }: { email: string }) {
 
               <LoadingButton
                 loading={isPending}
-                className="w-full"
+                className="w-full xl:h-9"
                 type="submit"
               >
                 Change Password

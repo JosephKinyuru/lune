@@ -12,19 +12,28 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="flex h-screen items-center justify-center p-5 sm:p-0">
-      <div className="flex h-full max-h-[40rem] w-full max-w-[64rem] overflow-hidden rounded-2xl bg-card shadow-2xl">
-        <div className="mt-12 w-full space-y-10 overflow-y-auto p-10 md:w-1/2">
-          <div className="space-y-1 text-center">
-            <h1 className="text-3xl font-bold">Begin your journey on lune</h1>
+    <main className="w-full md:grid md:min-h-screen md:grid-cols-2 lg:min-h-screen">
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-full bg-muted md:hidden">
+          <Image
+            src={signupImage}
+            alt="Image"
+            className="h-[20vh] w-full object-cover dark:brightness-[0.8]"
+            priority
+          />
+        </div>
+
+        <div className="mx-auto mt-6 grid w-[280px] gap-6 sm:w-[350px] md:mt-0 xl:w-[400px]">
+          <div className="grid gap-2 text-left">
+            <h1 className="mt-4 text-3xl font-bold">Getting started</h1>
             <p className="text-muted-foreground">
-              The shift begins <span className="italic">here</span>.
+              Create your account to get started
             </p>
           </div>
-          <div className="space-y-4">
-            <GoogleSignInButton text="Sign up with Google" />
+          <div className="grid gap-4">
+            <GoogleSignInButton text="Log in with Google" />
 
-            <GithubSignInButton text="Sign up with Github" />
+            <GithubSignInButton text="Log in with Github" />
 
             <div className="relative py-4">
               <div className="absolute inset-0 flex items-center">
@@ -39,19 +48,22 @@ export default function Page() {
 
             <SignUpForm />
 
-            <Link
-              href="/sign-in"
-              className="mt-3 block text-center hover:underline"
-            >
+            <div className="mb-4 mt-4 text-center text-sm">
               Already have an account?{" "}
-              <span className="text-primary/80">Log in</span>
-            </Link>
+              <Link href="/sign-in" className="text-primary underline">
+                Sign in
+              </Link>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="hidden bg-muted md:block">
         <Image
           src={signupImage}
-          alt=""
-          className="hidden w-1/2 object-cover md:block"
+          alt="Image"
+          className="h-screen w-full object-cover dark:brightness-[0.6]"
+          priority
         />
       </div>
     </main>

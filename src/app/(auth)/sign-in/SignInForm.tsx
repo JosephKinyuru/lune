@@ -59,7 +59,7 @@ export default function SignInForm() {
               <FormControl>
                 <Input
                   {...field}
-                  className="w-full"
+                  className="w-full shadow-lg dark:shadow-none xl:h-11"
                   type="email"
                   autoComplete="off"
                 />
@@ -84,7 +84,10 @@ export default function SignInForm() {
                 </Link>
               </div>
               <FormControl>
-                <PasswordInput {...field} />
+                <PasswordInput
+                  {...field}
+                  className="shadow-lg dark:shadow-none xl:h-11"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -99,7 +102,11 @@ export default function SignInForm() {
           </Alert>
         )}
 
-        <LoadingButton loading={isPending} className="w-full" type="submit">
+        <LoadingButton
+          loading={isPending}
+          className="w-full xl:h-9"
+          type="submit"
+        >
           Sign In
         </LoadingButton>
       </form>

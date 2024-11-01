@@ -1,10 +1,9 @@
 import loginImage from "@/assets/login-image.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import GoogleSignInButton from "../google/GoogleSignInButton";
 import GithubSignInButton from "../github/GithubSignInButton";
-import LoginForm from "./SignInForm";
+import SignInForm from "./SignInForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,21 +12,26 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="flex h-screen items-center justify-center p-5 sm:p-0">
-      <div className="flex h-full max-h-[42rem] w-full max-w-[64rem] overflow-hidden rounded-2xl bg-card shadow-2xl">
-        <div className="w-full space-y-10 overflow-y-auto p-10 md:w-1/2">
-          <div className="space-y-2 text-center">
-            <h1 className="text-center text-3xl font-bold">Welcome back !</h1>
-            <p className="text-gray-500 dark:text-gray-400">
-              Sign in to your account using one of the options below.
-            </p>
+    <main className="w-full md:grid md:min-h-screen md:grid-cols-2 lg:min-h-screen">
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-full bg-muted md:hidden">
+          <Image
+            src={loginImage}
+            alt="Image"
+            className="h-[20vh] w-full object-cover dark:brightness-[0.8]"
+            priority
+          />
+        </div>
+
+        <div className="mx-auto mt-6 grid w-[280px] gap-6 sm:w-[350px] md:mt-0 xl:w-[400px]">
+          <div className="grid gap-2 text-left">
+            <h1 className="mt-4 text-3xl font-bold">Log In</h1>
+            <p className="text-muted-foreground">Welcome back !!</p>
           </div>
-          <div className="space-y-4">
-            <GoogleSignInButton text="Sign in with Google" />
+          <div className="grid gap-4">
+            <GoogleSignInButton text="Log in with Google" />
 
-            <GithubSignInButton text="Sign in with Github" />
-
-            <LoginForm />
+            <GithubSignInButton text="Log in with Github" />
 
             <div className="relative py-4">
               <div className="absolute inset-0 flex items-center">
@@ -40,17 +44,25 @@ export default function Page() {
               </div>
             </div>
 
-            <Link href="/sign-up">
-              <Button className="w-full" variant={"secondary"}>
-                Create an account
-              </Button>
-            </Link>
+            <SignInForm />
+
+            <div className="mt-4 text-center text-sm mb-4">
+              Don&apos;t have an account?{" "}
+              <Link href="/sign-up" className="underline text-primary">
+                Sign Up
+              </Link>
+            </div>
+
           </div>
         </div>
+      </div>
+
+      <div className="hidden bg-muted md:block">
         <Image
           src={loginImage}
-          alt=""
-          className="hidden w-1/2 object-cover md:block"
+          alt="Image"
+          className="h-full w-full object-cover dark:brightness-[0.6]"
+          priority
         />
       </div>
     </main>

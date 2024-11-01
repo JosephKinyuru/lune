@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/input-otp";
 import LoadingButton from "@/components/LoadingButton";
 
-export default function ConfirmEmailForm({
+export default function VerifyEmailForm({
   email,
   token,
 }: {
@@ -58,7 +58,7 @@ export default function ConfirmEmailForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-4">
       <div className="flex items-center justify-center">
         <InputOTP maxLength={6} onChange={handleChangeOTP} className="w-full">
           <InputOTPGroup>
