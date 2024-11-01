@@ -27,7 +27,7 @@ export default async function NotFound({ param }: { param?: string }) {
             Click the button below to go to back to home.
           </p>
           <Link href="/">
-            <Button className="w-[30%]" variant={"secondary"}>
+            <Button className="w-[30%] mb-6" variant={"secondary"}>
               Home
             </Button>
           </Link>
