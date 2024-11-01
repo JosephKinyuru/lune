@@ -14,7 +14,7 @@ import EditProfileButton from "./EditProfileButton";
 import UserPosts from "./UserPosts";
 
 interface PageProps {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }
 
 const getUser = cache(async (username: string, loggedInUserId: string) => {
@@ -34,12 +34,13 @@ const getUser = cache(async (username: string, loggedInUserId: string) => {
 });
 
 export async function generateMetadata({
-  params: { username },
+  params,
 }: PageProps): Promise<Metadata> {
   const { user: loggedInUser } = await validateRequest();
 
   if (!loggedInUser) return {};
 
+  const { username } = await params;
   const user = await getUser(username, loggedInUser.id);
 
   return {
@@ -47,7 +48,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params: { username } }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const { user: loggedInUser } = await validateRequest();
 
   if (!loggedInUser) {
@@ -58,6 +59,7 @@ export default async function Page({ params: { username } }: PageProps) {
     );
   }
 
+  const { username } = await params;
   const user = await getUser(username, loggedInUser.id);
 
   return (
