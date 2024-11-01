@@ -4,7 +4,7 @@ export default function GoogleSignInButton({text} : {text: string}) {
   return (
     <Button
       variant="outline"
-      className="bg-white text-black hover:bg-gray-100 hover:text-black"
+      className="xl:h-11 bg-white text-black hover:bg-gray-100 hover:text-black"
       asChild
     >
       <a href="/google" className="flex w-full items-center gap-2">
