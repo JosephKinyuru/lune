@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { token?: string; email?: string };
+  searchParams: Promise<{ token?: string; email?: string }>;
 }) {
-  const token = searchParams.token;
-  const email = searchParams.email;
+  const token = (await searchParams).token;
+  const email = (await searchParams).email;
 
   if (!token || !email) {
     redirect("/sign-up");
