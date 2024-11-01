@@ -2,7 +2,7 @@ import UserAvatar from "@/components/UserAvatar";
 import { NotificationData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { NotificationType } from "@prisma/client";
-import { Heart, MessageCircle, User2 } from "lucide-react";
+import { Heart, MessageCircle, Repeat2, User2 } from "lucide-react";
 import Link from "next/link";
 
 interface NotificationProps {
@@ -27,6 +27,11 @@ export default function Notification({ notification }: NotificationProps) {
     LIKE: {
       message: `${notification.issuer.displayName} liked your post`,
       icon: <Heart className="size-7 fill-red-500 text-red-500" />,
+      href: `/posts/${notification.postId}`,
+    },
+    REPOST: {
+      message: `${notification.issuer.displayName} reposted your post`,
+      icon: <Repeat2 className="size-7 fill-emerald-500 text-emerald-500" />,
       href: `/posts/${notification.postId}`,
     },
   };
