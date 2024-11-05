@@ -61,7 +61,7 @@ async function WhoToFollow() {
                     className="flex items-center gap-3"
                   >
                     <UserAvatar
-                      avatarUrl={user.avatarUrl}
+                      avatar_url={user.avatar_url}
                       className="flex-none"
                     />
                     <div>

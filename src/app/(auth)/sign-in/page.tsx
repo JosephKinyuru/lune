@@ -19,7 +19,7 @@ export default function Page() {
             src={loginImage}
             alt="Image"
             className="h-[20vh] w-full object-cover dark:brightness-[0.8]"
-            priority
+            priority={true}
           />
         </div>
 
@@ -46,9 +46,9 @@ export default function Page() {
 
             <SignInForm />
 
-            <div className="mt-4 text-center text-sm mb-4">
+            <div className="mb-4 mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <Link href="/sign-up" className="underline text-primary">
+              <Link href="/sign-up" className="text-primary underline">
                 Sign Up
               </Link>
             </div>
@@ -62,7 +62,7 @@ export default function Page() {
           src={loginImage}
           alt="Image"
           className="h-full w-full object-cover dark:brightness-[0.6]"
-          priority
+          priority={true}
         />
       </div>
     </main>

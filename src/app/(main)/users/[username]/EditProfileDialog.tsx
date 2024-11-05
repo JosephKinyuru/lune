@@ -86,7 +86,7 @@ export default function EditProfileDialog({
             src={
               croppedAvatar
                 ? URL.createObjectURL(croppedAvatar)
-                : user.avatarUrl || avatarPlaceholder
+                : user.avatar_url || avatarPlaceholder
             }
             onImageCropped={setCroppedAvatar}
           />

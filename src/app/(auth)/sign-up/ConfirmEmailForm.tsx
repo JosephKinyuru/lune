@@ -51,7 +51,6 @@ export default function SignUpForm() {
                   type="email"
                   {...field}
                   className="shadow-lg dark:shadow-none xl:h-11"
-                  autoComplete="off"
                 />
               </FormControl>
               <FormMessage />

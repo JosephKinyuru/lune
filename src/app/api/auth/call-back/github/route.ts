@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
           username,
           displayName: githubUserResponse.login,
           googleId: githubUserResponse.id,
-          avatarUrl: githubUserResponse.avatar_url,
+          avatar_url: githubUserResponse.avatar_url,
           email: githubUserResponse.email,
         },
       });

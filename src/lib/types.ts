@@ -5,7 +5,8 @@ export function getUserDataSelect(loggedInUserId: string) {
     id: true,
     username: true,
     displayName: true,
-    avatarUrl: true,
+    avatar_url: true,
+    profile_banner_url: true,
     bio: true,
     verified: true,
     createdAt: true,
@@ -102,7 +103,7 @@ export const notificationsInclude = {
     select: {
       username: true,
       displayName: true,
-      avatarUrl: true,
+      avatar_url: true,
     },
   },
   post: {

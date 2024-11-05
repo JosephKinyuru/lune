@@ -19,7 +19,7 @@ export default function Page() {
             src={signupImage}
             alt="Image"
             className="h-[20vh] w-full object-cover dark:brightness-[0.8]"
-            priority
+            priority={true}
           />
         </div>
 
@@ -31,9 +31,9 @@ export default function Page() {
             </p>
           </div>
           <div className="grid gap-4">
-            <GoogleSignInButton text="Log in with Google" />
+            <GoogleSignInButton text="Sign up with Google" />
 
-            <GithubSignInButton text="Log in with Github" />
+            <GithubSignInButton text="Sign up with Github" />
 
             <div className="relative py-4">
               <div className="absolute inset-0 flex items-center">
@@ -51,7 +51,7 @@ export default function Page() {
             <div className="mb-4 mt-4 text-center text-sm">
               Already have an account?{" "}
               <Link href="/sign-in" className="text-primary underline">
-                Sign in
+                Sign In
               </Link>
             </div>
           </div>
@@ -63,7 +63,7 @@ export default function Page() {
           src={signupImage}
           alt="Image"
           className="h-screen w-full object-cover dark:brightness-[0.6]"
-          priority
+          priority={true}
         />
       </div>
     </main>

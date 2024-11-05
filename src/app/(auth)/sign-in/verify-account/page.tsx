@@ -84,7 +84,7 @@ export default async function Page({
             src={loginImage}
             alt="Image"
             className="h-[20vh] w-full object-cover dark:brightness-[0.8]"
-            priority
+            priority={true}
           />
         </div>
 
@@ -117,7 +117,7 @@ export default async function Page({
           src={loginImage}
           alt="Image"
           className="h-full w-full object-cover dark:brightness-[0.6]"
-          priority
+          priority={true}
         />
       </div>
     </main>

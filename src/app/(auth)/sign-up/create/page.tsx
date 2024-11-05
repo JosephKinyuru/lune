@@ -100,7 +100,7 @@ export default async function Page() {
               src={signupImage}
               alt="Image"
               className="h-[20vh] w-full object-cover dark:brightness-[0.8]"
-              priority
+              priority={true}
             />
           </div>
 
@@ -133,7 +133,7 @@ export default async function Page() {
             src={signupImage}
             alt="Image"
             className="h-screen w-full object-cover dark:brightness-[0.6]"
-            priority
+            priority={true}
           />
         </div>
       </main>

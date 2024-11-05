@@ -12,6 +12,10 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import EditProfileButton from "./EditProfileButton";
 import UserPosts from "./UserPosts";
+import { CalendarDays, Image as LucideImage } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import UserMedia from "./UserMedia";
+import UserLikes from "./UserLikes";
 
 interface PageProps {
   params: Promise<{ username: string }>;
@@ -66,12 +70,31 @@ export default async function Page({ params }: PageProps) {
     <main className="flex w-full min-w-0 gap-5">
       <div className="w-full min-w-0 space-y-5">
         <UserProfile user={user} loggedInUserId={loggedInUser.id} />
-        <div className="rounded-2xl bg-card p-5 shadow-sm">
-          <h2 className="text-center text-2xl font-bold">
-            {user.displayName}&apos;s posts
-          </h2>
-        </div>
-        <UserPosts userId={user.id} />
+        <Tabs defaultValue="posts">
+          <TabsList>
+            <TabsTrigger value="posts" className="text-md">
+              Posts
+            </TabsTrigger>
+            <TabsTrigger value="media" className="text-md">
+              Media
+            </TabsTrigger>
+            <TabsTrigger value="likes" className="text-md">
+              Likes
+            </TabsTrigger>
+          </TabsList>
+
+          <div>
+            <TabsContent value="posts" className="mt-6">
+              <UserPosts userId={user.id} />
+            </TabsContent>
+            <TabsContent value="media" className="mt-6">
+              <UserMedia userId={user.id} />
+            </TabsContent>
+            <TabsContent value="likes" className="mt-6">
+              <UserLikes userId={user.id} />
+            </TabsContent>
+          </div>
+        </Tabs>
       </div>
     </main>
   );
@@ -91,27 +114,54 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
   };
 
   return (
-    <div className="h-fit w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
-      <UserAvatar
-        avatarUrl={user.avatarUrl}
-        size={250}
-        className="mx-auto size-full max-h-60 max-w-60 rounded-full"
-      />
-      <div className="flex flex-wrap gap-3 sm:flex-nowrap">
+    <div className="w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
+      <div className="relative">
+        <div className="h-32 w-full rounded-sm bg-background">
+          {user.profile_banner_url ? (
+            <img
+              src={user.profile_banner_url}
+              alt={`${user.displayName}'s banner`}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <LucideImage className="size-8 text-muted-foreground" />
+            </div>
+          )}
+        </div>
+
+        <div className="absolute -mt-12 ml-4 md:ml-6">
+          <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-4 border-card bg-background md:h-20 md:w-20 lg:h-24 lg:w-24">
+            <UserAvatar
+              avatar_url={user.avatar_url}
+              className="h-full w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-3 pt-12 sm:flex-nowrap">
         <div className="me-auto space-y-3">
           <div>
             <h1 className="text-3xl font-bold">{user.displayName}</h1>
             <div className="text-muted-foreground">@{user.username}</div>
           </div>
-          <div>Member since {formatDate(user.createdAt, "MMM d, yyyy")}</div>
-          <div className="flex items-center gap-3">
-            <span>
-              Posts:{" "}
-              <span className="font-semibold">
-                {formatNumber(user._count.posts)}
+
+          <div className="me-auto space-y-1.5">
+            <div>
+              <CalendarDays className="inline size-4 text-muted-foreground" />{" "}
+              Joined {formatDate(user.createdAt, "MMM d, yyyy")}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <FollowerCount userId={user.id} initialState={followerInfo} />
+              <span>
+                <span className="font-semibold">
+                  {formatNumber(user._count.following)}
+                </span>{" "}
+                Following
               </span>
-            </span>
-            <FollowerCount userId={user.id} initialState={followerInfo} />
+            </div>
           </div>
         </div>
         {user.id === loggedInUserId ? (
@@ -120,6 +170,7 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
           <FollowButton userId={user.id} initialState={followerInfo} />
         )}
       </div>
+
       {user.bio && (
         <>
           <hr />

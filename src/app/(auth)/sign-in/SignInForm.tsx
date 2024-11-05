@@ -61,7 +61,6 @@ export default function SignInForm() {
                   {...field}
                   className="w-full shadow-lg dark:shadow-none xl:h-11"
                   type="email"
-                  autoComplete="off"
                 />
               </FormControl>
               <FormMessage />

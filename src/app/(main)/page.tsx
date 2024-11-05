@@ -10,13 +10,17 @@ export default function Home() {
         <PostEditor />
         <Tabs defaultValue="for-you">
           <TabsList>
-            <TabsTrigger value="for-you">For you</TabsTrigger>
-            <TabsTrigger value="following">Following</TabsTrigger>
+            <TabsTrigger value="for-you" className="text-lg">
+              For you
+            </TabsTrigger>
+            <TabsTrigger value="following" className="text-lg">
+              Following
+            </TabsTrigger>
           </TabsList>
-          <TabsContent value="for-you">
+          <TabsContent value="for-you" className="mt-6">
             <ForYouFeed />
           </TabsContent>
-          <TabsContent value="following">
+          <TabsContent value="following" className="mt-6">
             <FollowingFeed />
           </TabsContent>
         </Tabs>

@@ -3,19 +3,19 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 interface UserAvatarProps {
-  avatarUrl: string | null | undefined;
+  avatar_url: string | null | undefined;
   size?: number;
   className?: string;
 }
 
 export default function UserAvatar({
-  avatarUrl,
+  avatar_url,
   size,
   className,
 }: UserAvatarProps) {
   return (
     <Image
-      src={avatarUrl || avatarPlaceholder}
+      src={avatar_url || avatarPlaceholder}
       alt="User avatar"
       width={size ?? 48}
       height={size ?? 48}

@@ -174,7 +174,7 @@ function UserResult({ user, selected, onClick }: UserResultProps) {
       onClick={onClick}
     >
       <div className="flex items-center gap-2">
-        <UserAvatar avatarUrl={user.image} />
+        <UserAvatar avatar_url={user.image} />
         <div className="flex flex-col text-start">
           <p className="font-bold">{user.name}</p>
           <p className="text-muted-foreground">@{user.username}</p>
@@ -196,7 +196,7 @@ function SelectedUserTag({ user, onRemove }: SelectedUserTagProps) {
       onClick={onRemove}
       className="flex items-center gap-2 rounded-full border p-1 hover:bg-muted/50"
     >
-      <UserAvatar avatarUrl={user.image} size={24} />
+      <UserAvatar avatar_url={user.image} size={24} />
       <p className="font-bold">{user.name}</p>
       <X className="mx-2 size-5 text-muted-foreground" />
     </button>

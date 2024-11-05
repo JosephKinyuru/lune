@@ -77,7 +77,7 @@ export async function GET(req: NextRequest) {
           username,
           displayName: googleUser.name,
           googleId: googleUser.id,
-          avatarUrl: googleUser.picture,
+          avatar_url: googleUser.picture,
           email: googleUser.email,
         },
       });

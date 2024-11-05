@@ -48,7 +48,7 @@ export default function Notification({ notification }: NotificationProps) {
       >
         <div className="my-1">{icon}</div>
         <div className="space-y-3">
-          <UserAvatar avatarUrl={notification.issuer.avatarUrl} size={36} />
+          <UserAvatar avatar_url={notification.issuer.avatar_url} size={36} />
           <div>
             <span className="font-bold">{notification.issuer.displayName}</span>{" "}
             <span>{message}</span>

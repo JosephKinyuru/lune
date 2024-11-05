@@ -87,7 +87,7 @@ const UserCard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Image
-              src={user.avatarUrl || avatarPlaceholder}
+              src={user.avatar_url || avatarPlaceholder}
               alt="User Avatar"
               className="h-12 w-12 rounded-full"
               width={48}

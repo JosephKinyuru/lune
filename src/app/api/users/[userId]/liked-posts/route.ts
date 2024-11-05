@@ -9,7 +9,6 @@ export async function GET(
 ) {
   try {
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
-
     const pageSize = 10;
 
     const { user } = await validateRequest();
@@ -20,17 +19,9 @@ export async function GET(
 
     const { userId } = await params;
 
-    const posts = await prisma.post.findMany({
-      where: { userId },
-      include: getPostDataInclude(user.id),
-      orderBy: { createdAt: "desc" },
-      take: pageSize + 1,
-      cursor: cursor ? { id: cursor } : undefined,
-    });
-
-    const repostedPosts = await prisma.post.findMany({
+    const likedPosts = await prisma.post.findMany({
       where: {
-        reposts: {
+        likes: {
           some: { userId },
         },
       },
@@ -40,15 +31,11 @@ export async function GET(
       cursor: cursor ? { id: cursor } : undefined,
     });
 
-    const combinedPosts = [...posts, ...repostedPosts]
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-      .slice(0, pageSize);
-
     const nextCursor =
-      combinedPosts.length > pageSize ? combinedPosts[pageSize].id : null;
+      likedPosts.length > pageSize ? likedPosts[pageSize].id : null;
 
     const data: PostsPage = {
-      posts: combinedPosts,
+      posts: likedPosts.slice(0, pageSize),
       nextCursor,
     };
 

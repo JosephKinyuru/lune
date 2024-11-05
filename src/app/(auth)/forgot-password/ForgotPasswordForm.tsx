@@ -50,7 +50,7 @@ export default function ForgotPasswordForm() {
               <FormControl>
                 <Input
                   {...field}
-                  className="w-full"
+                  className="w-full shadow-lg dark:shadow-none xl:h-11"
                   type="email"
                 />
               </FormControl>
@@ -59,7 +59,11 @@ export default function ForgotPasswordForm() {
           )}
         />
 
-        <LoadingButton loading={isPending} className="w-full" type="submit">
+        <LoadingButton
+          loading={isPending}
+          className="w-full xl:h-9"
+          type="submit"
+        >
           Send Reset Email
         </LoadingButton>
       </form>
