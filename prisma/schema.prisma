@@ -23,14 +23,17 @@ model User {
   passwordHash          String?
   googleId              String?        @unique
   githubId              String?        @unique
-  avatarUrl             String?
+  avatar_url            String?
+  profile_banner_url    String?
   dateOfBirth           DateTime?
   bio                   String?
+  location              String?
   website               String?
   verified              Boolean        @default(false)
-  isBanned              Boolean        @default(false)
-  isSuspended           Boolean        @default(false)
-  isPrivate             Boolean        @default(false)
+  is_Banned             Boolean        @default(false)
+  is_Suspended          Boolean        @default(false)
+  is_Deactivated        Boolean        @default(false)
+  is_Private            Boolean        @default(false)
   sessions              Session[]
   posts                 Post[]
   reposts               Repost[]
@@ -113,7 +116,7 @@ model Repost {
   postId       String
   originalPost Post     @relation("OriginalPost", fields: [postId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
-  
+
   @@unique([userId, postId])
   @@map("reposts")
 }
