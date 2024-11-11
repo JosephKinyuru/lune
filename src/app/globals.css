@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '~stream-chat-react/dist/css/v2/index.css';
+@import "~stream-chat-react/dist/css/v2/index.css";
 
 @layer base {
   :root {
@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 210 76.2% 50%; 
+    --primary: 210 76.2% 50%;
     --primary-foreground: 355.7 100% 97.3%;
 
     --secondary: 240 4.8% 95.9%;
@@ -32,9 +32,12 @@
 
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 210 76.2% 50%; 
+    --ring: 210 76.2% 50%;
 
     --radius: 1rem;
+
+    --skeleton-base-color: #e5e7eb;
+    --skeleton-highlight-color: #f3f4f6;
   }
 
   .dark {
@@ -47,8 +50,8 @@
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 210 70.6% 55%; 
-    --primary-foreground: 210 80.4% 15%; 
+    --primary: 210 70.6% 55%;
+    --primary-foreground: 210 80.4% 15%;
 
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -64,7 +67,10 @@
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 210 71.8% 45%; 
+    --ring: 210 71.8% 45%;
+
+    --skeleton-base-color: #313131;
+    --skeleton-highlight-color: #525252;
   }
 }
 
