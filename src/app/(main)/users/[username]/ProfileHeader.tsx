@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const ProfileHeader = ({ displayName }: { displayName: string }) => {
   const router = useRouter();
