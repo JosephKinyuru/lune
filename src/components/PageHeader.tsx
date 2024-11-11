@@ -16,7 +16,7 @@ const PageHeader = ({
   return (
     <>
       <button
-        className="h-6 w-12 cursor-pointer hover:bg-accent dark:hover:bg-gray-50/10 rounded-full"
+        className="h-12 w-12 cursor-pointer hover:bg-accent dark:hover:bg-gray-50/10 rounded-full"
         onClick={() => {
           router.back();
         }}

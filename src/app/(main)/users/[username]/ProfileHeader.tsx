@@ -9,7 +9,7 @@ const ProfileHeader = ({ displayName }: { displayName: string }) => {
   return (
     <>
       <button
-        className="h-6 w-12 cursor-pointer"
+        className="h-12 w-12 cursor-pointer rounded-full hover:bg-accent dark:hover:bg-gray-50/10"
         onClick={() => {
           router.back();
         }}

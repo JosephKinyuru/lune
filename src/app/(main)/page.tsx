@@ -17,7 +17,7 @@ export default function Home() {
               Following
             </TabsTrigger>
           </TabsList>
-          <PostEditor />
+          <PostEditor className="mt-6 border-b dark:border-b-[#1F1F22] max-w-full" />
           <TabsContent value="for-you" className="mt-0">
             <ForYouFeed />
           </TabsContent>

@@ -79,22 +79,22 @@ export default function PostEditor({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex flex-col gap-5 border-b border-t bg-card p-5 shadow-sm dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black",
+        "flex flex-col gap-5 bg-card p-5 shadow-sm dark:bg-black",
         className,
       )}
     >
       <div className="flex gap-5">
         <UserAvatar avatar_url={user.avatar_url} className="hidden sm:inline" />
-        <div {...rootProps} className="w-full">
+        <div {...rootProps} className="w-[92%]">
           <EditorContent
             editor={editor}
             className={cn(
-              "max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3 text-lg",
+              "max-h-[20rem] w-full overflow-y-auto overflow-x-hidden rounded-2xl bg-background px-5 py-3 text-lg",
               isDragActive && "outline-dashed",
             )}
             onPaste={onPaste}
           />
-          <input {...getInputProps()} />
+          <input {...getInputProps()} className="w-full max-w-full" />
         </div>
       </div>
       {!!attachments.length && (
