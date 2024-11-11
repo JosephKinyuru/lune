@@ -60,7 +60,7 @@ export default function Notifications() {
 
   if (status === "success" && !notifications.length && !hasNextPage) {
     return (
-      <p className="text-center text-muted-foreground">
+      <p className="pt-6 text-center text-muted-foreground">
         You don&apos;t have any notifications yet.
       </p>
     );
@@ -68,7 +68,7 @@ export default function Notifications() {
 
   if (status === "error") {
     return (
-      <p className="text-center text-destructive">
+      <p className="pt-6 text-center text-destructive">
         An error occurred while loading notifications.
       </p>
     );

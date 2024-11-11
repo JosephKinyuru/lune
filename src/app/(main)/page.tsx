@@ -10,10 +10,10 @@ export default function Home() {
       <div className="w-full min-w-0 space-y-5 border-l border-r dark:border-l-[#1F1F22] dark:border-r-[#1F1F22] lg:w-11/12 xl:w-10/12 2xl:w-[54rem]">
         <Tabs defaultValue="for-you">
           <TabsList className="sticky top-0 z-20 backdrop-blur-sm">
-            <TabsTrigger value="for-you" className="px-8 text-lg">
+            <TabsTrigger value="for-you" className="py-4 text-xl">
               For you
             </TabsTrigger>
-            <TabsTrigger value="following" className="px-8 text-lg">
+            <TabsTrigger value="following" className="py-4 text-xl">
               Following
             </TabsTrigger>
           </TabsList>

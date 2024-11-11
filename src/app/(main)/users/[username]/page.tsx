@@ -12,7 +12,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import EditProfileButton from "./EditProfileButton";
 import UserPosts from "./UserPosts";
-import { ArrowLeft, CalendarDays, Image as LucideImage } from "lucide-react";
+import { CalendarDays, Image as LucideImage } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserMedia from "./UserMedia";
 import UserLikes from "./UserLikes";
@@ -70,20 +70,20 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className="flex w-full min-w-0 gap-5">
-      <div className="w-full min-w-0 space-y-5 border-l border-r dark:border-l-[#1F1F22] dark:border-r-[#1F1F22] lg:w-11/12 xl:w-10/12 2xl:w-[54rem]">
+      <div className="w-full min-w-0 space-y-4 border-l border-r dark:border-l-[#1F1F22] dark:border-r-[#1F1F22] lg:w-11/12 xl:w-10/12 2xl:w-[54rem]">
         <div className="sticky z-20 flex h-16 items-center space-x-16 border-b px-4 backdrop-blur-sm dark:border-b-[#1F1F22]">
           <ProfileHeader displayName={user.displayName} />
         </div>
         <UserProfile user={user} loggedInUserId={loggedInUser.id} />
         <Tabs defaultValue="posts">
           <TabsList>
-            <TabsTrigger value="posts" className="text-md">
+            <TabsTrigger value="posts" className="text-lg">
               Posts
             </TabsTrigger>
-            <TabsTrigger value="media" className="text-md">
+            <TabsTrigger value="media" className="text-lg">
               Media
             </TabsTrigger>
-            <TabsTrigger value="likes" className="text-md">
+            <TabsTrigger value="likes" className="text-lg">
               Likes
             </TabsTrigger>
           </TabsList>

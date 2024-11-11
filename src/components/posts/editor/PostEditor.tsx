@@ -16,7 +16,7 @@ import { useSubmitPostMutation } from "./mutations";
 import "./styles.css";
 import useMediaUpload, { Attachment } from "./useMediaUpload";
 
-export default function PostEditor() {
+export default function PostEditor({ className }: { className?: string }) {
   const { user } = useSession();
 
   const mutation = useSubmitPostMutation();
@@ -46,7 +46,7 @@ export default function PostEditor() {
         placeholder: "What's happening?",
       }),
     ],
-    immediatelyRender: false,  
+    immediatelyRender: false,
   });
 
   const input =
@@ -77,7 +77,12 @@ export default function PostEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-5 border-b border-t bg-card p-5 shadow-sm dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
+    <div
+      className={cn(
+        "flex flex-col gap-5 border-b border-t bg-card p-5 shadow-sm dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black",
+        className,
+      )}
+    >
       <div className="flex gap-5">
         <UserAvatar avatar_url={user.avatar_url} className="hidden sm:inline" />
         <div {...rootProps} className="w-full">

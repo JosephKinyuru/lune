@@ -37,7 +37,7 @@ export default function Bookmarks() {
 
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
-      <p className="text-center text-muted-foreground">
+      <p className="pt-6 text-center text-muted-foreground">
         You don&apos;t have any bookmarks yet.
       </p>
     );
@@ -45,7 +45,7 @@ export default function Bookmarks() {
 
   if (status === "error") {
     return (
-      <p className="text-center text-destructive">
+      <p className="pt-6 text-center text-destructive">
         An error occurred while loading bookmarks.
       </p>
     );

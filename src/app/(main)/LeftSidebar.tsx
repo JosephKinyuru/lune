@@ -15,7 +15,6 @@ import {
   LogOutIcon,
   Monitor,
   Moon,
-  Plus,
   Sun,
   UserIcon,
 } from "lucide-react";
@@ -23,7 +22,6 @@ import { GoBell } from "react-icons/go";
 import { PiCompassLight } from "react-icons/pi";
 
 import logo from "../favicon.ico";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,6 +41,7 @@ import { useSession } from "./SessionProvider";
 import { useTheme } from "next-themes";
 import { logout } from "../(auth)/actions";
 import { MdVerified } from "react-icons/md";
+import PostButton from "./PostButton";
 
 interface initialDataProps {
   unreadNotificationsCount: NotificationCountInfo;
@@ -136,7 +135,7 @@ export default function LeftSidebar({
   ];
 
   return (
-    <section className="sticky left-0 top-0 z-20 flex max-h-fit min-h-screen w-full max-w-72 flex-col px-4 pb-5 pt-4 max-xl:w-20 max-xl:px-2 max-md:hidden lg:pt-12 bg-card dark:bg-black">
+    <section className="sticky left-0 top-0 z-20 flex max-h-fit min-h-screen w-full max-w-72 flex-col px-4 pb-5 pt-4 max-xl:w-20 max-xl:px-2 max-md:hidden lg:pt-8 bg-card dark:bg-black">
       <div className="flex items-center gap-4 px-3">
         <Link href="/" className="flex items-center text-2xl font-bold">
           <Image src={logo.src} alt="logo" width={34} height={34} />
@@ -215,10 +214,7 @@ export default function LeftSidebar({
         </div>
 
         <div className="mt-12 max-md:mt-16 max-md:px-2 xl:px-2 2xl:mt-20">
-          <Button className="h-12 w-12 rounded-full bg-blue-400 text-center text-lg font-bold text-white hover:bg-blue-500 lg:h-12 lg:w-full lg:px-3 xl:h-14">
-            <p className="max-xl:hidden">Post</p>
-            <Plus className="hidden size-6 max-xl:block" />
-          </Button>
+          <PostButton />
         </div>
 
         <div className="mt-12 max-md:mt-16 max-md:px-2 xl:ml-2 xl:px-0 2xl:mt-24">
