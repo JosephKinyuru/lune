@@ -12,10 +12,12 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import EditProfileButton from "./EditProfileButton";
 import UserPosts from "./UserPosts";
-import { CalendarDays, Image as LucideImage } from "lucide-react";
+import { ArrowLeft, CalendarDays, Image as LucideImage } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserMedia from "./UserMedia";
 import UserLikes from "./UserLikes";
+import RightSidebar from "../../RightSidebar";
+import ProfileHeader from "./ProfileHeader";
 
 interface PageProps {
   params: Promise<{ username: string }>;
@@ -68,7 +70,10 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className="flex w-full min-w-0 gap-5">
-      <div className="w-full min-w-0 space-y-5">
+      <div className="w-full min-w-0 space-y-5 border-l border-r dark:border-l-[#1F1F22] dark:border-r-[#1F1F22] lg:w-11/12 xl:w-10/12 2xl:w-[54rem]">
+        <div className="sticky z-20 flex h-16 items-center space-x-16 border-b px-4 backdrop-blur-sm dark:border-b-[#1F1F22]">
+          <ProfileHeader displayName={user.displayName} />
+        </div>
         <UserProfile user={user} loggedInUserId={loggedInUser.id} />
         <Tabs defaultValue="posts">
           <TabsList>
@@ -84,17 +89,21 @@ export default async function Page({ params }: PageProps) {
           </TabsList>
 
           <div>
-            <TabsContent value="posts" className="mt-6">
+            <TabsContent value="posts" className="mt-0">
               <UserPosts userId={user.id} />
             </TabsContent>
-            <TabsContent value="media" className="mt-6">
+            <TabsContent value="media" className="mt-0">
               <UserMedia userId={user.id} />
             </TabsContent>
-            <TabsContent value="likes" className="mt-6">
+            <TabsContent value="likes" className="mt-0">
               <UserLikes userId={user.id} />
             </TabsContent>
           </div>
         </Tabs>
+      </div>
+
+      <div className="hidden lg:mx-6 lg:block lg:w-1/3 xl:mx-6 2xl:mx-9 2xl:w-[28rem]">
+        <RightSidebar />
       </div>
     </main>
   );
@@ -114,9 +123,9 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
   };
 
   return (
-    <div className="w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm">
+    <div className="w-full space-y-5 rounded-2xl bg-card p-5 shadow-sm dark:bg-black">
       <div className="relative">
-        <div className="h-32 w-full rounded-sm bg-background">
+        <div className="h-40 w-full rounded-sm bg-background dark:bg-[#333639]">
           {user.profile_banner_url ? (
             <img
               src={user.profile_banner_url}

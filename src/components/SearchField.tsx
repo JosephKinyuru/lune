@@ -3,8 +3,9 @@
 import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Input } from "./ui/input";
+import { cn } from "@/lib/utils";
 
-export default function SearchField() {
+export default function SearchField({ className }: { className?: string }) {
   const router = useRouter();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -17,7 +18,7 @@ export default function SearchField() {
 
   return (
     <form onSubmit={handleSubmit} method="GET" action="/search">
-      <div className="relative w-full">
+      <div className={cn("relative w-full", className)}>
         <Input
           name="q"
           placeholder="Search"
