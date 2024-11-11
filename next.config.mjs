@@ -13,13 +13,10 @@ const nextConfig = {
         pathname: `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/*`,
       },
       {
-        hostname: "lh3.googleusercontent.com",
+        hostname: "lh3.googleusercontent.com",  // Optimize pathname to avoid high bills
       },
       {
         hostname: "avatars.githubusercontent.com",
-      },
-      {
-        hostname: "images.unsplash.com",
       },
     ],
   },
