@@ -13,7 +13,7 @@ import { Suspense } from "react";
 
 export default function RightSidebar() {
   return (
-    <div className="sticky right-0 top-0 z-20 flex h-screen w-full flex-col justify-between gap-8 bg-card px-2 pb-6 pt-4 dark:bg-black">
+    <div className="fixed right-0 top-0 z-20 flex h-screen w-full flex-col justify-between gap-8 bg-card px-2 pb-6 pt-4 dark:bg-black">
       <SearchField className="sticky z-30"/>
       <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
         <WhoToFollow />
