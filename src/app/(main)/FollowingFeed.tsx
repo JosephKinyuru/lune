@@ -37,7 +37,7 @@ export default function FollowingFeed() {
 
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
-      <p className="text-center text-muted-foreground">
+      <p className="text-center text-muted-foreground mt-8">
         No posts found. Start following people to see their posts here.
       </p>
     );
@@ -45,7 +45,7 @@ export default function FollowingFeed() {
 
   if (status === "error") {
     return (
-      <p className="text-center text-destructive">
+      <p className="text-center text-destructive mt-8">
         An error occurred while loading posts.
       </p>
     );
