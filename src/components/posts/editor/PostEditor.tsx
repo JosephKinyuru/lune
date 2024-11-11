@@ -43,7 +43,7 @@ export default function PostEditor() {
         italic: false,
       }),
       Placeholder.configure({
-        placeholder: "What's crack-a-lackin'?",
+        placeholder: "What's happening?",
       }),
     ],
     immediatelyRender: false,  
@@ -77,7 +77,7 @@ export default function PostEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm dark:border-2 dark:border-[#1F1F22]">
+    <div className="flex flex-col gap-5 border-b border-t bg-card p-5 shadow-sm dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
       <div className="flex gap-5">
         <UserAvatar avatar_url={user.avatar_url} className="hidden sm:inline" />
         <div {...rootProps} className="w-full">

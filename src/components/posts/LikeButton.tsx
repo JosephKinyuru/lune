@@ -90,7 +90,7 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
           className="rounded-sm bg-card-foreground dark:text-black"
           side="bottom"
         >
-          <p className="font-semibold tracking-tight">Like</p>
+          <p className="text-[0.8rem] font-semibold tracking-tight">Like</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

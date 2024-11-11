@@ -1,5 +1,6 @@
 import { validateRequest } from "@/auth";
 import FollowButton from "@/components/FollowButton";
+import SearchField from "@/components/SearchField";
 import UserAvatar from "@/components/UserAvatar";
 import UserTooltip from "@/components/UserTooltip";
 import prisma from "@/lib/prisma";
@@ -12,7 +13,8 @@ import { Suspense } from "react";
 
 export default function RightSidebar() {
   return (
-    <div className="sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l bg-card px-8 pb-6 pt-28 dark:border-l-[#1F1F22] dark:bg-[#121417] max-2xl:hidden">
+    <div className="sticky right-0 top-0 z-20 flex h-screen w-full flex-col justify-between gap-8 bg-card px-2 pb-6 pt-4 dark:bg-black">
+      <SearchField />
       <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
         <WhoToFollow />
         <TrendingTopics />
@@ -42,10 +44,8 @@ async function WhoToFollow() {
   });
 
   return (
-    <div className="flex flex-1 flex-col justify-start">
-      <h3 className="text-xl font-medium leading-[140%]">
-        Who to follow
-      </h3>
+    <div className="flex min-h-64 flex-1 flex-col justify-start rounded-2xl border-[0.5px] border-black bg-card p-6 dark:border-white dark:bg-black">
+      <h3 className="text-xl font-medium leading-[140%]">Who to follow</h3>
 
       <div className="mt-7 flex w-[350px] flex-col gap-9">
         {usersToFollow.length > 0 ? (
@@ -121,10 +121,8 @@ async function TrendingTopics() {
   const trendingTopics = await getTrendingTopics();
 
   return (
-    <div className="flex flex-1 flex-col justify-start">
-      <h3 className="text-xl font-medium leading-[140%]">
-        Trending topics
-      </h3>
+    <div className="flex min-h-64 flex-1 flex-col justify-start rounded-2xl border-[0.5px] border-black bg-card p-6 dark:border-white dark:bg-black">
+      <h3 className="text-xl font-medium leading-[140%]">Trending topics</h3>
 
       <div className="mt-7 flex w-[350px] flex-col gap-10">
         {trendingTopics.length > 0 ? (

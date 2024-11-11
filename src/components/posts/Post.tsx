@@ -2,7 +2,7 @@
 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
-import { cn, copyToClipboard, formatRelativeDate } from "@/lib/utils";
+import { cn, formatRelativeDate } from "@/lib/utils";
 import { Media } from "@prisma/client";
 import { MessageSquare, Link as HLink } from "lucide-react";
 import Image from "next/image";
@@ -33,7 +33,7 @@ export default function Post({ post }: PostProps) {
   const [showComments, setShowComments] = useState(false);
 
   return (
-    <article className="group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm dark:border-2 dark:border-[#1F1F22]">
+    <article className="group/post space-y-3 border-b border-t bg-card p-5 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
       <div className="flex justify-between gap-3">
         <div className="flex flex-wrap gap-3">
           <UserTooltip user={post.user}>
@@ -90,7 +90,9 @@ export default function Post({ post }: PostProps) {
             postId={post.id}
             initialState={{
               reposts: post._count.reposts,
-              isRepostedByUser: post.reposts.some((repost) => repost.userId === user.id),
+              isRepostedByUser: post.reposts.some(
+                (repost) => repost.userId === user.id,
+              ),
             }}
           />
         </div>
@@ -188,7 +190,7 @@ function CommentButton({ post, onClick }: CommentButtonProps) {
           className="rounded-sm bg-card-foreground dark:text-black"
           side="bottom"
         >
-          <p className="font-semibold tracking-tight">Comment</p>
+          <p className="text-[0.8rem] font-semibold tracking-tight">Comment</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -201,7 +203,7 @@ interface LinkButtonProps {
 
 function LinkButton({ link }: LinkButtonProps) {
   const [buttonText, setButtonText] = useState("Copy Link");
-  
+
   return (
     <button
       onClick={async () => {
@@ -220,7 +222,9 @@ function LinkButton({ link }: LinkButtonProps) {
             className="rounded-sm bg-card-foreground dark:text-black"
             side="bottom"
           >
-            <p className="font-semibold tracking-tight">{buttonText}</p>
+            <p className="text-[0.8rem] font-semibold tracking-tight">
+              {buttonText}
+            </p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

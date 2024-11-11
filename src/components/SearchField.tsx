@@ -17,11 +17,11 @@ export default function SearchField() {
 
   return (
     <form onSubmit={handleSubmit} method="GET" action="/search">
-      <div className="relative w-[115%] max-w-md">
+      <div className="relative w-full">
         <Input
           name="q"
-          placeholder="Find friends, communities or posts here"
-          className="w-full rounded-sm bg-gray-100 py-2 pl-10 pr-3 text-gray-700 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary dark:bg-[#101012]"
+          placeholder="Search"
+          className="h-12 w-full rounded-full bg-gray-100 py-2 pl-10 pr-3 text-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary dark:bg-[#202327]"
           autoComplete="off"
         />
         <SearchIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />

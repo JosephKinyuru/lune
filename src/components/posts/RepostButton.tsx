@@ -74,7 +74,9 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
             onClick={() => mutate()}
             className={cn(
               "flex items-center gap-[6px]",
-              data.isRepostedByUser ? "text-emerald-400" : "hover:text-emerald-400",
+              data.isRepostedByUser
+                ? "text-emerald-400"
+                : "hover:text-emerald-400",
             )}
           >
             <Repeat2
@@ -93,7 +95,7 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
           className="rounded-sm bg-card-foreground dark:text-black"
           side="bottom"
         >
-          <p className="font-semibold tracking-tight">Repost</p>
+          <p className="text-[0.8rem] font-semibold tracking-tight">Repost</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

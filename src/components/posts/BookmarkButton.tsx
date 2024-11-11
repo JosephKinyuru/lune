@@ -86,7 +86,7 @@ export default function BookmarkButton({
             className="rounded-sm bg-card-foreground dark:text-black"
             side="bottom"
           >
-            <p className="font-semibold tracking-tight">
+            <p className="text-[0.8rem] font-semibold tracking-tight">
               {data.isBookmarkedByUser ? "Bookmarked" : "Bookmark"}
             </p>
           </TooltipContent>

@@ -1,8 +1,10 @@
-import { Skeleton } from "../ui/skeleton";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css"; 
 
 export default function PostsLoadingSkeleton() {
   return (
-    <div className="space-y-5">
+    <div className="space-y-1">
+      <PostLoadingSkeleton />
       <PostLoadingSkeleton />
       <PostLoadingSkeleton />
       <PostLoadingSkeleton />
@@ -13,15 +15,44 @@ export default function PostsLoadingSkeleton() {
 
 function PostLoadingSkeleton() {
   return (
-    <div className="w-full animate-pulse space-y-3 rounded-2xl bg-card p-5 shadow-sm">
+    <div className="w-full animate-pulse space-y-3 border-b bg-card p-6 shadow-sm dark:border-b-[#1F1F22] dark:bg-black">
       <div className="flex flex-wrap gap-3">
-        <Skeleton className="size-12 rounded-full" />
+        <div className="h-12 w-12 rounded-full">
+          <Skeleton circle width={48} height={48} />
+        </div>
         <div className="space-y-1.5">
-          <Skeleton className="h-4 w-24 rounded" />
-          <Skeleton className="h-4 w-20 rounded" />
+          <div className="h-4 w-56 rounded-xl">
+            <Skeleton />
+          </div>
+          <div className="h-4 w-44 rounded-xl">
+            <Skeleton />
+          </div>
         </div>
       </div>
-      <Skeleton className="h-16 rounded" />
+      <div className="ml-12 flex flex-col gap-3 p-4">
+        <div className="space-y-2">
+          <div className="h-4 w-[80%]">
+            <Skeleton />
+          </div>
+          <div className="h-4 w-[60%]">
+            <Skeleton />
+          </div>
+        </div>
+        <div className="w-[80%] rounded-2xl">
+          <Skeleton height={200} />
+        </div>
+        <div className="flex flex-row space-x-6">
+          <div className="h-4 w-16">
+            <Skeleton />
+          </div>
+          <div className="h-4 w-16">
+            <Skeleton />
+          </div>
+          <div className="h-4 w-16">
+            <Skeleton />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
