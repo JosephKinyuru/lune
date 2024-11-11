@@ -38,7 +38,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+            <SkeletonTheme
+              baseColor="var(--skeleton-base-color)"
+              highlightColor="var(--skeleton-highlight-color)"
+            >
               {children}
             </SkeletonTheme>
           </ThemeProvider>

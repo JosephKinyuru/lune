@@ -36,8 +36,8 @@
 
     --radius: 1rem;
 
-    --skeleton-base-color: #e5e7eb;
-    --skeleton-highlight-color: #f3f4f6;
+    --skeleton-base-color: #f0f0f0;
+    --skeleton-highlight-color: #e0e0e0;
   }
 
   .dark {

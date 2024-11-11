@@ -44,7 +44,7 @@ async function WhoToFollow() {
   });
 
   return (
-    <div className="flex min-h-64 flex-1 flex-col justify-start rounded-2xl border border-gray-800 bg-card p-6 dark:border-[#1F1F22] dark:bg-black">
+    <div className="flex min-h-64 flex-1 flex-col justify-start rounded-2xl border bg-card px-6 py-4 dark:border-[#1F1F22] dark:bg-black">
       <h3 className="text-xl font-medium leading-[140%]">Who to follow</h3>
 
       <div className="mt-7 flex w-[350px] flex-col gap-9">
@@ -121,7 +121,7 @@ async function TrendingTopics() {
   const trendingTopics = await getTrendingTopics();
 
   return (
-    <div className="flex min-h-64 flex-1 flex-col justify-start rounded-2xl border border-gray-800 bg-card p-6 dark:border-[#1F1F22] dark:bg-black">
+    <div className="flex min-h-64 flex-1 flex-col justify-start rounded-2xl border bg-card py-4 px-6 dark:border-[#1F1F22] dark:bg-black">
       <h3 className="text-xl font-medium leading-[140%]">Trending topics</h3>
 
       <div className="mt-7 flex w-[350px] flex-col gap-10">
