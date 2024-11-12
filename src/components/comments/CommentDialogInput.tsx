@@ -1,17 +1,15 @@
 import { PostData } from "@/lib/types";
-import { Loader2, Send } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useSubmitCommentMutation } from "./mutations";
 import LoadingButton from "../LoadingButton";
-import UserAvatar from "../UserAvatar";
 
-interface CommentInputProps {
+interface CommentDialogInputProps {
+  className? : string;
   post: PostData;
 }
 
-export default function CommentInput({ post }: CommentInputProps) {
+export default function CommentDialogInput({ post, className }: CommentDialogInputProps) {
   const [input, setInput] = useState("");
 
   const mutation = useSubmitCommentMutation(post.id);
@@ -33,26 +31,24 @@ export default function CommentInput({ post }: CommentInputProps) {
   }
 
   return (
-    <form
-      className="flex items-center gap-2 border-b border-t py-6 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22]"
-      onSubmit={onSubmit}
-    >
-      <UserAvatar avatar_url={post.user.avatar_url} />
+    <form className={`flex flex-col gap-4 ${className}`} onSubmit={onSubmit}>
       <Input
         placeholder="Post your reply..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
         autoFocus
-        className="flex-grow border-0 bg-transparent text-muted-foreground outline-none focus:ring-0"
+        className="flex-grow border-0 bg-transparent text-xl outline-none placeholder:text-gray-500 focus:ring-0"
       />
-      <LoadingButton
-        type="submit"
-        loading={mutation.isPending}
-        disabled={!input.trim() || mutation.isPending}
-        className="min-w-20"
-      >
-        Reply
-      </LoadingButton>
+      <div className="flex justify-end border-t dark:border-t-[#1F1F22] pt-4">
+        <LoadingButton
+          type="submit"
+          loading={mutation.isPending}
+          disabled={!input.trim() || mutation.isPending}
+          className="rounded-full bg-blue-500 px-6 py-2 font-bold text-white hover:bg-blue-600 disabled:opacity-50"
+        >
+          Reply
+        </LoadingButton>
+      </div>
     </form>
   );
 }

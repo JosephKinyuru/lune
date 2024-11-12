@@ -83,7 +83,7 @@ export default function BookmarkButton({
             />
           </TooltipTrigger>
           <TooltipContent
-            className="rounded-sm bg-card-foreground dark:text-black"
+            className="rounded-sm bg-accent-foreground dark:text-black"
             side="bottom"
           >
             <p className="text-[0.8rem] font-semibold tracking-tight">

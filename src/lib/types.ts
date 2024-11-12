@@ -8,7 +8,7 @@ export function getUserDataSelect(loggedInUserId: string) {
     avatar_url: true,
     profile_banner_url: true,
     bio: true,
-    verified: true,
+    is_Verified: true,
     createdAt: true,
     followers: {
       where: {

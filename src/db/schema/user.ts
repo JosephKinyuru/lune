@@ -19,7 +19,7 @@ export const user = pgTable("users", {
   dateOfBirth: timestamp("date_of_birth", { precision: 3 }),
   bio: text("bio"),
   website: varchar("website", { length: 255 }),
-  verified: boolean("verified").default(false),
+  is_Verified: boolean("is_Verified").default(false),
   isBanned: boolean("is_banned").default(false),
   isSuspended: boolean("is_suspended").default(false),
   isPrivate: boolean("is_private").default(false),

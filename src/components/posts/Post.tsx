@@ -4,11 +4,10 @@ import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
 import { cn, formatRelativeDate } from "@/lib/utils";
 import { Media } from "@prisma/client";
-import { MessageSquare, Link as HLink } from "lucide-react";
+import { Link as HLink, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Comments from "../comments/Comments";
 import Linkify from "../Linkify";
 import UserAvatar from "../UserAvatar";
 import UserTooltip from "../UserTooltip";
@@ -22,6 +21,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import RepostButton from "./RepostButton";
+import { MdVerified } from "react-icons/md";
+import CommentDialog from "../comments/CommentDialog";
 
 interface PostProps {
   post: PostData;
@@ -30,7 +31,7 @@ interface PostProps {
 export default function Post({ post }: PostProps) {
   const { user } = useSession();
 
-  const [showComments, setShowComments] = useState(false);
+  const [showCommentDialog, setShowCommentDialog] = useState(false);
 
   return (
     <article className="group/post space-y-3 border-b border-t bg-card p-5 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
@@ -48,15 +49,17 @@ export default function Post({ post }: PostProps) {
                 className="block font-medium hover:underline"
               >
                 {post.user.displayName}
+                {/* {data?.verified && ( */}
+                <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
+                {/* )} */}
               </Link>
             </UserTooltip>
-            <Link
-              href={`/posts/${post.id}`}
+            <p
               className="block text-sm text-muted-foreground hover:underline"
               suppressHydrationWarning
             >
               {formatRelativeDate(post.createdAt)}
-            </Link>
+            </p>
           </div>
         </div>
         {post.user.id === user.id && (
@@ -67,7 +70,13 @@ export default function Post({ post }: PostProps) {
         )}
       </div>
       <Linkify>
-        <div className="whitespace-pre-line break-words">{post.content}</div>
+        <Link
+          href={`/posts/${post.id}`}
+          className="block text-sm text-muted-foreground hover:underline"
+          suppressHydrationWarning
+        >
+          <div className="whitespace-pre-line break-words">{post.content}</div>
+        </Link>
       </Linkify>
       {!!post.attachments.length && (
         <MediaPreviews attachments={post.attachments} />
@@ -82,10 +91,17 @@ export default function Post({ post }: PostProps) {
               isLikedByUser: post.likes.some((like) => like.userId === user.id),
             }}
           />
+
           <CommentButton
             post={post}
-            onClick={() => setShowComments(!showComments)}
+            onClick={() => setShowCommentDialog(true)}
           />
+          <CommentDialog
+            post={post}
+            open={showCommentDialog}
+            onOpenChange={setShowCommentDialog}
+          />
+
           <RepostButton
             postId={post.id}
             initialState={{
@@ -110,7 +126,6 @@ export default function Post({ post }: PostProps) {
           />
         </div>
       </div>
-      {showComments && <Comments post={post} />}
     </article>
   );
 }
@@ -180,14 +195,14 @@ function CommentButton({ post, onClick }: CommentButtonProps) {
             onClick={onClick}
             className="flex items-center gap-[6px] hover:text-primary/80"
           >
-            <MessageSquare className="size-5" />
+            <MessageCircle className="size-5" />
             <span className="text-sm font-medium tabular-nums">
               {post._count.comments}
             </span>
           </button>
         </TooltipTrigger>
         <TooltipContent
-          className="rounded-sm bg-card-foreground dark:text-black"
+          className="rounded-sm bg-accent-foreground dark:text-black"
           side="bottom"
         >
           <p className="text-[0.8rem] font-semibold tracking-tight">Comment</p>
@@ -219,7 +234,7 @@ function LinkButton({ link }: LinkButtonProps) {
             <HLink className="size-5 hover:text-primary" />
           </TooltipTrigger>
           <TooltipContent
-            className="rounded-sm bg-card-foreground dark:text-black"
+            className="rounded-sm bg-accent-foreground dark:text-black"
             side="bottom"
           >
             <p className="text-[0.8rem] font-semibold tracking-tight">

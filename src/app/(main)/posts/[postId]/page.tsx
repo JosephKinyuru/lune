@@ -1,16 +1,17 @@
 import { validateRequest } from "@/auth";
 import FollowButton from "@/components/FollowButton";
 import Linkify from "@/components/Linkify";
-import Post from "@/components/posts/Post";
+import PageHeader from "@/components/PageHeader";
 import UserAvatar from "@/components/UserAvatar";
 import UserTooltip from "@/components/UserTooltip";
 import prisma from "@/lib/prisma";
 import { getPostDataInclude, UserData } from "@/lib/types";
-import { Loader2 } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cache, Suspense } from "react";
+import { cache } from "react";
+import RightSidebar from "../../RightSidebar";
+import Post from "./Post";
 
 interface PageProps {
   params: Promise<{ postId: string }>;
@@ -59,13 +60,15 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className="flex w-full min-w-0 gap-5">
-      <div className="w-full min-w-0 space-y-5">
+      <div className="w-full min-w-0 space-y-0 border-l border-r dark:border-l-[#1F1F22] dark:border-r-[#1F1F22] lg:w-11/12 xl:w-10/12 2xl:w-[54rem]">
+        <div className="sticky z-20 flex h-16 items-center space-x-16 border-b px-4 backdrop-blur-sm dark:border-b-[#1F1F22]">
+          <PageHeader title={"Post"} />
+        </div>
         <Post post={post} />
       </div>
-      <div className="sticky top-[5.25rem] hidden h-fit w-80 flex-none lg:block">
-        <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
-          <UserInfoSidebar user={post.user} />
-        </Suspense>
+
+      <div className="hidden lg:mx-6 lg:block lg:w-1/3 xl:mx-6 2xl:mx-9 2xl:w-[28rem]">
+        <RightSidebar />
       </div>
     </main>
   );

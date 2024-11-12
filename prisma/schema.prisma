@@ -29,7 +29,7 @@ model User {
   bio                   String?
   location              String?
   website               String?
-  verified              Boolean        @default(false)
+  is_Verified           Boolean        @default(false)
   is_Banned             Boolean        @default(false)
   is_Suspended          Boolean        @default(false)
   is_Deactivated        Boolean        @default(false)
