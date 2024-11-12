@@ -23,7 +23,7 @@ import {
 import RepostButton from "./RepostButton";
 import { MdVerified } from "react-icons/md";
 import CommentDialog from "../comments/CommentDialog";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface PostProps {
   post: PostData;

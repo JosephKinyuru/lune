@@ -20,7 +20,7 @@ const ProfileHeader = ({ displayName }: { displayName: string }) => {
       <div className="flex items-center">
         <h1 className="text-2xl font-bold">{displayName}</h1>
         {/* {data?.verified && ( */}
-        <MdVerified className="ml-1 h-6 w-6 text-primary" />
+        <MdVerified className="ml-1 h-5 w-5 text-primary" />
         {/* )} */}
       </div>
     </>
