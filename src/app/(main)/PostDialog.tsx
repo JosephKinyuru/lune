@@ -12,9 +12,9 @@ interface PostDialogProps {
 const PostDialog = ({ open, onOpenChange }: PostDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[600px] max-w-full bg-card p-4 dark:border-2 dark:border-[#1F1F22] dark:bg-black">
-        <div className="p-4">
-          <PostEditor />
+      <DialogContent className="w-[680px] max-w-full bg-card p-4 dark:border-2 dark:border-[#1F1F22] dark:bg-black">
+        <div className="overflow-y-auto ">
+          <PostEditor className="max-w-full" />
         </div>
       </DialogContent>
     </Dialog>

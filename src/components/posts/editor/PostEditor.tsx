@@ -15,6 +15,7 @@ import { ClipboardEvent, useRef } from "react";
 import { useSubmitPostMutation } from "./mutations";
 import "./styles.css";
 import useMediaUpload, { Attachment } from "./useMediaUpload";
+import { Input } from "@/components/ui/input";
 
 export default function PostEditor({ className }: { className?: string }) {
   const { user } = useSession();
@@ -89,12 +90,17 @@ export default function PostEditor({ className }: { className?: string }) {
           <EditorContent
             editor={editor}
             className={cn(
-              "max-h-[20rem] w-full overflow-y-auto overflow-x-hidden rounded-2xl bg-background px-5 py-3 text-lg",
+              "max-h-[20rem] w-full max-w-full overflow-y-auto overflow-x-hidden rounded-2xl bg-background px-5 py-3 text-lg",
               isDragActive && "outline-dashed",
             )}
             onPaste={onPaste}
           />
-          <input {...getInputProps()} className="w-full max-w-full" />
+          <Input
+            {...getInputProps()}
+            className={cn(
+              "h-auto max-h-[5rem] w-full max-w-full break-words break-all",
+            )}
+          />
         </div>
       </div>
       {!!attachments.length && (

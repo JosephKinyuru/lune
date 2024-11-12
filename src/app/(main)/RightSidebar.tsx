@@ -13,11 +13,13 @@ import { Suspense } from "react";
 
 export default function RightSidebar() {
   return (
-    <div className="sticky right-0 top-0 z-20 flex h-screen w-full flex-col justify-between gap-8 bg-card px-2 pb-6 pt-4 dark:bg-black">
-      <SearchField className="sticky z-30"/>
+    <div className="sticky right-0 top-0 z-20 flex h-screen w-full flex-col gap-4 bg-card px-2 pb-6 pt-4 dark:bg-black">
+      <SearchField className="sticky z-30" />
       <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
-        <WhoToFollow />
-        <TrendingTopics />
+        <div className="flex flex-col gap-6">
+          <WhoToFollow />
+          <TrendingTopics />
+        </div>
       </Suspense>
     </div>
   );
@@ -44,7 +46,7 @@ async function WhoToFollow() {
   });
 
   return (
-    <div className="flex min-h-[256px] flex-1 flex-col justify-start rounded-2xl border bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
+    <div className="flex max-h-[256px] min-h-[180px] flex-1 flex-col justify-start rounded-2xl border bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
       <h3 className="text-xl font-medium leading-[140%]">Who to follow</h3>
 
       <div className="mt-7 flex w-[350px] flex-col gap-9">
@@ -121,7 +123,7 @@ async function TrendingTopics() {
   const trendingTopics = await getTrendingTopics();
 
   return (
-    <div className="flex min-h-[256px] flex-1 flex-col justify-start rounded-2xl border bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
+    <div className="flex max-h-[326px] min-h-[280px] flex-1 flex-col justify-start rounded-2xl border bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
       <h3 className="text-xl font-medium leading-[140%]">Trending topics</h3>
 
       <div className="mt-7 flex w-[350px] flex-col gap-10">
