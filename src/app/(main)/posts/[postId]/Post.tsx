@@ -72,15 +72,9 @@ export default function Post({ post }: PostProps) {
           )}
         </div>
         <Linkify>
-          <Link
-            href={`/posts/${post.id}`}
-            className="block text-sm text-muted-foreground hover:underline"
-            suppressHydrationWarning
-          >
-            <div className="select-text whitespace-pre-line break-words">
-              {post.content}
-            </div>
-          </Link>
+          <div className="select-text whitespace-pre-line break-words">
+            {post.content}
+          </div>
         </Linkify>
         {!!post.attachments.length && (
           <MediaPreviews attachments={post.attachments} />
@@ -201,10 +195,10 @@ function CommentButton({ post, onClick }: CommentButtonProps) {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClick}
-            className="flex items-center gap-[6px] hover:text-primary/80"
+            className="flex items-center gap-[6px] text-muted-foreground hover:text-primary/80"
           >
             <MessageCircle className="size-5" />
             <span className="text-sm font-medium tabular-nums">
@@ -242,7 +236,7 @@ function LinkButton({ link }: LinkButtonProps) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <HLink className="size-5 hover:text-primary" />
+            <HLink className="size-5 text-muted-foreground hover:text-primary" />
           </TooltipTrigger>
           <TooltipContent
             className="rounded-sm bg-accent-foreground dark:text-black"

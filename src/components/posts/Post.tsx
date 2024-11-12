@@ -23,6 +23,7 @@ import {
 import RepostButton from "./RepostButton";
 import { MdVerified } from "react-icons/md";
 import CommentDialog from "../comments/CommentDialog";
+import { useRouter } from "next/router";
 
 interface PostProps {
   post: PostData;
@@ -30,16 +31,23 @@ interface PostProps {
 
 export default function Post({ post }: PostProps) {
   const { user } = useSession();
+  const router = useRouter();
 
   const [showCommentDialog, setShowCommentDialog] = useState(false);
 
   return (
-    <Link href={`/posts/${post.id}`} className="block">
+    <div
+      onClick={() => router.push(`/posts/${post.id}`)}
+      className="block cursor-pointer"
+    >
       <article className="group/post select-text space-y-3 border-b border-t bg-card p-5 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
         <div className="flex justify-between gap-3">
           <div className="flex flex-wrap gap-3">
             <UserTooltip user={post.user}>
-              <Link href={`/users/${post.user.username}`}>
+              <Link
+                href={`/users/${post.user.username}`}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <UserAvatar avatar_url={post.user.avatar_url} />
               </Link>
             </UserTooltip>
@@ -48,6 +56,7 @@ export default function Post({ post }: PostProps) {
                 <Link
                   href={`/users/${post.user.username}`}
                   className="block font-medium hover:underline"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   {post.user.displayName}
                   {/* {data?.verified && ( */}
@@ -59,6 +68,7 @@ export default function Post({ post }: PostProps) {
                 href={`/posts/${post.id}`}
                 className="block text-sm text-muted-foreground hover:underline"
                 suppressHydrationWarning
+                onClick={(e) => e.stopPropagation()}
               >
                 {formatRelativeDate(post.createdAt)}
               </Link>
@@ -79,7 +89,10 @@ export default function Post({ post }: PostProps) {
         {!!post.attachments.length && (
           <MediaPreviews attachments={post.attachments} />
         )}
-        <div className="flex justify-between gap-5 pt-4">
+        <div
+          className="flex justify-between gap-5 pt-4"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex items-center gap-5">
             <LikeButton
               postId={post.id}
@@ -126,7 +139,7 @@ export default function Post({ post }: PostProps) {
           </div>
         </div>
       </article>
-    </Link>
+    </div>
   );
 }
 
@@ -190,7 +203,7 @@ function CommentButton({ post, onClick }: CommentButtonProps) {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClick}
             className="flex items-center gap-[6px] text-muted-foreground hover:text-primary/80"

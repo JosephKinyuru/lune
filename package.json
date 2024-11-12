@@ -61,7 +61,7 @@
     "react-loading-skeleton": "^3.5.0",
     "resend": "^4.0.0",
     "stream-chat": "^8.43.0",
-    "stream-chat-react": "^12.5.1",
+    "stream-chat-react": "^12.5.2",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "unique-names-generator": "^4.7.1",

@@ -67,7 +67,7 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => mutate()}
             className={cn(

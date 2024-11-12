@@ -69,21 +69,16 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => mutate()}
             className={cn(
               "flex items-center gap-[6px] text-muted-foreground",
-              data.isRepostedByUser
-                ? "text-primary"
-                : "hover:text-primary",
+              data.isRepostedByUser ? "text-primary" : "hover:text-primary",
             )}
           >
             <Repeat2
-              className={cn(
-                "size-6",
-                data.isRepostedByUser && "text-primary",
-              )}
+              className={cn("size-6", data.isRepostedByUser && "text-primary")}
             />
 
             <span className="text-sm font-medium tabular-nums">

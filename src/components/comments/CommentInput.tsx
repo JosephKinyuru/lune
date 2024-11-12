@@ -43,7 +43,7 @@ export default function CommentInput({ post }: CommentInputProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         autoFocus
-        className="flex-grow border-0 bg-transparent text-muted-foreground outline-none focus:ring-0"
+        className="flex-grow border-0 bg-transparent h-12 text-muted-foreground outline-none focus:ring-0"
       />
       <LoadingButton
         type="submit"

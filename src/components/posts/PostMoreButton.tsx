@@ -24,7 +24,7 @@ export default function PostMoreButton({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
           <Button size="icon" variant="ghost" className={className}>
             <MoreHorizontal className="size-5 text-muted-foreground" />
           </Button>

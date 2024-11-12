@@ -3,7 +3,6 @@ import CommentDialogInput from "./CommentDialogInput";
 import { PostData } from "@/lib/types";
 import { formatRelativeDate } from "@/lib/utils";
 import UserAvatar from "../UserAvatar";
-import { X } from "lucide-react";
 
 interface CommentDialogProps {
   post: PostData;
@@ -13,7 +12,10 @@ interface CommentDialogProps {
 
 const CommentDialog = ({ post, open, onOpenChange }: CommentDialogProps) => {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+    >
       <DialogContent className="w-[600px] max-w-full bg-card p-4 dark:border-2 dark:border-[#1F1F22] dark:bg-black">
         <div className="p-4">
           <div className="flex gap-3">
@@ -25,7 +27,7 @@ const CommentDialog = ({ post, open, onOpenChange }: CommentDialogProps) => {
                   · {formatRelativeDate(post.createdAt)}
                 </span>
               </div>
-              <p className="mt-1 ">{post.content.slice(0, 20)}</p>
+              <p className="mt-1">{post.content.slice(0, 20)}</p>
             </div>
           </div>
 

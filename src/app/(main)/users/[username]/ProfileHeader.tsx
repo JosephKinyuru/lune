@@ -17,10 +17,10 @@ const ProfileHeader = ({ displayName }: { displayName: string }) => {
       >
         <ArrowLeft className="h-6 w-full" />
       </button>
-      <div>
-        <h1 className="align-middle text-2xl font-bold">{displayName}</h1>
+      <div className="flex items-center">
+        <h1 className="text-2xl font-bold">{displayName}</h1>
         {/* {data?.verified && ( */}
-        <MdVerified className="ml-1 inline-block h-8 w-8 align-middle text-primary" />
+        <MdVerified className="ml-1 h-6 w-6 text-primary" />
         {/* )} */}
       </div>
     </>
