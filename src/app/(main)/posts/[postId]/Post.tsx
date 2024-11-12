@@ -77,7 +77,7 @@ export default function Post({ post }: PostProps) {
             className="block text-sm text-muted-foreground hover:underline"
             suppressHydrationWarning
           >
-            <div className="whitespace-pre-line break-words">
+            <div className="select-text whitespace-pre-line break-words">
               {post.content}
             </div>
           </Link>

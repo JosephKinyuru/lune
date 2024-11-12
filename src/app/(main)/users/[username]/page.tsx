@@ -123,7 +123,7 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
   };
 
   return (
-    <div className="w-full space-y-5 rounded-2xl bg-card p-5 border-b dark:border-b-[#1f1f22] dark:bg-black">
+    <div className="w-full select-text space-y-5 rounded-2xl border-b bg-card p-5 dark:border-b-[#1f1f22] dark:bg-black">
       <div className="relative">
         <div className="h-40 w-full rounded-sm bg-background dark:bg-[#333639]">
           {user.profile_banner_url ? (

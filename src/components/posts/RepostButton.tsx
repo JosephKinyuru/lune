@@ -73,16 +73,16 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
           <button
             onClick={() => mutate()}
             className={cn(
-              "flex items-center gap-[6px]",
+              "flex items-center gap-[6px] text-muted-foreground",
               data.isRepostedByUser
-                ? "text-emerald-400"
-                : "hover:text-emerald-400",
+                ? "text-primary"
+                : "hover:text-primary",
             )}
           >
             <Repeat2
               className={cn(
                 "size-6",
-                data.isRepostedByUser && "text-emerald-400",
+                data.isRepostedByUser && "text-primary",
               )}
             />
 

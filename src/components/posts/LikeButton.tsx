@@ -71,7 +71,7 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
           <button
             onClick={() => mutate()}
             className={cn(
-              "flex items-center gap-[6px]",
+              "flex items-center gap-[6px] text-muted-foreground",
               data.isLikedByUser ? "text-red-500" : "hover:text-pink-600",
             )}
           >

@@ -77,7 +77,7 @@ export default function BookmarkButton({
           <TooltipTrigger asChild>
             <Bookmark
               className={cn(
-                "size-5",
+                "size-5 text-muted-foreground",
                 data.isBookmarkedByUser && "fill-primary text-primary",
               )}
             />

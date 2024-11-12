@@ -34,99 +34,99 @@ export default function Post({ post }: PostProps) {
   const [showCommentDialog, setShowCommentDialog] = useState(false);
 
   return (
-    <article className="group/post space-y-3 border-b border-t bg-card p-5 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
-      <div className="flex justify-between gap-3">
-        <div className="flex flex-wrap gap-3">
-          <UserTooltip user={post.user}>
-            <Link href={`/users/${post.user.username}`}>
-              <UserAvatar avatar_url={post.user.avatar_url} />
-            </Link>
-          </UserTooltip>
-          <div>
+    <Link href={`/posts/${post.id}`} className="block">
+      <article className="group/post select-text space-y-3 border-b border-t bg-card p-5 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
+        <div className="flex justify-between gap-3">
+          <div className="flex flex-wrap gap-3">
             <UserTooltip user={post.user}>
-              <Link
-                href={`/users/${post.user.username}`}
-                className="block font-medium hover:underline"
-              >
-                {post.user.displayName}
-                {/* {data?.verified && ( */}
-                <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
-                {/* )} */}
+              <Link href={`/users/${post.user.username}`}>
+                <UserAvatar avatar_url={post.user.avatar_url} />
               </Link>
             </UserTooltip>
-            <p
-              className="block text-sm text-muted-foreground hover:underline"
-              suppressHydrationWarning
-            >
-              {formatRelativeDate(post.createdAt)}
-            </p>
+            <div>
+              <UserTooltip user={post.user}>
+                <Link
+                  href={`/users/${post.user.username}`}
+                  className="block font-medium hover:underline"
+                >
+                  {post.user.displayName}
+                  {/* {data?.verified && ( */}
+                  <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
+                  {/* )} */}
+                </Link>
+              </UserTooltip>
+              <Link
+                href={`/posts/${post.id}`}
+                className="block text-sm text-muted-foreground hover:underline"
+                suppressHydrationWarning
+              >
+                {formatRelativeDate(post.createdAt)}
+              </Link>
+            </div>
+          </div>
+          {post.user.id === user.id && (
+            <PostMoreButton
+              post={post}
+              className="opacity-0 transition-opacity group-hover/post:opacity-100"
+            />
+          )}
+        </div>
+        <Linkify>
+          <div className="select-text whitespace-pre-line break-words">
+            {post.content}
+          </div>
+        </Linkify>
+        {!!post.attachments.length && (
+          <MediaPreviews attachments={post.attachments} />
+        )}
+        <div className="flex justify-between gap-5 pt-4">
+          <div className="flex items-center gap-5">
+            <LikeButton
+              postId={post.id}
+              initialState={{
+                likes: post._count.likes,
+                isLikedByUser: post.likes.some(
+                  (like) => like.userId === user.id,
+                ),
+              }}
+            />
+
+            <CommentButton
+              post={post}
+              onClick={() => setShowCommentDialog(true)}
+            />
+            <CommentDialog
+              post={post}
+              open={showCommentDialog}
+              onOpenChange={setShowCommentDialog}
+            />
+
+            <RepostButton
+              postId={post.id}
+              initialState={{
+                reposts: post._count.reposts,
+                isRepostedByUser: post.reposts.some(
+                  (repost) => repost.userId === user.id,
+                ),
+              }}
+            />
+          </div>
+          <div className="flex items-center gap-5">
+            <LinkButton
+              link={`${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`}
+            />
+            <BookmarkButton
+              postId={post.id}
+              initialState={{
+                isBookmarkedByUser: post.bookmarks.some(
+                  (bookmark) => bookmark.userId === user.id,
+                ),
+              }}
+            />
           </div>
         </div>
-        {post.user.id === user.id && (
-          <PostMoreButton
-            post={post}
-            className="opacity-0 transition-opacity group-hover/post:opacity-100"
-          />
-        )}
-      </div>
-      <Linkify>
-        <Link
-          href={`/posts/${post.id}`}
-          className="block text-sm text-muted-foreground hover:underline"
-          suppressHydrationWarning
-        >
-          <div className="whitespace-pre-line break-words">{post.content}</div>
-        </Link>
-      </Linkify>
-      {!!post.attachments.length && (
-        <MediaPreviews attachments={post.attachments} />
-      )}
-      <hr className="text-muted-foreground" />
-      <div className="flex justify-between gap-5">
-        <div className="flex items-center gap-5">
-          <LikeButton
-            postId={post.id}
-            initialState={{
-              likes: post._count.likes,
-              isLikedByUser: post.likes.some((like) => like.userId === user.id),
-            }}
-          />
-
-          <CommentButton
-            post={post}
-            onClick={() => setShowCommentDialog(true)}
-          />
-          <CommentDialog
-            post={post}
-            open={showCommentDialog}
-            onOpenChange={setShowCommentDialog}
-          />
-
-          <RepostButton
-            postId={post.id}
-            initialState={{
-              reposts: post._count.reposts,
-              isRepostedByUser: post.reposts.some(
-                (repost) => repost.userId === user.id,
-              ),
-            }}
-          />
-        </div>
-        <div className="flex items-center gap-5">
-          <LinkButton
-            link={`${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`}
-          />
-          <BookmarkButton
-            postId={post.id}
-            initialState={{
-              isBookmarkedByUser: post.bookmarks.some(
-                (bookmark) => bookmark.userId === user.id,
-              ),
-            }}
-          />
-        </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }
 
@@ -193,7 +193,7 @@ function CommentButton({ post, onClick }: CommentButtonProps) {
         <TooltipTrigger asChild>
           <button
             onClick={onClick}
-            className="flex items-center gap-[6px] hover:text-primary/80"
+            className="flex items-center gap-[6px] text-muted-foreground hover:text-primary/80"
           >
             <MessageCircle className="size-5" />
             <span className="text-sm font-medium tabular-nums">
@@ -231,7 +231,7 @@ function LinkButton({ link }: LinkButtonProps) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <HLink className="size-5 hover:text-primary" />
+            <HLink className="size-5 text-muted-foreground hover:text-primary" />
           </TooltipTrigger>
           <TooltipContent
             className="rounded-sm bg-accent-foreground dark:text-black"
