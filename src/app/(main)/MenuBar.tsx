@@ -4,11 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-import { LuCompass } from "react-icons/lu";
 import { HiOutlineUserGroup } from "react-icons/hi2";
-import { BsBoxFill } from "react-icons/bs";
-import { CiGrid41 } from "react-icons/ci";
-import { Film } from "lucide-react";
+import { CiGrid41, CiMail, CiSearch } from "react-icons/ci";
+import { GoBell } from "react-icons/go";
 
 interface MenuBarProps {
   className?: string;
@@ -16,29 +14,29 @@ interface MenuBarProps {
 
 export const sidebarLinks = [
   {
-    icon: <CiGrid41 className="h-6 w-6" />,
+    icon: <CiGrid41 className="size-7" />,
     route: "/",
     label: "Feed",
   },
   {
-    icon: <LuCompass className="h-6 w-6" />,
+    icon: <CiSearch className="size-7" />,
     route: "/discover",
     label: "Discover",
   },
   {
-    icon: <HiOutlineUserGroup className="h-6 w-6" />,
-    route: "/friends",
-    label: "Friends",
-  },
-  {
-    icon: <BsBoxFill className="h-6 w-6" />,
+    icon: <HiOutlineUserGroup className="size-7" />,
     route: "/communities",
-    label: "Communitiy",
+    label: "Community",
   },
   {
-    icon: <Film className="h-6 w-6" />,
-    route: "/videos",
-    label: "Videos",
+    icon: <GoBell className="size-7" />,
+    route: "/notifications",
+    label: "Notifications",
+  },
+  {
+    icon: <CiMail className="size-7" />,
+    route: "/messages",
+    label: "Messages",
   },
 ];
 
