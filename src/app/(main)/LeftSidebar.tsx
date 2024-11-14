@@ -135,16 +135,16 @@ export default function LeftSidebar({
   ];
 
   return (
-    <section className="sticky left-0 top-0 z-20 flex max-h-fit min-h-screen w-full max-w-72 flex-col border-r bg-card px-4 pb-5 pt-4 dark:border-r-[#1F1F22] dark:bg-black max-xl:w-20 max-xl:px-2 max-md:hidden lg:pt-8">
-      <div className="flex items-center gap-4 px-3">
+    <section className="sticky left-0 top-0 z-20 flex max-h-fit min-h-screen w-full max-w-72 flex-col border-r bg-card px-4 pb-5 pt-4 dark:border-r-[#1F1F22] dark:bg-black max-xl:w-20 max-xl:px-2 max-xs:hidden lg:pt-8">
+      <div className="flex items-center gap-4 px-3 xl:ml-2">
         <Link href="/" className="flex items-center text-2xl font-bold">
           <Image src={logo.src} alt="logo" width={34} height={34} />
           <span className="ml-2 max-xl:hidden">lune</span>
         </Link>
       </div>
 
-      <nav className="mt-10 px-2 max-md:mt-16">
-        <div className="flex w-full flex-col max-md:gap-2">
+      <nav className="mt-10 px-2 max-xs:mt-16">
+        <div className="flex w-full flex-col max-xs:gap-2">
           {sidebarLinks.map((link) => {
             const isActive =
               (pathname.includes(link.route) && link.route.length > 1) ||
@@ -213,11 +213,11 @@ export default function LeftSidebar({
           </DropdownMenu>
         </div>
 
-        <div className="mt-12 max-md:mt-16 max-md:px-2 xl:px-2 2xl:mt-20">
+        <div className="mt-12 max-xs:mt-16 max-xs:px-2 xl:px-2 2xl:mt-20">
           <PostButton />
         </div>
 
-        <div className="mt-12 max-md:mt-16 max-md:px-2 xl:ml-2 xl:px-0 2xl:mt-24">
+        <div className="mt-12 max-xs:mt-16 max-xs:px-2 xl:ml-2 xl:px-0 2xl:mt-24">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex h-12 w-12 items-center justify-center rounded-full bg-transparent transition-colors duration-300 hover:bg-accent dark:hover:bg-gray-50/15 lg:h-14 lg:justify-start xl:w-[106%]">

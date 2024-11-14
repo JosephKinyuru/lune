@@ -85,7 +85,7 @@ export default function PostEditor({ className }: { className?: string }) {
       )}
     >
       <div className="flex gap-5">
-        <UserAvatar avatar_url={user.avatar_url} className="hidden sm:inline" />
+        <UserAvatar avatar_url={user.avatar_url} className="inline" />
         <div {...rootProps} className="w-[92%]">
           <EditorContent
             editor={editor}

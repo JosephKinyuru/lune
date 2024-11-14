@@ -8,8 +8,14 @@ import { HiOutlineUserGroup } from "react-icons/hi2";
 import { CiGrid41, CiMail, CiSearch } from "react-icons/ci";
 import { GoBell } from "react-icons/go";
 
+import { MessageCountInfo, NotificationCountInfo } from "@/lib/types";
+import kyInstance from "@/lib/ky";
+import { useQuery } from "@tanstack/react-query";
+
 interface MenuBarProps {
   className?: string;
+  unreadNotificationsCount: NotificationCountInfo;
+  unreadMessagesCount: MessageCountInfo;
 }
 
 export const sidebarLinks = [
@@ -40,8 +46,30 @@ export const sidebarLinks = [
   },
 ];
 
-export default function MenuBar({ className }: MenuBarProps) {
+export default function MenuBar({
+  className,
+  unreadMessagesCount,
+  unreadNotificationsCount,
+}: MenuBarProps) {
   const pathname = usePathname();
+
+  const { data: unreadMessagesData } = useQuery({
+    queryKey: ["unread-messages-count"],
+    queryFn: () =>
+      kyInstance.get("/api/messages/unread-count").json<MessageCountInfo>(),
+    initialData: unreadMessagesCount,
+    refetchInterval: 60 * 1000,
+  });
+
+  const { data: unreadNotificationsData } = useQuery({
+    queryKey: ["unread-notification-count"],
+    queryFn: () =>
+      kyInstance
+        .get("/api/notifications/unread-count")
+        .json<NotificationCountInfo>(),
+    initialData: unreadNotificationsCount,
+    refetchInterval: 60 * 1000,
+  });
 
   return (
     <div className={className}>
@@ -53,12 +81,22 @@ export default function MenuBar({ className }: MenuBarProps) {
         return (
           <Button
             variant="ghost"
-            className={`hover:none flex items-center justify-start gap-2 outline-none focus:outline-none ${isActive && "text-primary"}`}
+            className={`hover:none flex items-center justify-start gap-4 outline-none focus:outline-none ${isActive && "text-primary"} relative`}
             title={link.label}
             asChild
             key={link.label}
           >
-            <Link href={link.route}>{link.icon}</Link>
+            <div className="relative flex items-center">
+              <Link href={link.route}>{link.icon}</Link>
+              {link.label === "Messages" &&
+                unreadMessagesData?.unreadCount > 0 && (
+                  <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-primary"></span>
+                )}
+              {link.label === "Notifications" &&
+                unreadNotificationsData?.unreadCount > 0 && (
+                  <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-primary"></span>
+                )}
+            </div>
           </Button>
         );
       })}

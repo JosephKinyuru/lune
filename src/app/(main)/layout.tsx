@@ -40,7 +40,13 @@ export default async function Layout({
           {children}
         </div>
       </div>
-      <MenuBar className="sticky bottom-0 flex w-full justify-center gap-4 border-t bg-card p-3 md:hidden" />
+      <MenuBar
+        className="sticky bottom-0 flex w-full justify-center gap-4 border-t bg-card p-3 xxxs:gap-1 xxs:gap-3 xs:hidden"
+        unreadNotificationsCount={{
+          unreadCount: unreadNotificationsCount,
+        }}
+        unreadMessagesCount={{ unreadCount: unreadMessagesCount }}
+      />
     </SessionProvider>
   );
 }
