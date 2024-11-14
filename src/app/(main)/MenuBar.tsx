@@ -26,7 +26,7 @@ export const sidebarLinks = [
   },
   {
     icon: <CiSearch className="size-7" />,
-    route: "/discover",
+    route: "/search",
     label: "Discover",
   },
   {

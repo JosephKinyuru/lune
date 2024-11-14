@@ -23,7 +23,7 @@ const PageHeader = ({
       >
         <ArrowLeft className="h-6 w-full" />
       </button>
-      <h1 className={cn("text-2xl font-bold", className)}>{title}</h1>
+      <h1 className={cn("xs:text-xl text-2xl font-bold", className)}>{title}</h1>
     </>
   );
 };
