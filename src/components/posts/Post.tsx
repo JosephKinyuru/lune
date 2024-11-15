@@ -24,6 +24,7 @@ import RepostButton from "./RepostButton";
 import { MdVerified } from "react-icons/md";
 import CommentDialog from "../comments/CommentDialog";
 import { useRouter } from "next/navigation";
+import PostMoreButtonOwner from "./PostMoreButtonOwner";
 
 interface PostProps {
   post: PostData;
@@ -74,12 +75,13 @@ export default function Post({ post }: PostProps) {
               </Link>
             </div>
           </div>
-          {post.user.id === user.id && (
-            <PostMoreButton
-              post={post}
-              className=""
-            />
+
+          {post.user.id === user.id ? (
+            <PostMoreButtonOwner post={post} className="" />
+          ) : (
+            <PostMoreButton post={post} className="" />
           )}
+          
         </div>
         <Linkify>
           <div className="select-text whitespace-pre-line break-words">
