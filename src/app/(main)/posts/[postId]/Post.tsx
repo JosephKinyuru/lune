@@ -67,7 +67,7 @@ export default function Post({ post }: PostProps) {
           {post.user.id === user.id && (
             <PostMoreButton
               post={post}
-              className="opacity-0 transition-opacity group-hover/post:opacity-100"
+              className=""
             />
           )}
         </div>
@@ -198,9 +198,12 @@ function CommentButton({ post, onClick }: CommentButtonProps) {
         <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClick}
-            className="flex items-center gap-[6px] text-muted-foreground hover:text-primary/80"
+            className="flex items-center gap-[0.5px] text-muted-foreground hover:text-primary"
           >
-            <MessageCircle className="size-5" />
+            <div className="group relative flex size-9 items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
+              <MessageCircle className="z-10 text-muted-foreground group-hover:text-primary" />
+            </div>
             <span className="text-sm font-medium tabular-nums">
               {post._count.comments}
             </span>
@@ -231,12 +234,15 @@ function LinkButton({ link }: LinkButtonProps) {
         setButtonText("Link copied!");
         setTimeout(() => setButtonText("Copy Link"), 2500);
       }}
-      className="flex items-center gap-[6px] hover:text-primary/60"
+      className="flex items-center gap-[6px] hover:text-primary"
     >
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <HLink className="size-5 text-muted-foreground hover:text-primary" />
+            <div className="group relative flex size-9 items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
+              <HLink className="z-10 text-muted-foreground group-hover:text-primary" />
+            </div>
           </TooltipTrigger>
           <TooltipContent
             className="rounded-sm bg-accent-foreground dark:text-black"
