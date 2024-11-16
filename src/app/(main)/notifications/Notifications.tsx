@@ -55,7 +55,11 @@ export default function Notifications() {
   const notifications = data?.pages.flatMap((page) => page.notifications) || [];
 
   if (status === "pending") {
-    return <PostsLoadingSkeleton />;
+    return (
+      <div className="mx-2">
+        <PostsLoadingSkeleton />
+      </div>
+    );
   }
 
   if (status === "success" && !notifications.length && !hasNextPage) {

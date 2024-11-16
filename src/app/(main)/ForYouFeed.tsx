@@ -32,12 +32,16 @@ export default function ForYouFeed() {
   const posts = data?.pages.flatMap((page) => page.posts) || [];
 
   if (status === "pending") {
-    return <PostsLoadingSkeleton />;
+    return (
+      <div className="mx-2">
+        <PostsLoadingSkeleton />
+      </div>
+    );
   }
 
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
-      <p className="text-center text-muted-foreground mt-8">
+      <p className="mt-8 text-center text-muted-foreground">
         No one has posted anything yet.
       </p>
     );
@@ -45,7 +49,7 @@ export default function ForYouFeed() {
 
   if (status === "error") {
     return (
-      <p className="text-center text-destructive mt-8">
+      <p className="mt-8 text-center text-destructive">
         An error occurred while loading posts.
       </p>
     );

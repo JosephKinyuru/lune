@@ -36,7 +36,11 @@ export default function UserMedia({ userId }: UsersLikesProps) {
   const posts = data?.pages.flatMap((page) => page.posts) || [];
 
   if (status === "pending") {
-    return <PostsLoadingSkeleton />;
+    return (
+      <div className="mx-2">
+        <PostsLoadingSkeleton />
+      </div>
+    );
   }
 
   if (status === "success" && !posts.length && !hasNextPage) {

@@ -2,15 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 
-import { HiOutlineUserGroup } from "react-icons/hi2";
 import { CiGrid41, CiMail, CiSearch } from "react-icons/ci";
+import { HiOutlineUserGroup } from "react-icons/hi2";
 import { GoBell } from "react-icons/go";
+import { TbSquareRoundedPlus } from "react-icons/tb";
 
 import { MessageCountInfo, NotificationCountInfo } from "@/lib/types";
 import kyInstance from "@/lib/ky";
-import { useQuery } from "@tanstack/react-query";
 
 interface MenuBarProps {
   className?: string;

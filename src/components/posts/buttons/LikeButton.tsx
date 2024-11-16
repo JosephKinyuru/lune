@@ -75,11 +75,11 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
               data.isLikedByUser ? "text-red-500" : "hover:text-red-500",
             )}
           >
-            <div className="group relative flex size-8 items-center justify-center xl:size-9">
+            <div className="group relative flex size-8 items-center justify-center 2xl:size-9">
               <div className="absolute inset-0 rounded-full bg-red-500 opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <Heart
                 className={cn(
-                  "z-10 size-5 text-muted-foreground group-hover:text-red-500 xl:size-6",
+                  "z-10 size-5 text-muted-foreground group-hover:text-red-500 2xl:size-6",
                   data.isLikedByUser && "fill-red-500 text-red-500",
                 )}
               />

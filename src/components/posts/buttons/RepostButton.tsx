@@ -21,7 +21,10 @@ interface RepostButtonProps {
   initialState: RepostInfo;
 }
 
-export default function RepostButton({ postId, initialState }: RepostButtonProps) {
+export default function RepostButton({
+  postId,
+  initialState,
+}: RepostButtonProps) {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
@@ -51,7 +54,7 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
           (previousState?.reposts || 0) +
           (previousState?.isRepostedByUser ? -1 : 1),
         isReposted: !previousState?.isRepostedByUser,
-        isRepostedByUser: !previousState?.isRepostedByUser, 
+        isRepostedByUser: !previousState?.isRepostedByUser,
       }));
 
       return { previousState };
@@ -77,11 +80,11 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
               data.isRepostedByUser ? "text-primary" : "hover:text-primary",
             )}
           >
-            <div className="group relative flex size-8 xl:size-9 items-center justify-center">
+            <div className="group relative flex size-8 items-center justify-center 2xl:size-9">
               <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <Repeat2
                 className={cn(
-                  "z-10 size-6 xl:size-7 text-muted-foreground group-hover:text-primary",
+                  "z-10 size-6 text-muted-foreground group-hover:text-primary 2xl:size-7",
                   data.isRepostedByUser && "text-primary",
                 )}
               />
