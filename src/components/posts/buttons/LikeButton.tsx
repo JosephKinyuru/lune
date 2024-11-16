@@ -1,6 +1,6 @@
 import { useToast } from "@/hooks/use-toast";
 import kyInstance from "@/lib/ky";
-import { RepostInfo } from "@/lib/types";
+import { LikeInfo } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
   QueryKey,
@@ -8,7 +8,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { Repeat2 } from "lucide-react";
+import { Heart } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -16,42 +16,40 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface RepostButtonProps {
+interface LikeButtonProps {
   postId: string;
-  initialState: RepostInfo;
+  initialState: LikeInfo;
 }
 
-export default function RepostButton({ postId, initialState }: RepostButtonProps) {
+export default function LikeButton({ postId, initialState }: LikeButtonProps) {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
 
-  const queryKey: QueryKey = ["repost-info", postId];
+  const queryKey: QueryKey = ["like-info", postId];
 
   const { data } = useQuery({
     queryKey,
     queryFn: () =>
-      kyInstance.get(`/api/posts/${postId}/repost`).json<RepostInfo>(),
+      kyInstance.get(`/api/posts/${postId}/likes`).json<LikeInfo>(),
     initialData: initialState,
     staleTime: Infinity,
   });
 
   const { mutate } = useMutation({
     mutationFn: () =>
-      data.isRepostedByUser
-        ? kyInstance.delete(`/api/posts/${postId}/reposts`)
-        : kyInstance.post(`/api/posts/${postId}/reposts`),
+      data.isLikedByUser
+        ? kyInstance.delete(`/api/posts/${postId}/likes`)
+        : kyInstance.post(`/api/posts/${postId}/likes`),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
-      const previousState = queryClient.getQueryData<RepostInfo>(queryKey);
+      const previousState = queryClient.getQueryData<LikeInfo>(queryKey);
 
-      queryClient.setQueryData<RepostInfo>(queryKey, () => ({
-        reposts:
-          (previousState?.reposts || 0) +
-          (previousState?.isRepostedByUser ? -1 : 1),
-        isReposted: !previousState?.isRepostedByUser,
-        isRepostedByUser: !previousState?.isRepostedByUser, 
+      queryClient.setQueryData<LikeInfo>(queryKey, () => ({
+        likes:
+          (previousState?.likes || 0) + (previousState?.isLikedByUser ? -1 : 1),
+        isLikedByUser: !previousState?.isLikedByUser,
       }));
 
       return { previousState };
@@ -74,21 +72,21 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
             onClick={() => mutate()}
             className={cn(
               "flex items-center gap-[0.5px] text-muted-foreground",
-              data.isRepostedByUser ? "text-primary" : "hover:text-primary",
+              data.isLikedByUser ? "text-red-500" : "hover:text-red-500",
             )}
           >
-            <div className="group relative flex size-9 items-center justify-center">
-              <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
-              <Repeat2
+            <div className="group relative flex size-8 items-center justify-center xl:size-9">
+              <div className="absolute inset-0 rounded-full bg-red-500 opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
+              <Heart
                 className={cn(
-                  "z-10 size-7 text-muted-foreground group-hover:text-primary",
-                  data.isRepostedByUser && "text-primary",
+                  "z-10 size-5 text-muted-foreground group-hover:text-red-500 xl:size-6",
+                  data.isLikedByUser && "fill-red-500 text-red-500",
                 )}
               />
             </div>
 
             <span className="text-sm font-medium tabular-nums">
-              {data.reposts}
+              {data.likes}
             </span>
           </button>
         </TooltipTrigger>
@@ -96,7 +94,7 @@ export default function RepostButton({ postId, initialState }: RepostButtonProps
           className="rounded-sm bg-accent-foreground dark:text-black"
           side="bottom"
         >
-          <p className="text-[0.8rem] font-semibold tracking-tight">Repost</p>
+          <p className="text-[0.8rem] font-semibold tracking-tight">Like</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

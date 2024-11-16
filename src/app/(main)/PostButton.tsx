@@ -11,16 +11,13 @@ const PostButton = () => {
   return (
     <>
       <Button
-        className="h-12 w-12 rounded-full bg-blue-400 text-center text-lg font-bold text-white hover:bg-blue-500 lg:h-12 lg:w-full lg:px-3 xl:h-14"
+        className="h-10 w-10 rounded-full bg-blue-400 px-2 text-center text-lg font-bold text-white hover:bg-blue-500 xl:h-14 xl:w-full xl:px-3"
         onClick={() => setShowDialog(true)}
       >
         <p className="max-xl:hidden">Post</p>
-        <Plus className="hidden size-6 max-xl:block" />
+        <Plus className="hidden max-xl:block" size={36} />
       </Button>
-      <PostDialog
-        open={showDialog}
-        onOpenChange={setShowDialog}
-      />
+      <PostDialog open={showDialog} onOpenChange={setShowDialog} />
     </>
   );
 };

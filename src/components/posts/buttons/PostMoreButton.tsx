@@ -1,12 +1,11 @@
 import { PostData } from "@/lib/types";
-import { MoreHorizontal, Trash2, Flag } from "lucide-react";
-import { useState } from "react";
+import { MoreHorizontal, Flag } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 interface PostMoreButtonProps {

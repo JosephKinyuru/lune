@@ -4,27 +4,24 @@ import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
 import { cn, formatRelativeDate } from "@/lib/utils";
 import { Media } from "@prisma/client";
-import { Link as HLink, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Linkify from "../Linkify";
 import UserAvatar from "../UserAvatar";
 import UserTooltip from "../UserTooltip";
-import BookmarkButton from "./BookmarkButton";
-import LikeButton from "./LikeButton";
-import PostMoreButton from "./PostMoreButton";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import RepostButton from "./RepostButton";
 import { MdVerified } from "react-icons/md";
 import CommentDialog from "../comments/CommentDialog";
 import { useRouter } from "next/navigation";
-import PostMoreButtonOwner from "./PostMoreButtonOwner";
+import {
+  BookmarkButton,
+  CommentButton,
+  LikeButton,
+  LinkButton,
+  PostMoreButton,
+  PostMoreButtonOwner,
+  RepostButton,
+} from "./buttons";
 
 interface PostProps {
   post: PostData;
@@ -81,7 +78,6 @@ export default function Post({ post }: PostProps) {
           ) : (
             <PostMoreButton post={post} className="" />
           )}
-          
         </div>
         <Linkify>
           <div className="select-text whitespace-pre-line break-words">
@@ -194,76 +190,4 @@ function MediaPreview({ media }: MediaPreviewProps) {
   }
 
   return <p className="text-destructive">Unsupported media type</p>;
-}
-
-interface CommentButtonProps {
-  post: PostData;
-  onClick: () => void;
-}
-
-function CommentButton({ post, onClick }: CommentButtonProps) {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
-          <button
-            onClick={onClick}
-            className="flex items-center gap-[0.5px] text-muted-foreground hover:text-primary"
-          >
-            <div className="group relative flex size-9 items-center justify-center">
-              <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
-              <MessageCircle className="z-10 text-muted-foreground group-hover:text-primary" />
-            </div>
-            <span className="text-sm font-medium tabular-nums">
-              {post._count.comments}
-            </span>
-          </button>
-        </TooltipTrigger>
-        <TooltipContent
-          className="rounded-sm bg-accent-foreground dark:text-black"
-          side="bottom"
-        >
-          <p className="text-[0.8rem] font-semibold tracking-tight">Comment</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-}
-
-interface LinkButtonProps {
-  link: string;
-}
-
-function LinkButton({ link }: LinkButtonProps) {
-  const [buttonText, setButtonText] = useState("Copy Link");
-
-  return (
-    <button
-      onClick={async () => {
-        await navigator.clipboard.writeText(link);
-        setButtonText("Link copied!");
-        setTimeout(() => setButtonText("Copy Link"), 2500);
-      }}
-      className="flex items-center gap-[6px] hover:text-primary"
-    >
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="group relative flex size-9 items-center justify-center">
-              <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
-              <HLink className="z-10 text-muted-foreground group-hover:text-primary" />
-            </div>
-          </TooltipTrigger>
-          <TooltipContent
-            className="rounded-sm bg-accent-foreground dark:text-black"
-            side="bottom"
-          >
-            <p className="text-[0.8rem] font-semibold tracking-tight">
-              {buttonText}
-            </p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </button>
-  );
 }

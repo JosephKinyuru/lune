@@ -75,11 +75,11 @@ export default function BookmarkButton({
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="group relative flex size-9 items-center justify-center">
+            <div className="group relative flex size-8 xl:size-9 items-center justify-center">
               <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <Bookmark
                 className={cn(
-                  "z-10 size-6 text-muted-foreground group-hover:text-primary",
+                  "z-10 size-5 xl:size-6 text-muted-foreground group-hover:text-primary",
                   data.isBookmarkedByUser && "fill-primary text-primary",
                 )}
               />

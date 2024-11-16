@@ -6,8 +6,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import DeletePostDialog from "./DeletePostDialog";
+} from "../../ui/dropdown-menu";
+import DeletePostDialog from "../DeletePostDialog";
 import { cn } from "@/lib/utils";
 
 interface PostMoreButtonProps {

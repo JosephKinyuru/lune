@@ -50,17 +50,17 @@ interface initialDataProps {
 
 export const moreSidebarLinks = [
   {
-    icon: <Film className="size-6" />,
+    icon: <Film className="size-5 xl:size-6" />,
     route: "/videos",
     label: "Videos",
   },
   {
-    icon: <BiStoreAlt className="size-6" />,
+    icon: <BiStoreAlt className="size-5 xl:size-6" />,
     route: "/marketplace",
     label: "Marketplace",
   },
   {
-    icon: <IoSettingsOutline className="size-6" />,
+    icon: <IoSettingsOutline className="size-5 xl:size-6" />,
     route: "/settings",
     label: "Settings",
   },
@@ -98,37 +98,37 @@ export default function LeftSidebar({
 
   const sidebarLinks = [
     {
-      icon: <CiGrid41 className="size-9" />,
+      icon: <CiGrid41 className="size-8 xl:size-9" />,
       route: "/",
       label: "Feed",
     },
     {
-      icon: <PiCompassLight className="size-10" />,
+      icon: <PiCompassLight className="size-9 xl:size-10" />,
       route: "/search",
       label: "Discover",
     },
     {
-      icon: <CiMail className="size-9" />,
+      icon: <CiMail className="size-8 xl:size-9" />,
       route: "/messages",
       label: "Messages",
     },
     {
-      icon: <GoBell className="size-9" />,
+      icon: <GoBell className="size-8 xl:size-9" />,
       route: "/notifications",
       label: "Notifications",
     },
     {
-      icon: <CiBookmark className="size-9" />,
+      icon: <CiBookmark className="size-8 xl:size-9" />,
       route: "/bookmarks",
       label: "Bookmarks",
     },
     {
-      icon: <CiUser className="size-9" />,
+      icon: <CiUser className="size-8 xl:size-9" />,
       route: `/users/${user.username}`,
       label: "Profile",
     },
     {
-      icon: <HiOutlineUserGroup className="size-9" />,
+      icon: <HiOutlineUserGroup className="size-8 xl:size-9" />,
       route: "/communities",
       label: "Communitiy",
     },
@@ -220,13 +220,13 @@ export default function LeftSidebar({
         <div className="mt-12 max-xs:mt-16 max-xs:px-2 xl:ml-2 xl:px-0 2xl:mt-24">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="flex h-12 w-12 items-center justify-center rounded-full bg-transparent transition-colors duration-300 hover:bg-accent dark:hover:bg-gray-50/15 lg:h-14 lg:justify-start xl:w-[106%]">
+              <button className="flex size-10 items-center justify-center rounded-full bg-transparent transition-colors duration-300 hover:bg-accent dark:hover:bg-gray-50/15 lg:h-14 lg:justify-start xl:w-[100%]">
                 <Image
                   src={user.avatar_url || avatarPlaceholder}
                   alt="User Profile"
-                  width={48}
-                  height={48}
-                  className="rounded-full lg:mr-2 xl:ml-2"
+                  width={40}
+                  height={40}
+                  className="rounded-full lg:mr-2 xl:ml-2 xl:size-12"
                 />
                 <div className="hidden text-left lg:block">
                   <p className="text-lg font-medium tracking-tight max-xl:hidden">
