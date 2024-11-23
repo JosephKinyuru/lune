@@ -1,12 +1,13 @@
 import { PostData } from "@/lib/types";
 import { MoreHorizontal, Flag } from "lucide-react";
+import { cn } from "@/lib/utils";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 
 interface PostMoreButtonProps {
   post: PostData;
@@ -35,7 +36,7 @@ export default function PostMoreButton({
         </DropdownMenuTrigger>
         <DropdownMenuContent
           sideOffset={0}
-          className="w-40 border-black bg-white dark:border-gray-50 dark:bg-black xl:w-52"
+          className="w-40 border-gray-800 bg-white dark:border-[#1F1F22] dark:bg-black xl:w-52"
         >
           <DropdownMenuItem onClick={() => {}}>
             <span className="flex items-center gap-3 text-destructive">

@@ -76,11 +76,11 @@ export default function RepostButton({
           <button
             onClick={() => mutate()}
             className={cn(
-              "flex items-center gap-[0.5px] text-muted-foreground",
+              "group flex items-center gap-[0.5px] text-muted-foreground",
               data.isRepostedByUser ? "text-primary" : "hover:text-primary",
             )}
           >
-            <div className="group relative flex size-8 items-center justify-center 2xl:size-9">
+            <div className="relative flex size-8 items-center justify-center 2xl:size-9">
               <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <Repeat2
                 className={cn(

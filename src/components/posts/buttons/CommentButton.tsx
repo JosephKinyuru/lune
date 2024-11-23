@@ -19,9 +19,9 @@ export default function CommentButton({ post, onClick }: CommentButtonProps) {
         <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
           <button
             onClick={onClick}
-            className="flex items-center gap-[0.5px] text-muted-foreground hover:text-primary"
+            className="group flex items-center gap-[0.5px] text-muted-foreground hover:text-primary"
           >
-            <div className="group relative flex size-8 items-center justify-center 2xl:size-9">
+            <div className="relative flex size-8 items-center justify-center 2xl:size-9">
               <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <MessageCircle className="z-10 size-5 text-muted-foreground group-hover:text-primary 2xl:size-6" />
             </div>

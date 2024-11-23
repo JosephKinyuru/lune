@@ -71,11 +71,11 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
           <button
             onClick={() => mutate()}
             className={cn(
-              "flex items-center gap-[0.5px] text-muted-foreground",
+              "group flex items-center gap-[0.5px] text-muted-foreground",
               data.isLikedByUser ? "text-red-500" : "hover:text-red-500",
             )}
           >
-            <div className="group relative flex size-8 items-center justify-center 2xl:size-9">
+            <div className="relative flex size-8 items-center justify-center 2xl:size-9">
               <div className="absolute inset-0 rounded-full bg-red-500 opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <Heart
                 className={cn(
