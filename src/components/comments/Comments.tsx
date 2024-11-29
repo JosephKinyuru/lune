@@ -33,7 +33,6 @@ export default function Comments({ post }: CommentsProps) {
 
   return (
     <div className="space-y-3">
-      <CommentInput post={post} />
       {hasNextPage && (
         <Button
           variant="link"
@@ -44,12 +43,12 @@ export default function Comments({ post }: CommentsProps) {
           Load previous comments
         </Button>
       )}
-      {status === "pending" && <Loader2 className="mx-auto animate-spin" />}
+      {status === "pending" && <Loader2 className="mx-auto animate-spin py-6" />}
       {status === "success" && !comments.length && (
-        <p className="text-center text-muted-foreground pt-6">No comments yet.</p>
+        <p className="text-center text-muted-foreground py-6">No comments yet.</p>
       )}
       {status === "error" && (
-        <p className="text-center text-destructive pt-6">
+        <p className="text-center text-destructive py-6">
           An error occurred while loading comments.
         </p>
       )}

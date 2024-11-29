@@ -15,7 +15,7 @@ export default function PostsLoadingSkeleton() {
 
 function PostLoadingSkeleton() {
   return (
-    <div className="w-full animate-pulse space-y-3 border-b bg-card py-6 shadow-sm dark:border-b-[#1F1F22] xxs:ml-2 dark:bg-black xs:px-10 sm:px-8 md:px-12 xl:px-20">
+    <div className="w-full space-y-3 border-b bg-card py-6 shadow-sm dark:border-b-[#1F1F22] xxs:ml-2 dark:bg-black xs:px-10 sm:px-8 md:px-12 xl:px-20">
       <div className="flex flex-wrap gap-3">
         <div className="h-12 w-12 rounded-full">
           <Skeleton circle width={48} height={48} />

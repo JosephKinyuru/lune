@@ -38,108 +38,124 @@ export default function Post({ post }: PostProps) {
       onClick={() => router.push(`/posts/${post.id}`)}
       className="block cursor-pointer"
     >
-      <article className="group/post select-text space-y-3 border-b border-t bg-card p-5 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
-        <div className="flex justify-between gap-3">
-          <div className="flex flex-wrap gap-3">
-            <UserTooltip user={post.user}>
-              <Link
-                href={`/users/${post.user.username}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <UserAvatar avatar_url={post.user.avatar_url} />
-              </Link>
-            </UserTooltip>
-            <div>
-              <UserTooltip user={post.user}>
+      <article className="group/post select-text border-b border-t bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
+        <div className="flex gap-3">
+          <UserTooltip user={post.user}>
+            <Link
+              href={`/users/${post.user.username}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <UserAvatar
+                avatar_url={post.user.avatar_url}
+                className="h-9 w-9 xxs:h-12 xxs:w-12"
+              />
+            </Link>
+          </UserTooltip>
+
+          <div className="flex-1">
+            <div className="flex justify-between">
+              <div className="flex items-center gap-2">
+                <UserTooltip user={post.user}>
+                  <Link
+                    href={`/users/${post.user.username}`}
+                    className="font-bold hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {post.user.displayName}
+                  </Link>
+                </UserTooltip>
+                {post.user.is_Verified && (
+                  <MdVerified className="h-4 w-4 text-primary" />
+                )}
+                <span className="text-muted-foreground">
+                  @{post.user.username}
+                </span>
                 <Link
-                  href={`/users/${post.user.username}`}
-                  className="block font-medium hover:underline"
+                  href={`/posts/${post.id}`}
+                  className="text-lg text-muted-foreground"
+                  suppressHydrationWarning
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {post.user.displayName}
-                  {/* {data?.verified && ( */}
-                  <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
-                  {/* )} */}
+                  · {" "}
+                  <span className="text-sm hover:underline">
+                    {formatRelativeDate(post.createdAt)}
+                  </span>
                 </Link>
-              </UserTooltip>
-              <Link
-                href={`/posts/${post.id}`}
-                className="block text-sm text-muted-foreground hover:underline"
-                suppressHydrationWarning
-                onClick={(e) => e.stopPropagation()}
-              >
-                {formatRelativeDate(post.createdAt)}
-              </Link>
+              </div>
+              <div>
+                {post.user.id === user.id ? (
+                  <PostMoreButtonOwner post={post} />
+                ) : (
+                  <PostMoreButton post={post} />
+                )}
+              </div>
             </div>
-          </div>
 
-          {post.user.id === user.id ? (
-            <PostMoreButtonOwner post={post} className="" />
-          ) : (
-            <PostMoreButton post={post} className="" />
-          )}
-        </div>
-        <Linkify>
-          <div className="select-text whitespace-pre-line break-words">
-            {post.content}
-          </div>
-        </Linkify>
-        {!!post.attachments.length && (
-          <MediaPreviews attachments={post.attachments} />
-        )}
-        <div
-          className="flex justify-between gap-5 pt-4"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex items-center gap-5">
-            <LikeButton
-              postId={post.id}
-              initialState={{
-                likes: post._count.likes,
-                isLikedByUser: post.likes.some(
-                  (like) => like.userId === user.id,
-                ),
-              }}
-            />
+            <Linkify>
+              <div className="mt-[1px] whitespace-pre-line text-lg">{post.content}</div>
+            </Linkify>
 
-            <CommentButton
-              post={post}
-              onClick={() => setShowCommentDialog(true)}
-            />
-            <CommentDialog
-              post={post}
-              open={showCommentDialog}
-              onOpenChange={setShowCommentDialog}
-            />
+            {!!post.attachments.length && (
+              <div className="mt-3">
+                <MediaPreviews attachments={post.attachments} />
+              </div>
+            )}
 
-            <RepostButton
-              postId={post.id}
-              initialState={{
-                reposts: post._count.reposts,
-                isRepostedByUser: post.reposts.some(
-                  (repost) => repost.userId === user.id,
-                ),
-              }}
-            />
-          </div>
-          <div className="flex items-center gap-5">
-            <LinkButton
-              link={`${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`}
-            />
-            <BookmarkButton
-              postId={post.id}
-              initialState={{
-                isBookmarkedByUser: post.bookmarks.some(
-                  (bookmark) => bookmark.userId === user.id,
-                ),
-              }}
-            />
+            <div
+              className="mt-2 flex justify-between gap-5"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex gap-5 xl:gap-8 -ml-2">
+                <LikeButton
+                  postId={post.id}
+                  initialState={{
+                    likes: post._count.likes,
+                    isLikedByUser: post.likes.some(
+                      (like) => like.userId === user.id,
+                    ),
+                  }}
+                />
+                <CommentButton
+                  post={post}
+                  onClick={() => setShowCommentDialog(true)}
+                />
+                <CommentDialog
+                  post={post}
+                  open={showCommentDialog}
+                  onOpenChange={setShowCommentDialog}
+                />
+                <RepostButton
+                  postId={post.id}
+                  initialState={{
+                    reposts: post._count.reposts,
+                    isRepostedByUser: post.reposts.some(
+                      (repost) => repost.userId === user.id,
+                    ),
+                  }}
+                />
+              </div>
+
+              <div className="flex gap-5">
+                <LinkButton
+                  link={`${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`}
+                />
+                <BookmarkButton
+                  postId={post.id}
+                  initialState={{
+                    isBookmarkedByUser: post.bookmarks.some(
+                      (bookmark) => bookmark.userId === user.id,
+                    ),
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>
     </div>
   );
 }
+
 
 interface MediaPreviewsProps {
   attachments: Media[];

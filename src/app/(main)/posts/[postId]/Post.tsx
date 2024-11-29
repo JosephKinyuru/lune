@@ -2,7 +2,7 @@
 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
-import { cn, formatRelativeDate } from "@/lib/utils";
+import { cn, formatLongDate, formatRelativeDate } from "@/lib/utils";
 import { Media } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +22,7 @@ import {
   PostMoreButtonOwner,
   RepostButton,
 } from "@/components/posts/buttons";
+import CommentInput from "@/components/comments/CommentInput";
 
 interface PostProps {
   post: PostData;
@@ -46,20 +47,22 @@ export default function Post({ post }: PostProps) {
               <UserTooltip user={post.user}>
                 <Link
                   href={`/users/${post.user.username}`}
-                  className="block font-medium hover:underline"
+                  className="block font-bold hover:underline text-lg"
                 >
                   {post.user.displayName}
-                  {/* {data?.verified && ( */}
-                  <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
-                  {/* )} */}
+                  {post.user.is_Verified && (
+                    <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
+                  )}
                 </Link>
               </UserTooltip>
-              <p
-                className="block text-sm text-muted-foreground hover:underline"
-                suppressHydrationWarning
-              >
-                {formatRelativeDate(post.createdAt)}
-              </p>
+              <UserTooltip user={post.user}>
+                <Link
+                  href={`/users/${post.user.username}`}
+                  className="block text-md text-muted-foreground"
+                >
+                  @{post.user.username}
+                </Link>
+              </UserTooltip>
             </div>
           </div>
 
@@ -68,17 +71,29 @@ export default function Post({ post }: PostProps) {
           ) : (
             <PostMoreButton post={post} className="" />
           )}
-          
         </div>
+
         <Linkify>
-          <div className="select-text whitespace-pre-line break-words">
+          <div className="select-text whitespace-pre-line break-words text-lg">
             {post.content}
           </div>
         </Linkify>
+
         {!!post.attachments.length && (
           <MediaPreviews attachments={post.attachments} />
         )}
+
+        <div className="flex items-center gap-2">
+          <p
+            className="block text-md text-muted-foreground hover:underline"
+            suppressHydrationWarning
+          >
+            {formatLongDate(post.createdAt)}
+          </p>
+        </div>
+
         <hr className="text-muted-foreground" />
+
         <div className="flex justify-between gap-5">
           <div className="flex items-center gap-5">
             <LikeButton
@@ -125,11 +140,12 @@ export default function Post({ post }: PostProps) {
             />
           </div>
         </div>
-        <Comments post={post} />
+        <CommentInput post={post} />
       </article>
-      {/* <div className="p-5">
+      
+      <div className="">
         <Comments post={post} />
-      </div> */}
+      </div>
     </>
   );
 }

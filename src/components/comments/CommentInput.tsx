@@ -34,16 +34,16 @@ export default function CommentInput({ post }: CommentInputProps) {
 
   return (
     <form
-      className="flex items-center gap-2 border-b border-t py-6 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22]"
+      className="flex items-center gap-2 border-t pt-5 dark:border-t-[#1F1F22]"
       onSubmit={onSubmit}
     >
       <UserAvatar avatar_url={post.user.avatar_url} />
       <Input
-        placeholder="Post your reply..."
+        placeholder="Post your reply"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         autoFocus
-        className="flex-grow border-0 bg-transparent h-12 text-muted-foreground outline-none focus:ring-0"
+        className="text-md h-12 flex-grow border-0 bg-transparent outline-none focus:ring-0"
       />
       <LoadingButton
         type="submit"
