@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
-import { formatDate, formatDistanceToNowStrict } from "date-fns";
+import { format, formatDate, formatDistanceToNowStrict } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import prisma from "@/lib/prisma";
 import crypto from "crypto";
@@ -20,6 +20,10 @@ export function formatRelativeDate(from: Date) {
       return formatDate(from, "MMM d, yyyy");
     }
   }
+}
+
+export function formatLongDate(date: Date): string {
+  return format(date, "hh:mm a · MMM d, yyyy");
 }
 
 export function formatNumber(n: number): string {
