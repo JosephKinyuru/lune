@@ -4,7 +4,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import Comment from "./Comment";
-import CommentInput from "./CommentInput";
 
 interface CommentsProps {
   post: PostData;
@@ -43,12 +42,18 @@ export default function Comments({ post }: CommentsProps) {
           Load previous comments
         </Button>
       )}
-      {status === "pending" && <Loader2 className="mx-auto animate-spin py-6" />}
+      {status === "pending" && (
+        <div className="flex p-6 items-center justify-center">
+          <Loader2 className="animate-spin" />
+        </div>
+      )}
       {status === "success" && !comments.length && (
-        <p className="text-center text-muted-foreground py-6">No comments yet.</p>
+        <p className="py-6 text-center text-muted-foreground">
+          No comments yet.
+        </p>
       )}
       {status === "error" && (
-        <p className="text-center text-destructive py-6">
+        <p className="py-6 text-center text-destructive">
           An error occurred while loading comments.
         </p>
       )}

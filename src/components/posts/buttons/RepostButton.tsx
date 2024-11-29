@@ -96,7 +96,7 @@ export default function RepostButton({
           </button>
         </TooltipTrigger>
         <TooltipContent
-          className="rounded-sm bg-accent-foreground dark:text-black"
+          className="rounded-[5px] bg-[#607d8b] text-[#fafafa]"
           side="bottom"
         >
           <p className="text-[0.8rem] font-semibold tracking-tight">Repost</p>

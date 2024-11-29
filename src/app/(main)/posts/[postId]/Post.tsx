@@ -2,7 +2,7 @@
 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
-import { cn, formatLongDate, formatRelativeDate } from "@/lib/utils";
+import { cn, formatLongDate } from "@/lib/utils";
 import { Media } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +22,12 @@ import {
   PostMoreButtonOwner,
   RepostButton,
 } from "@/components/posts/buttons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import CommentInput from "@/components/comments/CommentInput";
 
 interface PostProps {
@@ -47,7 +53,7 @@ export default function Post({ post }: PostProps) {
               <UserTooltip user={post.user}>
                 <Link
                   href={`/users/${post.user.username}`}
-                  className="block font-bold hover:underline text-lg"
+                  className="block text-lg font-bold hover:underline"
                 >
                   {post.user.displayName}
                   {post.user.is_Verified && (
@@ -58,7 +64,7 @@ export default function Post({ post }: PostProps) {
               <UserTooltip user={post.user}>
                 <Link
                   href={`/users/${post.user.username}`}
-                  className="block text-md text-muted-foreground"
+                  className="text-md block text-muted-foreground"
                 >
                   @{post.user.username}
                 </Link>
@@ -84,12 +90,26 @@ export default function Post({ post }: PostProps) {
         )}
 
         <div className="flex items-center gap-2">
-          <p
-            className="block text-md text-muted-foreground hover:underline"
-            suppressHydrationWarning
-          >
-            {formatLongDate(post.createdAt)}
-          </p>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild onClick={(e) => e.stopPropagation()}>
+                <p
+                  className="text-md block text-muted-foreground hover:underline"
+                  suppressHydrationWarning
+                >
+                  {formatLongDate(post.createdAt)}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent
+                className="rounded-[5px] bg-[#607d8b] text-[#fafafa]"
+                side="bottom"
+              >
+                <p className="text-[0.8rem] font-semibold tracking-tight">
+                  {formatLongDate(post.createdAt)}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         <hr className="text-muted-foreground" />
@@ -142,7 +162,7 @@ export default function Post({ post }: PostProps) {
         </div>
         <CommentInput post={post} />
       </article>
-      
+
       <div className="">
         <Comments post={post} />
       </div>

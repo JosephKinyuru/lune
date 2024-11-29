@@ -2,7 +2,7 @@
 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
-import { cn, formatRelativeDate } from "@/lib/utils";
+import { cn, formatLongDate, formatRelativeDate } from "@/lib/utils";
 import { Media } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +22,12 @@ import {
   PostMoreButtonOwner,
   RepostButton,
 } from "./buttons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PostProps {
   post: PostData;
@@ -67,20 +73,40 @@ export default function Post({ post }: PostProps) {
                 {post.user.is_Verified && (
                   <MdVerified className="h-4 w-4 text-primary" />
                 )}
-                <span className="text-muted-foreground">
-                  @{post.user.username}
-                </span>
-                <Link
-                  href={`/posts/${post.id}`}
-                  className="text-lg text-muted-foreground"
-                  suppressHydrationWarning
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  · {" "}
-                  <span className="text-sm hover:underline">
-                    {formatRelativeDate(post.createdAt)}
+                <UserTooltip user={post.user}>
+                  <span className="text-muted-foreground">
+                    @{post.user.username}
                   </span>
-                </Link>
+                </UserTooltip>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger
+                      asChild
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Link
+                        href={`/posts/${post.id}`}
+                        className="text-lg text-muted-foreground"
+                        suppressHydrationWarning
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        ·{" "}
+                        <span className="text-sm hover:underline">
+                          {formatRelativeDate(post.createdAt)}
+                        </span>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      className="rounded-[5px] bg-[#607d8b] text-[#fafafa]"
+                      side="bottom"
+                    >
+                      <p className="text-[0.8rem] font-semibold tracking-tight">
+                        {formatLongDate(post.createdAt)}
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               <div>
                 {post.user.id === user.id ? (
@@ -92,7 +118,9 @@ export default function Post({ post }: PostProps) {
             </div>
 
             <Linkify>
-              <div className="mt-[1px] whitespace-pre-line text-lg">{post.content}</div>
+              <div className="mt-[1px] whitespace-pre-line text-lg">
+                {post.content}
+              </div>
             </Linkify>
 
             {!!post.attachments.length && (
@@ -105,7 +133,7 @@ export default function Post({ post }: PostProps) {
               className="mt-2 flex justify-between gap-5"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex gap-5 xl:gap-8 -ml-2">
+              <div className="-ml-2 flex gap-5 xl:gap-8">
                 <LikeButton
                   postId={post.id}
                   initialState={{
