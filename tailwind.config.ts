@@ -10,9 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        xs: "480px", 
-        xxs: "360px", 
-        xxxs: "240px", 
+        xs: "480px",
+        xxs: "360px",
+        xxxs: "240px",
       },
       keyframes: {
         "caret-blink": {

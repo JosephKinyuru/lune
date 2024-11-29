@@ -6,7 +6,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"]
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
@@ -16,37 +16,37 @@ datasource db {
 }
 
 model User {
-  id                    String         @id
-  username              String         @unique
+  id                    String              @id
+  username              String              @unique
   displayName           String
-  email                 String?        @unique
+  email                 String?             @unique
   passwordHash          String?
-  googleId              String?        @unique
-  githubId              String?        @unique
+  googleId              String?             @unique
+  githubId              String?             @unique
   avatar_url            String?
   profile_banner_url    String?
   dateOfBirth           DateTime?
   bio                   String?
   location              String?
   website               String?
-  is_Verified           Boolean        @default(false)
-  is_Banned             Boolean        @default(false)
-  is_Suspended          Boolean        @default(false)
-  is_Deactivated        Boolean        @default(false)
-  is_Private            Boolean        @default(false)
+  is_Verified           Boolean             @default(false)
+  is_Banned             Boolean             @default(false)
+  is_Suspended          Boolean             @default(false)
+  is_Deactivated        Boolean             @default(false)
+  is_Private            Boolean             @default(false)
   sessions              Session[]
   posts                 Post[]
   reposts               Repost[]
-  following             Follow[]       @relation("Following")
-  followers             Follow[]       @relation("Followers")
+  following             Follow[]            @relation("Following")
+  followers             Follow[]            @relation("Followers")
   likes                 Like[]
   bookmarks             Bookmark[]
   comments              Comment[]
-  receivedNotifications Notification[] @relation("Recipient")
-  issuedNotifications   Notification[] @relation("Issuer")
+  receivedNotifications Notification[]      @relation("Recipient")
+  issuedNotifications   Notification[]      @relation("Issuer")
+  resetPasswordToken    ResetPasswordToken?
 
-  createdAt          DateTime            @default(now())
-  ResetPasswordToken ResetPasswordToken?
+  createdAt DateTime @default(now())
 
   @@map("users")
 }
@@ -70,6 +70,8 @@ model ResetPasswordToken {
   otpExpiresAt   DateTime
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  @@map("reset_password_tokens")
 }
 
 model VerifyEmailToken {
@@ -81,6 +83,8 @@ model VerifyEmailToken {
   otpExpiresAt   DateTime
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  @@map("verify_email_tokens")
 }
 
 model Follow {
