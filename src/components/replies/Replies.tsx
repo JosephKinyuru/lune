@@ -1,25 +1,25 @@
 import kyInstance from "@/lib/ky";
-import { CommentsPage, PostData } from "@/lib/types";
+import { RepliesPage, PostData } from "@/lib/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
-import Comment from "./Comment";
+import Reply from "./Reply";
 
-interface CommentsProps {
+interface RepliesProps {
   post: PostData;
 }
 
-export default function Comments({ post }: CommentsProps) {
+export default function Replies({ post }: RepliesProps) {
   const { data, fetchNextPage, hasNextPage, isFetching, status } =
     useInfiniteQuery({
-      queryKey: ["comments", post.id],
+      queryKey: ["replies", post.id],
       queryFn: ({ pageParam }) =>
         kyInstance
           .get(
-            `/api/posts/${post.id}/comments`,
+            `/api/posts/${post.id}/replies`,
             pageParam ? { searchParams: { cursor: pageParam } } : {},
           )
-          .json<CommentsPage>(),
+          .json<RepliesPage>(),
       initialPageParam: null as string | null,
       getNextPageParam: (firstPage) => firstPage.previousCursor,
       select: (data) => ({
@@ -28,7 +28,7 @@ export default function Comments({ post }: CommentsProps) {
       }),
     });
 
-  const comments = data?.pages.flatMap((page) => page.comments) || [];
+  const replies = data?.pages.flatMap((page) => page.replies) || [];
 
   return (
     <div className="space-y-3">
@@ -39,7 +39,7 @@ export default function Comments({ post }: CommentsProps) {
           disabled={isFetching}
           onClick={() => fetchNextPage()}
         >
-          Load previous comments
+          Load previous replies
         </Button>
       )}
       {status === "pending" && (
@@ -47,19 +47,19 @@ export default function Comments({ post }: CommentsProps) {
           <Loader2 className="animate-spin" />
         </div>
       )}
-      {status === "success" && !comments.length && (
+      {status === "success" && !replies.length && (
         <p className="py-6 text-center text-muted-foreground">
-          No comments yet.
+          No replies yet.
         </p>
       )}
       {status === "error" && (
         <p className="py-6 text-center text-destructive">
-          An error occurred while loading comments.
+          An error occurred while loading replies.
         </p>
       )}
       <div className="divide-y">
-        {comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+        {replies.map((reply) => (
+          <Reply key={reply.id} reply={reply} />
         ))}
       </div>
     </div>

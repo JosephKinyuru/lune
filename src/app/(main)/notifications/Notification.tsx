@@ -19,8 +19,8 @@ export default function Notification({ notification }: NotificationProps) {
       icon: <User2 className="size-7 text-primary" />,
       href: `/users/${notification.issuer.username}`,
     },
-    COMMENT: {
-      message: `${notification.issuer.displayName} commented on your post`,
+    REPLY: {
+      message: `${notification.issuer.displayName} replied to your post`,
       icon: <MessageCircle className="size-7 fill-primary text-primary" />,
       href: `/posts/${notification.postId}`,
     },

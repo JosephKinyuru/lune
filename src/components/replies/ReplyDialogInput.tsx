@@ -1,18 +1,18 @@
 import { PostData } from "@/lib/types";
 import { useState } from "react";
 import { Input } from "../ui/input";
-import { useSubmitCommentMutation } from "./mutations";
+import { useSubmitReplyMutation } from "./mutations";
 import LoadingButton from "../LoadingButton";
 
-interface CommentDialogInputProps {
+interface ReplyDialogInputProps {
   className? : string;
   post: PostData;
 }
 
-export default function CommentDialogInput({ post, className }: CommentDialogInputProps) {
+export default function ReplyDialogInput({ post, className }: ReplyDialogInputProps) {
   const [input, setInput] = useState("");
 
-  const mutation = useSubmitCommentMutation(post.id);
+  const mutation = useSubmitReplyMutation(post.id);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();

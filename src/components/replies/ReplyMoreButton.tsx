@@ -1,4 +1,4 @@
-import { CommentData } from "@/lib/types";
+import { ReplyData } from "@/lib/types";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -8,17 +8,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import DeleteCommentDialog from "./DeleteCommentDialog";
+import DeleteReplyDialog from "./DeleteReplyDialog";
 
-interface CommentMoreButtonProps {
-  comment: CommentData;
+interface ReplyMoreButtonProps {
+  reply: ReplyData;
   className?: string;
 }
 
-export default function CommentMoreButton({
-  comment,
+export default function ReplyMoreButton({
+  reply,
   className,
-}: CommentMoreButtonProps) {
+}: ReplyMoreButtonProps) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   return (
@@ -38,8 +38,8 @@ export default function CommentMoreButton({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <DeleteCommentDialog
-        comment={comment}
+      <DeleteReplyDialog
+        reply={reply}
         open={showDeleteDialog}
         onClose={() => setShowDeleteDialog(false)}
       />

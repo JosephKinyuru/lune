@@ -1,20 +1,18 @@
 import { PostData } from "@/lib/types";
-import { Loader2, Send } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useSubmitCommentMutation } from "./mutations";
+import { useSubmitReplyMutation } from "./mutations";
 import LoadingButton from "../LoadingButton";
 import UserAvatar from "../UserAvatar";
 
-interface CommentInputProps {
+interface ReplyInputProps {
   post: PostData;
 }
 
-export default function CommentInput({ post }: CommentInputProps) {
+export default function ReplyInput({ post }: ReplyInputProps) {
   const [input, setInput] = useState("");
 
-  const mutation = useSubmitCommentMutation(post.id);
+  const mutation = useSubmitReplyMutation(post.id);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();

@@ -90,9 +90,12 @@ export default function RepostButton({
               />
             </div>
 
-            <span className="text-sm font-medium tabular-nums">
-              {data.reposts}
-            </span>
+            {data.reposts > 0 && (
+              <span className="text-md font-medium tabular-nums">
+                {data.reposts}
+              </span>
+            )}
+
           </button>
         </TooltipTrigger>
         <TooltipContent

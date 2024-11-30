@@ -11,11 +11,9 @@ import Linkify from "@/components/Linkify";
 import UserAvatar from "@/components/UserAvatar";
 import UserTooltip from "@/components/UserTooltip";
 import { MdVerified } from "react-icons/md";
-import CommentDialog from "@/components/comments/CommentDialog";
-import Comments from "@/components/comments/Comments";
 import {
   BookmarkButton,
-  CommentButton,
+  ReplyButton,
   LikeButton,
   LinkButton,
   PostMoreButton,
@@ -28,7 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import CommentInput from "@/components/comments/CommentInput";
+import { Replies, ReplyDialog, ReplyInput } from "@/components/replies";
 
 interface PostProps {
   post: PostData;
@@ -37,7 +35,7 @@ interface PostProps {
 export default function Post({ post }: PostProps) {
   const { user } = useSession();
 
-  const [showCommentDialog, setShowCommentDialog] = useState(false);
+  const [showReplyDialog, setShowReplyDialog] = useState(false);
 
   return (
     <>
@@ -126,14 +124,11 @@ export default function Post({ post }: PostProps) {
               }}
             />
 
-            <CommentButton
+            <ReplyButton post={post} onClick={() => setShowReplyDialog(true)} />
+            <ReplyDialog
               post={post}
-              onClick={() => setShowCommentDialog(true)}
-            />
-            <CommentDialog
-              post={post}
-              open={showCommentDialog}
-              onOpenChange={setShowCommentDialog}
+              open={showReplyDialog}
+              onOpenChange={setShowReplyDialog}
             />
 
             <RepostButton
@@ -160,11 +155,11 @@ export default function Post({ post }: PostProps) {
             />
           </div>
         </div>
-        <CommentInput post={post} />
+        <ReplyInput post={post} />
       </article>
 
       <div className="">
-        <Comments post={post} />
+        <Replies post={post} />
       </div>
     </>
   );

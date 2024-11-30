@@ -5,7 +5,7 @@ import { post } from "./post";
 export const notificationTypeEnum = pgEnum("notification_type", [
   "LIKE",
   "FOLLOW",
-  "COMMENT",
+  "REPLY",
   "REPOST",
 ]);
 

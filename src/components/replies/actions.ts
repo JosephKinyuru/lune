@@ -2,10 +2,10 @@
 
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { getCommentDataInclude, PostData } from "@/lib/types";
-import { createCommentSchema } from "@/lib/validation";
+import { getReplyDataInclude, PostData } from "@/lib/types";
+import { createReplySchema } from "@/lib/validation";
 
-export async function submitComment({
+export async function submitReply({
   post,
   content,
 }: {
@@ -16,16 +16,16 @@ export async function submitComment({
 
   if (!user) throw new Error("Unauthorized");
 
-  const { content: contentValidated } = createCommentSchema.parse({ content });
+  const { content: contentValidated } = createReplySchema.parse({ content });
 
-  const [newComment] = await prisma.$transaction([
-    prisma.comment.create({
+  const [newReply] = await prisma.$transaction([
+    prisma.reply.create({
       data: {
         content: contentValidated,
         postId: post.id,
         userId: user.id,
       },
-      include: getCommentDataInclude(user.id),
+      include: getReplyDataInclude(user.id),
     }),
     ...(post.user.id !== user.id
       ? [
@@ -34,33 +34,33 @@ export async function submitComment({
               issuerId: user.id,
               recipientId: post.user.id,
               postId: post.id,
-              type: "COMMENT",
+              type: "REPLY",
             },
           }),
         ]
       : []),
   ]);
 
-  return newComment;
+  return newReply;
 }
 
-export async function deleteComment(id: string) {
+export async function deleteReply(id: string) {
   const { user } = await validateRequest();
 
   if (!user) throw new Error("Unauthorized");
 
-  const comment = await prisma.comment.findUnique({
+  const reply = await prisma.reply.findUnique({
     where: { id },
   });
 
-  if (!comment) throw new Error("Comment not found");
+  if (!reply) throw new Error("Reply not found");
 
-  if (comment.userId !== user.id) throw new Error("Unauthorized");
+  if (reply.userId !== user.id) throw new Error("Unauthorized");
 
-  const deletedComment = await prisma.comment.delete({
+  const deletedReply = await prisma.reply.delete({
     where: { id },
-    include: getCommentDataInclude(user.id),
+    include: getReplyDataInclude(user.id),
   });
 
-  return deletedComment;
+  return deletedReply;
 }

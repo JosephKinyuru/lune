@@ -20,6 +20,7 @@ export default function UserPosts({ userId }: UserPostsProps) {
     isFetching,
     isFetchingNextPage,
     status,
+    error
   } = useInfiniteQuery({
     queryKey: ["post-feed", "user-posts", userId],
     queryFn: ({ pageParam }) =>
@@ -52,6 +53,7 @@ export default function UserPosts({ userId }: UserPostsProps) {
   }
 
   if (status === "error") {
+    console.log(error);
     return (
       <p className="text-center text-destructive mt-8">
         An error occurred while loading posts.

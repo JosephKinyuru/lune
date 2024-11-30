@@ -11,11 +11,11 @@ import Linkify from "../Linkify";
 import UserAvatar from "../UserAvatar";
 import UserTooltip from "../UserTooltip";
 import { MdVerified } from "react-icons/md";
-import CommentDialog from "../comments/CommentDialog";
+import ReplyDialog from "../replies/ReplyDialog";
 import { useRouter } from "next/navigation";
 import {
   BookmarkButton,
-  CommentButton,
+  ReplyButton,
   LikeButton,
   LinkButton,
   PostMoreButton,
@@ -37,7 +37,7 @@ export default function Post({ post }: PostProps) {
   const { user } = useSession();
   const router = useRouter();
 
-  const [showCommentDialog, setShowCommentDialog] = useState(false);
+  const [showReplyDialog, setShowReplyDialog] = useState(false);
 
   return (
     <div
@@ -143,14 +143,14 @@ export default function Post({ post }: PostProps) {
                     ),
                   }}
                 />
-                <CommentButton
+                <ReplyButton
                   post={post}
-                  onClick={() => setShowCommentDialog(true)}
+                  onClick={() => setShowReplyDialog(true)}
                 />
-                <CommentDialog
+                <ReplyDialog
                   post={post}
-                  open={showCommentDialog}
-                  onOpenChange={setShowCommentDialog}
+                  open={showReplyDialog}
+                  onOpenChange={setShowReplyDialog}
                 />
                 <RepostButton
                   postId={post.id}

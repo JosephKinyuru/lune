@@ -1,4 +1,4 @@
-import { CommentData } from "@/lib/types";
+import { ReplyData } from "@/lib/types";
 import LoadingButton from "../LoadingButton";
 import { Button } from "../ui/button";
 import {
@@ -9,20 +9,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { useDeleteCommentMutation } from "./mutations";
+import { useDeleteReplyMutation } from "./mutations";
 
-interface DeleteCommentDialogProps {
-  comment: CommentData;
+interface DeleteReplyDialogProps {
+  reply: ReplyData;
   open: boolean;
   onClose: () => void;
 }
 
-export default function DeleteCommentDialog({
-  comment,
+export default function DeleteReplyDialog({
+  reply,
   open,
   onClose,
-}: DeleteCommentDialogProps) {
-  const mutation = useDeleteCommentMutation();
+}: DeleteReplyDialogProps) {
+  const mutation = useDeleteReplyMutation();
 
   function handleOpenChange(open: boolean) {
     if (!open || !mutation.isPending) {
@@ -34,16 +34,16 @@ export default function DeleteCommentDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete comment?</DialogTitle>
+          <DialogTitle>Delete reply?</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this comment? This action cannot be
+            Are you sure you want to delete this reply? This action cannot be
             undone.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <LoadingButton
             variant="destructive"
-            onClick={() => mutation.mutate(comment.id, { onSuccess: onClose })}
+            onClick={() => mutation.mutate(reply.id, { onSuccess: onClose })}
             loading={mutation.isPending}
           >
             Delete

@@ -1,26 +1,26 @@
-import { CommentsPage } from "@/lib/types";
+import { RepliesPage } from "@/lib/types";
 import {
   InfiniteData,
   QueryKey,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { deleteComment, submitComment } from "./actions";
+import { deleteReply, submitReply } from "./actions";
 import { useToast } from "@/hooks/use-toast";
 
-export function useSubmitCommentMutation(postId: string) {
+export function useSubmitReplyMutation(postId: string) {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: submitComment,
-    onSuccess: async (newComment) => {
-      const queryKey: QueryKey = ["comments", postId];
+    mutationFn: submitReply,
+    onSuccess: async (newReply) => {
+      const queryKey: QueryKey = ["replies", postId];
 
       await queryClient.cancelQueries({ queryKey });
 
-      queryClient.setQueryData<InfiniteData<CommentsPage, string | null>>(
+      queryClient.setQueryData<InfiniteData<RepliesPage, string | null>>(
         queryKey,
         (oldData) => {
           const firstPage = oldData?.pages[0];
@@ -31,7 +31,7 @@ export function useSubmitCommentMutation(postId: string) {
               pages: [
                 {
                   previousCursor: firstPage.previousCursor,
-                  comments: [...firstPage.comments, newComment],
+                  replies: [...firstPage.replies, newReply],
                 },
                 ...oldData.pages.slice(1),
               ],
@@ -48,14 +48,14 @@ export function useSubmitCommentMutation(postId: string) {
       });
 
       toast({
-        description: "Comment created",
+        description: "Reply created",
       });
     },
     onError(error) {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Failed to submit comment. Please try again.",
+        description: "Failed to submit reply. Please try again.",
       });
     },
   });
@@ -63,19 +63,19 @@ export function useSubmitCommentMutation(postId: string) {
   return mutation;
 }
 
-export function useDeleteCommentMutation() {
+export function useDeleteReplyMutation() {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: deleteComment,
-    onSuccess: async (deletedComment) => {
-      const queryKey: QueryKey = ["comments", deletedComment.postId];
+    mutationFn: deleteReply,
+    onSuccess: async (deletedReply) => {
+      const queryKey: QueryKey = ["replies", deletedReply.postId];
 
       await queryClient.cancelQueries({ queryKey });
 
-      queryClient.setQueryData<InfiniteData<CommentsPage, string | null>>(
+      queryClient.setQueryData<InfiniteData<RepliesPage, string | null>>(
         queryKey,
         (oldData) => {
           if (!oldData) return;
@@ -84,21 +84,21 @@ export function useDeleteCommentMutation() {
             pageParams: oldData.pageParams,
             pages: oldData.pages.map((page) => ({
               previousCursor: page.previousCursor,
-              comments: page.comments.filter((c) => c.id !== deletedComment.id),
+              replies: page.replies.filter((c) => c.id !== deletedReply.id),
             })),
           };
         },
       );
 
       toast({
-        description: "Comment deleted",
+        description: "Reply deleted",
       });
     },
     onError(error) {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Failed to delete comment. Please try again.",
+        description: "Failed to delete reply. Please try again.",
       });
     },
   });

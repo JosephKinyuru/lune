@@ -7,12 +7,12 @@ import {
 import { PostData } from "@/lib/types";
 import { MessageCircle } from "lucide-react";
 
-interface CommentButtonProps {
+interface ReplyButtonProps {
   post: PostData;
   onClick: () => void;
 }
 
-export default function CommentButton({ post, onClick }: CommentButtonProps) {
+export default function ReplyButton({ post, onClick }: ReplyButtonProps) {
   return (
     <TooltipProvider>
       <Tooltip>
@@ -25,9 +25,11 @@ export default function CommentButton({ post, onClick }: CommentButtonProps) {
               <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <MessageCircle className="z-10 size-5 text-muted-foreground group-hover:text-primary 2xl:size-6" />
             </div>
-            <span className="text-sm font-medium tabular-nums">
-              {post._count.comments}
-            </span>
+            {post._count.replies > 0 && (
+              <span className="text-md font-medium tabular-nums">
+                {post._count.replies}
+              </span>
+            )}
           </button>
         </TooltipTrigger>
         <TooltipContent

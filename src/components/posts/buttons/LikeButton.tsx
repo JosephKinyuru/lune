@@ -85,9 +85,11 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
               />
             </div>
 
-            <span className="text-sm font-medium tabular-nums">
-              {data.likes}
-            </span>
+            {data.likes > 0 && (
+              <span className="text-md font-medium tabular-nums">
+                {data.likes}
+              </span>
+            )}
           </button>
         </TooltipTrigger>
         <TooltipContent

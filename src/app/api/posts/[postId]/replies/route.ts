@@ -1,6 +1,6 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { CommentsPage, getCommentDataInclude } from "@/lib/types";
+import { RepliesPage, getReplyDataInclude } from "@/lib/types";
 import { NextRequest } from "next/server";
 
 export async function GET(
@@ -20,18 +20,18 @@ export async function GET(
     
     const { postId } = await params;
     
-    const comments = await prisma.comment.findMany({
+    const replies = await prisma.reply.findMany({
       where: { postId },
-      include: getCommentDataInclude(user.id),
+      include: getReplyDataInclude(user.id),
       orderBy: { createdAt: "asc" },
       take: -pageSize - 1,
       cursor: cursor ? { id: cursor } : undefined,
     });
 
-    const previousCursor = comments.length > pageSize ? comments[0].id : null;
+    const previousCursor = replies.length > pageSize ? replies[0].id : null;
 
-    const data: CommentsPage = {
-      comments: comments.length > pageSize ? comments.slice(1) : comments,
+    const data: RepliesPage = {
+      replies: replies.length > pageSize ? replies.slice(1) : replies,
       previousCursor,
     };
 

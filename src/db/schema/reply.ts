@@ -2,7 +2,7 @@ import { pgTable, varchar, text, timestamp } from "drizzle-orm/pg-core";
 import { user } from "./user";
 import { post } from "./post";
 
-export const comment = pgTable("comments", {
+export const reply = pgTable("replies", {
   id: varchar("id", { length: 36 }).default("cuid_generate()").primaryKey(),
   content: text("content").notNull(),
   userId: varchar("user_id", { length: 36 })

@@ -1,16 +1,16 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import CommentDialogInput from "./CommentDialogInput";
+import ReplyDialogInput from "./ReplyDialogInput";
 import { PostData } from "@/lib/types";
 import { formatRelativeDate } from "@/lib/utils";
 import UserAvatar from "../UserAvatar";
 
-interface CommentDialogProps {
+interface ReplyDialogProps {
   post: PostData;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-const CommentDialog = ({ post, open, onOpenChange }: CommentDialogProps) => {
+const ReplyDialog = ({ post, open, onOpenChange }: ReplyDialogProps) => {
   return (
     <Dialog
       open={open}
@@ -31,11 +31,11 @@ const CommentDialog = ({ post, open, onOpenChange }: CommentDialogProps) => {
             </div>
           </div>
 
-          <CommentDialogInput className="mt-4" post={post} />
+          <ReplyDialogInput className="mt-4" post={post} />
         </div>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default CommentDialog;
+export default ReplyDialog;

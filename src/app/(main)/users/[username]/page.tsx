@@ -11,13 +11,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import EditProfileButton from "./EditProfileButton";
-import UserPosts from "./UserPosts";
 import { CalendarDays, Image as LucideImage } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import UserMedia from "./UserMedia";
-import UserLikes from "./UserLikes";
 import RightSidebar from "../../RightSidebar";
 import ProfileHeader from "./ProfileHeader";
+import { UserLikes, UserMedia, UserPosts, UserReplies } from "./tabs";
 
 interface PageProps {
   params: Promise<{ username: string }>;
@@ -83,6 +81,9 @@ export default async function Page({ params }: PageProps) {
             <TabsTrigger value="media" className="text-lg">
               Media
             </TabsTrigger>
+            <TabsTrigger value="replies" className="text-lg">
+              Replies
+            </TabsTrigger>
             <TabsTrigger value="likes" className="text-lg">
               Likes
             </TabsTrigger>
@@ -94,6 +95,9 @@ export default async function Page({ params }: PageProps) {
             </TabsContent>
             <TabsContent value="media" className="mt-0">
               <UserMedia userId={user.id} />
+            </TabsContent>
+            <TabsContent value="replies" className="mt-0">
+              <UserReplies userId={user.id} />
             </TabsContent>
             <TabsContent value="likes" className="mt-0">
               <UserLikes userId={user.id} />
