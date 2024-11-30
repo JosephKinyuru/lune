@@ -5,6 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { PostData } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { MessageCircle } from "lucide-react";
 
 interface ReplyButtonProps {
@@ -27,7 +28,7 @@ export default function ReplyButton({ post, onClick }: ReplyButtonProps) {
             </div>
             {post._count.replies > 0 && (
               <span className="text-md font-medium tabular-nums">
-                {post._count.replies}
+                {formatNumber(post._count.replies)}
               </span>
             )}
           </button>

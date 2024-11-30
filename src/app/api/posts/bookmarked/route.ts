@@ -31,11 +31,17 @@ export async function GET(req: NextRequest) {
       cursor: cursor ? { id: cursor } : undefined,
     });
 
+    const validBookmarks = bookmarks.filter(
+      (bookmark) => bookmark.post !== null,
+    );
+
     const nextCursor =
-      bookmarks.length > pageSize ? bookmarks[pageSize].id : null;
+      validBookmarks.length > pageSize ? validBookmarks[pageSize].id : null;
 
     const data: PostsPage = {
-      posts: bookmarks.slice(0, pageSize).map((bookmark) => bookmark.post),
+      posts: validBookmarks
+        .slice(0, pageSize)
+        .map((bookmark) => bookmark.post!),
       nextCursor,
     };
 

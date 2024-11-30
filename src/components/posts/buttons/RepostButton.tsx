@@ -1,7 +1,7 @@
 import { useToast } from "@/hooks/use-toast";
 import kyInstance from "@/lib/ky";
 import { RepostInfo } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import {
   QueryKey,
   useMutation,
@@ -92,10 +92,9 @@ export default function RepostButton({
 
             {data.reposts > 0 && (
               <span className="text-md font-medium tabular-nums">
-                {data.reposts}
+                {formatNumber(data.reposts)}
               </span>
             )}
-
           </button>
         </TooltipTrigger>
         <TooltipContent

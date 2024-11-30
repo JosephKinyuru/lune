@@ -113,7 +113,7 @@ export default function Post({ post }: PostProps) {
         <hr className="text-muted-foreground" />
 
         <div className="flex justify-between gap-5">
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-10">
             <LikeButton
               postId={post.id}
               initialState={{

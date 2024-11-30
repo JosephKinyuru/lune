@@ -1,7 +1,7 @@
 import { useToast } from "@/hooks/use-toast";
 import kyInstance from "@/lib/ky";
 import { LikeInfo } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import {
   QueryKey,
   useMutation,
@@ -87,7 +87,7 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
 
             {data.likes > 0 && (
               <span className="text-md font-medium tabular-nums">
-                {data.likes}
+                {formatNumber(data.likes)}
               </span>
             )}
           </button>
