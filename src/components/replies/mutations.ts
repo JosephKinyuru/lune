@@ -1,16 +1,15 @@
-import { RepliesPage } from "@/lib/types";
+import { PostsPage } from "@/lib/types";
 import {
   InfiniteData,
   QueryKey,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { deleteReply, submitReply } from "./actions";
+import { submitReply } from "./actions";
 import { useToast } from "@/hooks/use-toast";
 
 export function useSubmitReplyMutation(postId: string) {
   const { toast } = useToast();
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -20,25 +19,22 @@ export function useSubmitReplyMutation(postId: string) {
 
       await queryClient.cancelQueries({ queryKey });
 
-      queryClient.setQueryData<InfiniteData<RepliesPage, string | null>>(
-        queryKey,
-        (oldData) => {
-          const firstPage = oldData?.pages[0];
+      queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (oldData) => {
+        if (!oldData) return;
 
-          if (firstPage) {
-            return {
-              pageParams: oldData.pageParams,
-              pages: [
-                {
-                  previousCursor: firstPage.previousCursor,
-                  replies: [...firstPage.replies, newReply],
-                },
-                ...oldData.pages.slice(1),
-              ],
-            };
-          }
-        },
-      );
+        return {
+          pageParams: oldData.pageParams,
+          pages: oldData.pages.map((page, index) => {
+            if (index === 0) {
+              return {
+                ...page,
+                posts: [...page.posts, newReply],
+              };
+            }
+            return page;
+          }),
+        };
+      });
 
       queryClient.invalidateQueries({
         queryKey,
@@ -48,7 +44,7 @@ export function useSubmitReplyMutation(postId: string) {
       });
 
       toast({
-        description: "Reply created",
+        description: "Reply created successfully",
       });
     },
     onError(error) {
@@ -56,49 +52,6 @@ export function useSubmitReplyMutation(postId: string) {
       toast({
         variant: "destructive",
         description: "Failed to submit reply. Please try again.",
-      });
-    },
-  });
-
-  return mutation;
-}
-
-export function useDeleteReplyMutation() {
-  const { toast } = useToast();
-
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: deleteReply,
-    onSuccess: async (deletedReply) => {
-      const queryKey: QueryKey = ["replies", deletedReply.postId];
-
-      await queryClient.cancelQueries({ queryKey });
-
-      queryClient.setQueryData<InfiniteData<RepliesPage, string | null>>(
-        queryKey,
-        (oldData) => {
-          if (!oldData) return;
-
-          return {
-            pageParams: oldData.pageParams,
-            pages: oldData.pages.map((page) => ({
-              previousCursor: page.previousCursor,
-              replies: page.replies.filter((c) => c.id !== deletedReply.id),
-            })),
-          };
-        },
-      );
-
-      toast({
-        description: "Reply deleted",
-      });
-    },
-    onError(error) {
-      console.error(error);
-      toast({
-        variant: "destructive",
-        description: "Failed to delete reply. Please try again.",
       });
     },
   });

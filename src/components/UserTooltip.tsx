@@ -35,7 +35,7 @@ export default function UserTooltip({ children, user }: UserTooltipProps) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent className="w-56 rounded-2xl bg-card p-4 text-black shadow-xl dark:border-2 dark:border-[#1F1F22] dark:bg-black dark:text-white">
+        <TooltipContent className="w-64 rounded-2xl bg-card p-4 text-black shadow-xl dark:border-2 dark:border-[#1F1F22] dark:bg-black dark:text-white">
           <div className="flex max-w-xs flex-col gap-3 break-words">
             <div className="flex items-center justify-between gap-4">
               <Link href={`/users/${user.username}`}>

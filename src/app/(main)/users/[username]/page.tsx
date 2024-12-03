@@ -75,16 +75,28 @@ export default async function Page({ params }: PageProps) {
         <UserProfile user={user} loggedInUserId={loggedInUser.id} />
         <Tabs defaultValue="posts">
           <TabsList>
-            <TabsTrigger value="posts" className="text-lg">
+            <TabsTrigger
+              value="posts"
+              className="text-lg data-[state=active]:after:w-2/5"
+            >
               Posts
             </TabsTrigger>
-            <TabsTrigger value="media" className="text-lg">
+            <TabsTrigger
+              value="media"
+              className="text-lg data-[state=active]:after:w-2/5"
+            >
               Media
             </TabsTrigger>
-            <TabsTrigger value="replies" className="text-lg">
+            <TabsTrigger
+              value="replies"
+              className="text-lg data-[state=active]:after:w-2/5"
+            >
               Replies
             </TabsTrigger>
-            <TabsTrigger value="likes" className="text-lg">
+            <TabsTrigger
+              value="likes"
+              className="text-lg data-[state=active]:after:w-2/5"
+            >
               Likes
             </TabsTrigger>
           </TabsList>

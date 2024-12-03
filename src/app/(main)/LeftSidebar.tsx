@@ -135,8 +135,8 @@ export default function LeftSidebar({
   ];
 
   return (
-    <section className="sticky left-0 top-0 z-20 flex max-h-fit min-h-screen w-full max-w-72 flex-col border-r bg-card px-0 xl:px-4 pb-5 pt-4 dark:border-r-[#1F1F22] dark:bg-black max-xl:w-20 max-xl:px-2 max-xs:hidden lg:pt-8">
-      <div className="flex items-center gap-4 px-3 xl:ml-2">
+    <section className="sticky left-0 top-0 z-20 flex max-h-fit min-h-screen w-full max-w-72 flex-col border-r bg-card px-0 pb-5 pt-4 dark:border-r-[#1F1F22] dark:bg-black max-xl:w-20 max-xl:px-2 max-xs:hidden lg:pt-8 xl:px-4">
+      <div className="flex w-fit items-center gap-4 rounded-full px-3 transition-colors duration-200 ease-in-out hover:bg-accent dark:hover:bg-gray-50/10 xl:ml-2 xl:h-14">
         <Link href="/" className="flex items-center text-2xl font-bold">
           <Image src={logo.src} alt="logo" width={34} height={34} />
           <span className="ml-2 max-xl:hidden">lune</span>

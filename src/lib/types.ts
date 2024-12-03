@@ -65,7 +65,7 @@ export function getPostDataInclude(loggedInUserId: string) {
     _count: {
       select: {
         likes: true,
-        replies: true,
+        children: true,
         reposts: true,
       },
     },
@@ -79,23 +79,6 @@ export type PostData = Prisma.PostGetPayload<{
 export interface PostsPage {
   posts: PostData[];
   nextCursor: string | null;
-}
-
-export function getReplyDataInclude(loggedInUserId: string) {
-  return {
-    user: {
-      select: getUserDataSelect(loggedInUserId),
-    },
-  } satisfies Prisma.ReplyInclude;
-}
-
-export type ReplyData = Prisma.ReplyGetPayload<{
-  include: ReturnType<typeof getReplyDataInclude>;
-}>;
-
-export interface RepliesPage {
-  replies: ReplyData[];
-  previousCursor: string | null;
 }
 
 export const notificationsInclude = {

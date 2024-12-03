@@ -21,7 +21,10 @@ export async function GET(
     const { userId } = await params;
 
     const posts = await prisma.post.findMany({
-      where: { userId },
+      where: {
+        userId,
+        parentId: null, 
+      },
       include: getPostDataInclude(user.id),
       orderBy: { createdAt: "desc" },
       take: pageSize + 1,

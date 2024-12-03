@@ -1,6 +1,6 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { RepliesPage, getReplyDataInclude } from "@/lib/types";
+import { PostsPage, getPostDataInclude } from "@/lib/types";
 import { NextRequest } from "next/server";
 
 export async function GET(
@@ -17,22 +17,25 @@ export async function GET(
     if (!user) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
-    
+
     const { postId } = await params;
-    
-    const replies = await prisma.reply.findMany({
-      where: { postId },
-      include: getReplyDataInclude(user.id),
+
+    const posts = await prisma.post.findMany({
+      where: { parentId: postId },
+      include: getPostDataInclude(user.id),
       orderBy: { createdAt: "asc" },
-      take: -pageSize - 1,
+      take: pageSize + 1, 
       cursor: cursor ? { id: cursor } : undefined,
     });
 
-    const previousCursor = replies.length > pageSize ? replies[0].id : null;
+    const nextCursor =
+      posts.length > pageSize ? posts[posts.length - 1].id : null;
 
-    const data: RepliesPage = {
-      replies: replies.length > pageSize ? replies.slice(1) : replies,
-      previousCursor,
+    const paginatedPosts = posts.length > pageSize ? posts.slice(0, -1) : posts;
+
+    const data: PostsPage = {
+      posts: paginatedPosts,
+      nextCursor,
     };
 
     return Response.json(data);

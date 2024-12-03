@@ -2,14 +2,9 @@
 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
-import { cn, formatLongDate } from "@/lib/utils";
-import { Media } from "@prisma/client";
-import Image from "next/image";
+import { formatLongDate } from "@/lib/utils";
 import Link from "next/link";
 import { useState } from "react";
-import Linkify from "@/components/Linkify";
-import UserAvatar from "@/components/UserAvatar";
-import UserTooltip from "@/components/UserTooltip";
 import { MdVerified } from "react-icons/md";
 import {
   BookmarkButton,
@@ -27,6 +22,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Replies, ReplyDialog, ReplyInput } from "@/components/replies";
+import MediaPreviews from "@/components/media/MediaPreviews";
+import { Linkify, UserAvatar, UserTooltip } from "@/components";
 
 interface PostProps {
   post: PostData;
@@ -124,7 +121,10 @@ export default function Post({ post }: PostProps) {
               }}
             />
 
-            <ReplyButton post={post} onClick={() => setShowReplyDialog(true)} />
+            <ReplyButton
+              replies_Count={post._count.children}
+              onClick={() => setShowReplyDialog(true)}
+            />
             <ReplyDialog
               post={post}
               open={showReplyDialog}
@@ -163,55 +163,4 @@ export default function Post({ post }: PostProps) {
       </div>
     </>
   );
-}
-
-interface MediaPreviewsProps {
-  attachments: Media[];
-}
-
-function MediaPreviews({ attachments }: MediaPreviewsProps) {
-  return (
-    <div
-      className={cn(
-        "flex flex-col gap-3",
-        attachments.length > 1 && "sm:grid sm:grid-cols-2",
-      )}
-    >
-      {attachments.map((m) => (
-        <MediaPreview key={m.id} media={m} />
-      ))}
-    </div>
-  );
-}
-
-interface MediaPreviewProps {
-  media: Media;
-}
-
-function MediaPreview({ media }: MediaPreviewProps) {
-  if (media.type === "IMAGE") {
-    return (
-      <Image
-        src={media.url}
-        alt="Attachment"
-        width={500}
-        height={500}
-        className="mx-auto size-fit max-h-[30rem] rounded-2xl"
-      />
-    );
-  }
-
-  if (media.type === "VIDEO") {
-    return (
-      <div>
-        <video
-          src={media.url}
-          controls
-          className="mx-auto size-fit max-h-[30rem] rounded-2xl"
-        />
-      </div>
-    );
-  }
-
-  return <p className="text-destructive">Unsupported media type</p>;
 }

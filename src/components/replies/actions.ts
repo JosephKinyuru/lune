@@ -2,30 +2,39 @@
 
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { getReplyDataInclude, PostData } from "@/lib/types";
-import { createReplySchema } from "@/lib/validation";
+import { getPostDataInclude, PostData } from "@/lib/types";
+import { createPostSchema } from "@/lib/validation";
 
 export async function submitReply({
   post,
   content,
+  mediaIds,
 }: {
   post: PostData;
   content: string;
+  mediaIds: string[];
 }) {
   const { user } = await validateRequest();
 
   if (!user) throw new Error("Unauthorized");
 
-  const { content: contentValidated } = createReplySchema.parse({ content });
+  const { content: contentValidated, mediaIds: mediaIdsValidated } =
+    createPostSchema.parse({
+      content,
+      mediaIds,
+    });
 
   const [newReply] = await prisma.$transaction([
-    prisma.reply.create({
+    prisma.post.create({
       data: {
         content: contentValidated,
-        postId: post.id,
+        parentId: post.id,
         userId: user.id,
+        attachments: {
+          connect: mediaIdsValidated.map((id) => ({ id })),
+        },
       },
-      include: getReplyDataInclude(user.id),
+      include: getPostDataInclude(user.id),
     }),
     ...(post.user.id !== user.id
       ? [
@@ -42,25 +51,4 @@ export async function submitReply({
   ]);
 
   return newReply;
-}
-
-export async function deleteReply(id: string) {
-  const { user } = await validateRequest();
-
-  if (!user) throw new Error("Unauthorized");
-
-  const reply = await prisma.reply.findUnique({
-    where: { id },
-  });
-
-  if (!reply) throw new Error("Reply not found");
-
-  if (reply.userId !== user.id) throw new Error("Unauthorized");
-
-  const deletedReply = await prisma.reply.delete({
-    where: { id },
-    include: getReplyDataInclude(user.id),
-  });
-
-  return deletedReply;
 }

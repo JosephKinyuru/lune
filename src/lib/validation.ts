@@ -87,8 +87,3 @@ export const updateUserProfileSchema = z.object({
 });
 
 export type UpdateUserProfileValues = z.infer<typeof updateUserProfileSchema>;
-
-export const createReplySchema = z.object({
-  content: requiredString,
-  mediaIds: z.array(z.string()).max(5, "Cannot have more than 5 attachments"),
-});

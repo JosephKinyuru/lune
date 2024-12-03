@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import FollowingFeed from "./FollowingFeed";
 import ForYouFeed from "./ForYouFeed";
 import RightSidebar from "./RightSidebar";
+import { Metadata } from "next";
 
 export default function Home() {
   return (
