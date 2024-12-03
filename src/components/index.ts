@@ -9,7 +9,6 @@ export { default as NotFoundSVG } from "./NotFoundSVG";
 export { default as PageHeader } from "./PageHeader";
 export { PasswordInput } from "./PasswordInput";
 export { default as SearchField } from "./SearchField";
-export { default as TrendsSidebar } from "./TrendsSidebar";
 export { default as UserAvatar } from "./UserAvatar";
 export { default as UserButton } from "./UserButton";
 export { default as UserLinkWithTooltip } from "./UserLinkWithTooltip";
