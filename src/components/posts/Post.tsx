@@ -43,7 +43,7 @@ export default function Post({ post }: PostProps) {
       onClick={() => router.push(`/posts/${post.id}`)}
       className="block cursor-pointer"
     >
-      <article className="group/post select-text border-b border-t bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
+      <article className="group/post select-text border-b bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
         <div className="flex gap-3">
           <UserTooltip user={post.user}>
             <Link
@@ -63,15 +63,18 @@ export default function Post({ post }: PostProps) {
                 <UserTooltip user={post.user}>
                   <Link
                     href={`/users/${post.user.username}`}
-                    className="font-bold hover:underline"
+                    className="flex items-center gap-[2px] font-bold hover:underline"
                     onClick={(e) => e.stopPropagation()}
                   >
                     {post.user.displayName}
+                    {post.user.is_Verified && (
+                      <MdVerified
+                        className="-mb-1 h-4 w-4 text-primary"
+                        aria-label="Verified"
+                      />
+                    )}
                   </Link>
                 </UserTooltip>
-                {post.user.is_Verified && (
-                  <MdVerified className="h-4 w-4 text-primary" />
-                )}
                 <UserTooltip user={post.user}>
                   <span className="text-muted-foreground">
                     @{post.user.username}
@@ -143,7 +146,7 @@ export default function Post({ post }: PostProps) {
                   }}
                 />
                 <ReplyButton
-                  replies_Count={post._count.children}
+                  repliesCount={post._count.children}
                   onClick={() => setShowReplyDialog(true)}
                 />
                 <ReplyDialog

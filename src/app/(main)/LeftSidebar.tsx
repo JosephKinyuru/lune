@@ -231,8 +231,11 @@ export default function LeftSidebar({
                 <div className="hidden text-left lg:block">
                   <p className="text-lg font-medium tracking-tight max-xl:hidden">
                     {user.displayName}
-                    {/* {data?.verified && ( */}
-                    <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
+                    {/* {user?.is_Verified && ( */}
+                    <MdVerified
+                      className="ml-1 inline-block h-4 w-4 align-middle text-primary"
+                      aria-label="Verified"
+                    />
                     {/* )} */}
                   </p>
                   <p className="text-md -mt-1 tracking-tighter text-muted-foreground max-xl:hidden">

@@ -52,7 +52,10 @@ export default function Post({ post }: PostProps) {
                 >
                   {post.user.displayName}
                   {post.user.is_Verified && (
-                    <MdVerified className="ml-1 inline-block h-4 w-4 align-middle text-primary" />
+                    <MdVerified
+                      className="ml-1 inline-block h-5 w-5 align-middle text-primary"
+                      aria-label="Verified"
+                    />
                   )}
                 </Link>
               </UserTooltip>
@@ -122,7 +125,7 @@ export default function Post({ post }: PostProps) {
             />
 
             <ReplyButton
-              replies_Count={post._count.children}
+              repliesCount={post._count.children}
               onClick={() => setShowReplyDialog(true)}
             />
             <ReplyDialog

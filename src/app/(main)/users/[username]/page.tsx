@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RightSidebar from "../../RightSidebar";
 import ProfileHeader from "./ProfileHeader";
 import { UserLikes, UserMedia, UserPosts, UserReplies } from "./tabs";
+import { MdVerified } from "react-icons/md";
 
 interface PageProps {
   params: Promise<{ username: string }>;
@@ -70,7 +71,10 @@ export default async function Page({ params }: PageProps) {
     <main className="flex w-full min-w-0 gap-5">
       <div className="w-full min-w-0 space-y-4 xs:border-l xs:border-r xs:dark:border-l-[#1F1F22] xs:dark:border-r-[#1F1F22] lg:w-11/12 xl:w-10/12 2xl:w-[54rem]">
         <div className="sticky z-20 flex h-16 items-center space-x-16 border-b px-4 backdrop-blur-sm dark:border-b-[#1F1F22]">
-          <ProfileHeader displayName={user.displayName} />
+          <ProfileHeader
+            displayName={user.displayName}
+            isVerified={!!user.is_Verified}
+          />
         </div>
         <UserProfile user={user} loggedInUserId={loggedInUser.id} />
         <Tabs defaultValue="posts">
@@ -93,12 +97,14 @@ export default async function Page({ params }: PageProps) {
             >
               Replies
             </TabsTrigger>
-            <TabsTrigger
-              value="likes"
-              className="text-lg data-[state=active]:after:w-2/5"
-            >
-              Likes
-            </TabsTrigger>
+            {loggedInUser.id === user.id && (
+              <TabsTrigger
+                value="likes"
+                className="text-lg data-[state=active]:after:w-2/5"
+              >
+                Likes
+              </TabsTrigger>
+            )}
           </TabsList>
 
           <div>
@@ -111,9 +117,11 @@ export default async function Page({ params }: PageProps) {
             <TabsContent value="replies" className="mt-0">
               <UserReplies userId={user.id} />
             </TabsContent>
-            <TabsContent value="likes" className="mt-0">
-              <UserLikes userId={user.id} />
-            </TabsContent>
+            {loggedInUser.id === user.id && (
+              <TabsContent value="likes" className="mt-0">
+                <UserLikes userId={user.id} />
+              </TabsContent>
+            )}
           </div>
         </Tabs>
       </div>
@@ -168,7 +176,15 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
       <div className="flex flex-wrap gap-3 pt-12 sm:flex-nowrap">
         <div className="me-auto space-y-3">
           <div>
-            <h1 className="text-3xl font-bold">{user.displayName}</h1>
+            <div className="flex items-center gap-1">
+              <h1 className="text-3xl font-bold">{user.displayName}</h1>
+              {user.is_Verified && (
+                <MdVerified
+                  className="-mb-1 inline h-6 w-6 text-primary"
+                  aria-label="Verified"
+                />
+              )}
+            </div>
             <div className="text-muted-foreground">@{user.username}</div>
           </div>
 

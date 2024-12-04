@@ -13,3 +13,4 @@ export { default as UserAvatar } from "./UserAvatar";
 export { default as UserButton } from "./UserButton";
 export { default as UserLinkWithTooltip } from "./UserLinkWithTooltip";
 export { default as UserTooltip } from "./UserTooltip";
+export { default as Banner } from "./Banner";

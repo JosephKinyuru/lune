@@ -35,11 +35,11 @@ export default function UserTooltip({ children, user }: UserTooltipProps) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent className="w-64 rounded-2xl bg-card p-4 text-black shadow-xl dark:border-2 dark:border-[#1F1F22] dark:bg-black dark:text-white">
+        <TooltipContent className="w-72 rounded-2xl bg-card p-4 text-black shadow-xl dark:border-2 dark:border-[#1F1F22] dark:bg-black dark:text-white">
           <div className="flex max-w-xs flex-col gap-3 break-words">
             <div className="flex items-center justify-between gap-4">
               <Link href={`/users/${user.username}`}>
-                <UserAvatar size={48} avatar_url={user.avatar_url} />
+                <UserAvatar size={56} avatar_url={user.avatar_url} />
               </Link>
               {loggedInUser.id !== user.id && (
                 <FollowButton userId={user.id} initialState={followerState} />
@@ -48,25 +48,28 @@ export default function UserTooltip({ children, user }: UserTooltipProps) {
 
             <div>
               <Link href={`/users/${user.username}`}>
-                <div className="flex items-center text-lg font-semibold hover:underline">
+                <div className="flex items-center text-xl font-semibold hover:underline">
                   {user.displayName}
                   {user.is_Verified && (
-                    <MdVerified className="ml-1 h-5 w-5 text-primary" />
+                    <MdVerified
+                      className="ml-1 h-5 w-5 text-primary"
+                      aria-label="Verified"
+                    />
                   )}
                 </div>
-                <div className="text-sm text-gray-400">@{user.username}</div>
+                <div className="text-lg text-gray-400">@{user.username}</div>
               </Link>
             </div>
 
             {user.bio && (
               <Linkify>
-                <div className="line-clamp-4 text-sm text-gray-300">
+                <div className="text-md line-clamp-4 text-gray-300">
                   {user.bio}
                 </div>
               </Linkify>
             )}
 
-            <div className="flex items-center gap-6 text-sm">
+            <div className="flex items-center gap-10 text-lg">
               <FollowerCount userId={user.id} initialState={followerState} />
               <span>
                 <span className="font-semibold">

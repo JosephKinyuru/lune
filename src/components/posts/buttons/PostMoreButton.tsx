@@ -53,7 +53,7 @@ export default function PostMoreButton({
         </TooltipProvider>
         <DropdownMenuContent
           sideOffset={0}
-          className="w-40 border-gray-800 bg-white dark:border-[#1F1F22] dark:bg-black xl:w-52"
+          className="w-40 rounded-xl bg-card text-black shadow-xl dark:border-2 dark:border-[#1F1F22] dark:bg-black dark:text-white xl:w-52"
         >
           <DropdownMenuItem onClick={() => {}}>
             <span className="flex items-center gap-3 text-destructive">

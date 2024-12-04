@@ -1,12 +1,13 @@
 "use client";
 
+import { Banner } from "@/components";
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
 import Post from "@/components/posts/Post";
 import PostsLoadingSkeleton from "@/components/posts/PostsLoadingSkeleton";
 import kyInstance from "@/lib/ky";
 import { PostsPage } from "@/lib/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, Lock } from "lucide-react";
 
 interface UsersLikesProps {
   userId: string;
@@ -45,7 +46,7 @@ export default function UserLikes({ userId }: UsersLikesProps) {
 
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
-      <p className="text-center text-muted-foreground mt-8">
+      <p className="mt-8 text-center text-muted-foreground">
         You haven&apos;t liked anything yet.
       </p>
     );
@@ -53,7 +54,7 @@ export default function UserLikes({ userId }: UsersLikesProps) {
 
   if (status === "error") {
     return (
-      <p className="text-center text-destructive mt-8">
+      <p className="mt-8 text-center text-destructive">
         An error occurred while loading posts.
       </p>
     );
@@ -64,6 +65,10 @@ export default function UserLikes({ userId }: UsersLikesProps) {
       className="space-y-0"
       onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
     >
+      <Banner
+        info={"Your likes are private. Only you can see them."}
+        icon={<Lock className="h-5 w-5" />}
+      />
       {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}

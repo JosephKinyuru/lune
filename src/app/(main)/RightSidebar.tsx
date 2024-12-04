@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { Suspense } from "react";
+import { MdVerified } from "react-icons/md";
 
 export default function RightSidebar() {
   return (
@@ -46,7 +47,7 @@ async function WhoToFollow() {
   });
 
   return (
-    <div className="flex max-h-[256px] min-h-[180px] flex-1 flex-col justify-start rounded-2xl border dark:border-2 bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
+    <div className="flex max-h-[256px] min-h-[180px] flex-1 flex-col justify-start rounded-2xl border bg-card p-4 dark:border-2 dark:border-[#1F1F22] dark:bg-black">
       <h3 className="text-xl font-medium leading-[140%]">Who to follow</h3>
 
       <div className="mt-7 flex w-[350px] flex-col gap-9">
@@ -70,6 +71,12 @@ async function WhoToFollow() {
                       <p className="line-clamp-1 break-all font-semibold hover:underline">
                         {user.displayName}
                       </p>
+                      {user?.is_Verified && (
+                        <MdVerified
+                          className="ml-1 inline-block h-4 w-4 align-middle text-primary"
+                          aria-label="Verified"
+                        />
+                      )}
                       <p className="line-clamp-1 break-all text-muted-foreground">
                         @{user.username}
                       </p>
