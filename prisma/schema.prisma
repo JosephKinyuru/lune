@@ -36,7 +36,6 @@ model User {
   is_Private            Boolean             @default(false)
   sessions              Session[]
   posts                 Post[]
-  reposts               Repost[]
   following             Follow[]            @relation("Following")
   followers             Follow[]            @relation("Followers")
   likes                 Like[]
@@ -99,31 +98,22 @@ model Follow {
 model Post {
   id                  String         @id @default(cuid())
   content             String
-  userId              String
-  user                User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  authorId            String
+  author              User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
   attachments         Media[]
   likes               Like[]
   bookmarks           Bookmark[]
   linkedNotifications Notification[]
-  reposts             Repost[]       @relation("OriginalPost")
+  reposts             Post[]         @relation("OriginalPost") // All reposts of this post
+  originId            String? // If this is a repost, it will reference the original post
+  originalPost        Post?          @relation("OriginalPost", fields: [originId], references: [id], onDelete: Cascade)
   parentId            String? // Reference to the parent post (null for top-level posts)
   parent              Post?          @relation("PostHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
-  children            Post[]         @relation("PostHierarchy") // Replies (children) to this post
+  replies             Post[]         @relation("PostHierarchy") // Replies (children) to this post
   createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
 
   @@map("posts")
-}
-
-model Repost {
-  id           String   @id @default(cuid())
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId       String
-  originalPost Post     @relation("OriginalPost", fields: [postId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-
-  @@unique([userId, postId])
-  @@map("reposts")
 }
 
 model Media {

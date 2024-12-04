@@ -39,19 +39,19 @@ export default function Post({ post }: PostProps) {
       <article className="group/post space-y-3 border-b border-t bg-card p-5 dark:border-b-[#1F1F22] dark:border-t-[#1F1F22] dark:bg-black">
         <div className="flex justify-between gap-3">
           <div className="flex flex-wrap gap-3">
-            <UserTooltip user={post.user}>
-              <Link href={`/users/${post.user.username}`}>
-                <UserAvatar avatar_url={post.user.avatar_url} />
+            <UserTooltip user={post.author}>
+              <Link href={`/users/${post.author.username}`}>
+                <UserAvatar avatar_url={post.author.avatar_url} />
               </Link>
             </UserTooltip>
             <div>
-              <UserTooltip user={post.user}>
+              <UserTooltip user={post.author}>
                 <Link
-                  href={`/users/${post.user.username}`}
+                  href={`/users/${post.author.username}`}
                   className="block text-lg font-bold hover:underline"
                 >
-                  {post.user.displayName}
-                  {post.user.is_Verified && (
+                  {post.author.displayName}
+                  {post.author.is_Verified && (
                     <MdVerified
                       className="ml-1 inline-block h-5 w-5 align-middle text-primary"
                       aria-label="Verified"
@@ -59,18 +59,18 @@ export default function Post({ post }: PostProps) {
                   )}
                 </Link>
               </UserTooltip>
-              <UserTooltip user={post.user}>
+              <UserTooltip user={post.author}>
                 <Link
-                  href={`/users/${post.user.username}`}
+                  href={`/users/${post.author.username}`}
                   className="text-md block text-muted-foreground"
                 >
-                  @{post.user.username}
+                  @{post.author.username}
                 </Link>
               </UserTooltip>
             </div>
           </div>
 
-          {post.user.id === user.id ? (
+          {post.author.id === user.id ? (
             <PostMoreButtonOwner post={post} className="" />
           ) : (
             <PostMoreButton post={post} className="" />
@@ -125,7 +125,7 @@ export default function Post({ post }: PostProps) {
             />
 
             <ReplyButton
-              repliesCount={post._count.children}
+              repliesCount={post._count.replies}
               onClick={() => setShowReplyDialog(true)}
             />
             <ReplyDialog
@@ -139,7 +139,7 @@ export default function Post({ post }: PostProps) {
               initialState={{
                 reposts: post._count.reposts,
                 isRepostedByUser: post.reposts.some(
-                  (repost) => repost.userId === user.id,
+                  (repost) => repost.authorId === user.id,
                 ),
               }}
             />

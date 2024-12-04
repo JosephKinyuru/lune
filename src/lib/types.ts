@@ -34,7 +34,7 @@ export type UserData = Prisma.UserGetPayload<{
 
 export function getPostDataInclude(loggedInUserId: string) {
   return {
-    user: {
+    author: {
       select: getUserDataSelect(loggedInUserId),
     },
     attachments: true,
@@ -48,10 +48,10 @@ export function getPostDataInclude(loggedInUserId: string) {
     },
     reposts: {
       where: {
-        userId: loggedInUserId,
+        authorId: loggedInUserId,
       },
       select: {
-        userId: true,
+        authorId: true,
       },
     },
     bookmarks: {
@@ -65,7 +65,7 @@ export function getPostDataInclude(loggedInUserId: string) {
     _count: {
       select: {
         likes: true,
-        children: true,
+        replies: true,
         reposts: true,
       },
     },

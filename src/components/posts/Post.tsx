@@ -45,13 +45,13 @@ export default function Post({ post }: PostProps) {
     >
       <article className="group/post select-text border-b bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
         <div className="flex gap-3">
-          <UserTooltip user={post.user}>
+          <UserTooltip user={post.author}>
             <Link
-              href={`/users/${post.user.username}`}
+              href={`/users/${post.author.username}`}
               onClick={(e) => e.stopPropagation()}
             >
               <UserAvatar
-                avatar_url={post.user.avatar_url}
+                avatar_url={post.author.avatar_url}
                 className="h-9 w-9 xxs:h-12 xxs:w-12"
               />
             </Link>
@@ -60,14 +60,14 @@ export default function Post({ post }: PostProps) {
           <div className="flex-1">
             <div className="flex justify-between">
               <div className="flex items-center gap-2">
-                <UserTooltip user={post.user}>
+                <UserTooltip user={post.author}>
                   <Link
-                    href={`/users/${post.user.username}`}
+                    href={`/users/${post.author.username}`}
                     className="flex items-center gap-[2px] font-bold hover:underline"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {post.user.displayName}
-                    {post.user.is_Verified && (
+                    {post.author.displayName}
+                    {post.author.is_Verified && (
                       <MdVerified
                         className="-mb-1 h-4 w-4 text-primary"
                         aria-label="Verified"
@@ -75,9 +75,9 @@ export default function Post({ post }: PostProps) {
                     )}
                   </Link>
                 </UserTooltip>
-                <UserTooltip user={post.user}>
+                <UserTooltip user={post.author}>
                   <span className="text-muted-foreground">
-                    @{post.user.username}
+                    @{post.author.username}
                   </span>
                 </UserTooltip>
 
@@ -111,7 +111,7 @@ export default function Post({ post }: PostProps) {
                 </TooltipProvider>
               </div>
               <div>
-                {post.user.id === user.id ? (
+                {post.author.id === user.id ? (
                   <PostMoreButtonOwner post={post} />
                 ) : (
                   <PostMoreButton post={post} />
@@ -146,7 +146,7 @@ export default function Post({ post }: PostProps) {
                   }}
                 />
                 <ReplyButton
-                  repliesCount={post._count.children}
+                  repliesCount={post._count.replies}
                   onClick={() => setShowReplyDialog(true)}
                 />
                 <ReplyDialog
@@ -159,7 +159,7 @@ export default function Post({ post }: PostProps) {
                   initialState={{
                     reposts: post._count.reposts,
                     isRepostedByUser: post.reposts.some(
-                      (repost) => repost.userId === user.id,
+                      (repost) => repost.authorId === user.id,
                     ),
                   }}
                 />

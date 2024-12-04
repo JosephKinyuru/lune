@@ -29,19 +29,19 @@ export async function submitReply({
       data: {
         content: contentValidated,
         parentId: post.id,
-        userId: user.id,
+        authorId: user.id,
         attachments: {
           connect: mediaIdsValidated.map((id) => ({ id })),
         },
       },
       include: getPostDataInclude(user.id),
     }),
-    ...(post.user.id !== user.id
+    ...(post.author.id !== user.id
       ? [
           prisma.notification.create({
             data: {
               issuerId: user.id,
-              recipientId: post.user.id,
+              recipientId: post.author.id,
               postId: post.id,
               type: "REPLY",
             },

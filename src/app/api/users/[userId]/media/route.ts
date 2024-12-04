@@ -21,7 +21,7 @@ export async function GET(
 
     const postsWithMedia = await prisma.post.findMany({
       where: {
-        userId, 
+        authorId: userId, 
         attachments: {
           some: {}, 
         },

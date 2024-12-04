@@ -18,7 +18,7 @@ export async function submitPost(input: {
   const newPost = await prisma.post.create({
     data: {
       content,
-      userId: user.id,
+      authorId: user.id,
       attachments: {
         connect: mediaIds.map((id) => ({ id })),
       },

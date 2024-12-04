@@ -109,7 +109,7 @@ export default async function Page() {
               <h1 className="text-3xl font-bold">Create your account</h1>
             </div>
             <div className="grid gap-4">
-              <CreateAccountForm email={"jjajajaj"} />
+              <CreateAccountForm email={decoded.email} />
 
               <Link
                 href="/sign-up"

@@ -27,14 +27,14 @@ export async function GET(req: NextRequest) {
             },
           },
           {
-            user: {
+            author: {
               displayName: {
                 search: searchQuery,
               },
             },
           },
           {
-            user: {
+            author: {
               username: {
                 search: searchQuery,
               },

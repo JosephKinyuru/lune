@@ -41,7 +41,8 @@ export async function verifyEmail({
   }
 
   // Check if the OTP has expired
-  if (isBefore(new Date(), tokenRecord.otpExpiresAt)) {
+  const otpExpiresAt = new Date(tokenRecord.otpExpiresAt);
+  if (isBefore(new Date(), otpExpiresAt)) {
     return { success: false, error: "OTP has expired" };
   }
 

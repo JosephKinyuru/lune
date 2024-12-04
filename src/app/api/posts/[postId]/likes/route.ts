@@ -66,7 +66,7 @@ export async function POST(
     const post = await prisma.post.findUnique({
       where: { id: postId },
       select: {
-        userId: true,
+        authorId: true,
       },
     });
 
@@ -88,12 +88,12 @@ export async function POST(
         },
         update: {},
       }),
-      ...(loggedInUser.id !== post.userId
+      ...(loggedInUser.id !== post.authorId
         ? [
             prisma.notification.create({
               data: {
                 issuerId: loggedInUser.id,
-                recipientId: post.userId,
+                recipientId: post.authorId,
                 postId,
                 type: "LIKE",
               },
@@ -125,7 +125,7 @@ export async function DELETE(
     const post = await prisma.post.findUnique({
       where: { id: postId },
       select: {
-        userId: true,
+        authorId: true,
       },
     });
 
@@ -143,7 +143,7 @@ export async function DELETE(
       prisma.notification.deleteMany({
         where: {
           issuerId: loggedInUser.id,
-          recipientId: post.userId,
+          recipientId: post.authorId,
           postId,
           type: "LIKE",
         },

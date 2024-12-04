@@ -21,7 +21,7 @@ export async function GET(
 
     const posts = await prisma.post.findMany({
       where: {
-        userId,
+        authorId: userId,
         parentId: { not: null }, 
       },
       include: getPostDataInclude(user.id),
@@ -34,7 +34,7 @@ export async function GET(
       where: {
         parentId: { not: null },
         reposts: {
-          some: { userId },
+          some: { authorId: userId },
         },
       },
       include: getPostDataInclude(user.id),

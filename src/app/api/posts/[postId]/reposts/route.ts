@@ -20,10 +20,10 @@ export async function GET(
       select: {
         reposts: {
           where: {
-            userId: loggedInUser.id,
+            authorId: loggedInUser.id,
           },
           select: {
-            userId: true,
+            authorId: true,
           },
         },
         _count: {
@@ -66,7 +66,9 @@ export async function POST(
     const post = await prisma.post.findUnique({
       where: { id: postId },
       select: {
-        userId: true,
+        authorId: true,
+        originId: true,
+        content: true,
       },
     });
 
@@ -74,26 +76,34 @@ export async function POST(
       return Response.json({ error: "Post not found" }, { status: 404 });
     }
 
+    const existingRepost = await prisma.post.findFirst({
+      where: {
+        originId: postId,
+        authorId: loggedInUser.id,
+      },
+    });
+
+    if (existingRepost) {
+      return Response.json(
+        { error: "You have already reposted this post" },
+        { status: 400 },
+      );
+    }
+
     await prisma.$transaction([
-      prisma.repost.upsert({
-        where: {
-          userId_postId: {
-            userId: loggedInUser.id,
-            postId,
-          },
+      prisma.post.create({
+        data: {
+          content: post.content,
+          authorId: loggedInUser.id,
+          originId: postId,
         },
-        create: {
-          userId: loggedInUser.id,
-          postId,
-        },
-        update: {},
       }),
-      ...(loggedInUser.id !== post.userId
+      ...(loggedInUser.id !== post.authorId
         ? [
             prisma.notification.create({
               data: {
                 issuerId: loggedInUser.id,
-                recipientId: post.userId,
+                recipientId: post.authorId,
                 postId,
                 type: "REPOST",
               },
@@ -125,7 +135,8 @@ export async function DELETE(
     const post = await prisma.post.findUnique({
       where: { id: postId },
       select: {
-        userId: true,
+        authorId: true,
+        originId: true,
       },
     });
 
@@ -133,22 +144,38 @@ export async function DELETE(
       return Response.json({ error: "Post not found" }, { status: 404 });
     }
 
-    await prisma.$transaction([
-      prisma.repost.deleteMany({
-        where: {
-          userId: loggedInUser.id,
-          postId,
-        },
-      }),
-      prisma.notification.deleteMany({
-        where: {
-          issuerId: loggedInUser.id,
-          recipientId: post.userId,
-          postId,
-          type: "REPOST",
-        },
-      }),
-    ]);
+    if (post.originId) {
+      if (post.authorId !== loggedInUser.id) {
+        return Response.json(
+          { error: "Unauthorized to delete this repost" },
+          { status: 401 },
+        );
+      }
+
+      await prisma.$transaction([
+        prisma.post.deleteMany({
+          where: {
+            authorId: loggedInUser.id,
+            originId: postId,
+          },
+        }),
+        prisma.notification.deleteMany({
+          where: {
+            issuerId: loggedInUser.id,
+            recipientId: post.authorId,
+            postId,
+            type: "REPOST",
+          },
+        }),
+      ]);
+    } else {
+      if (post.authorId !== loggedInUser.id) {
+        return Response.json(
+          { error: "Unauthorized to delete this post" },
+          { status: 401 },
+        );
+      }
+    }
 
     return new Response();
   } catch (error) {
