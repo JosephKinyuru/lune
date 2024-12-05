@@ -41,9 +41,9 @@ export default function Post({ post }: PostProps) {
   return (
     <div
       onClick={() => router.push(`/posts/${post.id}`)}
-      className="block cursor-pointer"
+      className="block cursor-pointer focus:border-transparent focus:outline-none focus:ring-0"
     >
-      <article className="group/post select-text border-b bg-card p-4 dark:border-[#1F1F22] dark:bg-black">
+      <article className="group/post select-text border-b bg-card p-4 focus-visible:border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-200 dark:border-[#1F1F22] dark:bg-black">
         <div className="flex gap-3">
           <UserTooltip user={post.author}>
             <Link

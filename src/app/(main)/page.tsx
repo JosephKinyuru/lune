@@ -18,11 +18,17 @@ export default function Home() {
               Following
             </TabsTrigger>
           </TabsList>
-          <PostEditor className="mt-6 border-b dark:border-b-[#1F1F22] max-w-full" />
-          <TabsContent value="for-you" className="mt-0">
+          <PostEditor className="mt-6 max-w-full border-b dark:border-b-[#1F1F22]" />
+          <TabsContent
+            value="for-you"
+            className="mt-0 focus:border-transparent focus:outline-none focus:ring-0"
+          >
             <ForYouFeed />
           </TabsContent>
-          <TabsContent value="following" className="mt-0">
+          <TabsContent
+            value="following"
+            className="mt-0 focus:border-transparent focus:outline-none focus:ring-0"
+          >
             <FollowingFeed />
           </TabsContent>
         </Tabs>

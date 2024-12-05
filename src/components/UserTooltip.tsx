@@ -34,7 +34,7 @@ export default function UserTooltip({ children, user }: UserTooltipProps) {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipTrigger asChild className="rounded-full h-fit w-fit">{children}</TooltipTrigger>
         <TooltipContent className="w-72 rounded-2xl bg-card p-4 text-black shadow-xl dark:border-2 dark:border-[#1F1F22] dark:bg-black dark:text-white">
           <div className="flex max-w-xs flex-col gap-3 break-words">
             <div className="flex items-center justify-between gap-4">

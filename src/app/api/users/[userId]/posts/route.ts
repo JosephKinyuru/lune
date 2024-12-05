@@ -31,27 +31,11 @@ export async function GET(
       cursor: cursor ? { id: cursor } : undefined,
     });
 
-    const repostedPosts = await prisma.post.findMany({
-      where: {
-        reposts: {
-          some: { authorId: userId },
-        },
-      },
-      include: getPostDataInclude(user.id),
-      orderBy: { createdAt: "desc" },
-      take: pageSize + 1,
-      cursor: cursor ? { id: cursor } : undefined,
-    });
-
-    const combinedPosts = [...posts, ...repostedPosts]
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-      .slice(0, pageSize);
-
     const nextCursor =
-      combinedPosts.length > pageSize ? combinedPosts[pageSize].id : null;
+      posts.length > pageSize ? posts[pageSize].id : null;
 
     const data: PostsPage = {
-      posts: combinedPosts,
+      posts: posts,
       nextCursor,
     };
 

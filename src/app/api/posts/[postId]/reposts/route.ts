@@ -132,52 +132,39 @@ export async function DELETE(
 
     const { postId } = await params;
 
-    const post = await prisma.post.findUnique({
-      where: { id: postId },
+    const repost = await prisma.post.findFirst({
+      where: {
+        originId: postId, 
+        authorId: loggedInUser.id, 
+      },
       select: {
-        authorId: true,
-        originId: true,
+        id: true, 
       },
     });
 
-    if (!post) {
-      return Response.json({ error: "Post not found" }, { status: 404 });
+    if (!repost) {
+      return Response.json(
+        { error: "Repost not found or not authorized to delete" },
+        { status: 404 },
+      );
     }
 
-    if (post.originId) {
-      if (post.authorId !== loggedInUser.id) {
-        return Response.json(
-          { error: "Unauthorized to delete this repost" },
-          { status: 401 },
-        );
-      }
+    await prisma.$transaction([
+      prisma.post.delete({
+        where: {
+          id: repost.id, 
+        },
+      }),
+      prisma.notification.deleteMany({
+        where: {
+          issuerId: loggedInUser.id,
+          postId, 
+          type: "REPOST",
+        },
+      }),
+    ]);
 
-      await prisma.$transaction([
-        prisma.post.deleteMany({
-          where: {
-            authorId: loggedInUser.id,
-            originId: postId,
-          },
-        }),
-        prisma.notification.deleteMany({
-          where: {
-            issuerId: loggedInUser.id,
-            recipientId: post.authorId,
-            postId,
-            type: "REPOST",
-          },
-        }),
-      ]);
-    } else {
-      if (post.authorId !== loggedInUser.id) {
-        return Response.json(
-          { error: "Unauthorized to delete this post" },
-          { status: 401 },
-        );
-      }
-    }
-
-    return new Response();
+    return new Response(null, { status: 204 });
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
