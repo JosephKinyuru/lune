@@ -6,13 +6,28 @@ import {
 } from "@/components/ui/tooltip";
 import { formatNumber } from "@/lib/utils";
 import { MessageCircle } from "lucide-react";
+import { useQuery, useQueryClient, QueryKey } from "@tanstack/react-query";
+import kyInstance from "@/lib/ky";
 
 interface ReplyButtonProps {
-  repliesCount: number;
+  postId: string;
+  initialState: { replies: number };
   onClick: () => void;
 }
 
-export default function ReplyButton({ repliesCount, onClick }: ReplyButtonProps) {
+export default function ReplyButton({ postId, initialState, onClick }: ReplyButtonProps) {
+  const queryKey: QueryKey = ["reply-info", postId];
+
+  const { data } = useQuery({
+    queryKey,
+    queryFn: () =>
+      kyInstance
+        .get(`/api/posts/${postId}/replies/count`)
+        .json<{ replies: number }>(),
+    staleTime: Infinity,
+    initialData: initialState,
+  });
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -25,9 +40,9 @@ export default function ReplyButton({ repliesCount, onClick }: ReplyButtonProps)
               <div className="absolute inset-0 rounded-full bg-primary opacity-0 transition-opacity duration-200 group-hover:opacity-30"></div>
               <MessageCircle className="z-10 size-5 text-muted-foreground group-hover:text-primary 2xl:size-6" />
             </div>
-            {repliesCount > 0 && (
+            {data.replies > 0 && (
               <span className="text-md font-medium tabular-nums">
-                {formatNumber(repliesCount)}
+                {formatNumber(data.replies)}
               </span>
             )}
           </button>

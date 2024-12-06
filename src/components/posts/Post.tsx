@@ -2,7 +2,7 @@
 
 import { useSession } from "@/app/(main)/SessionProvider";
 import { PostData } from "@/lib/types";
-import { formatLongDate, formatRelativeDate } from "@/lib/utils";
+import { formatLongDate, formatRelativeDate, isInteractiveElement } from "@/lib/utils";
 import Link from "next/link";
 import { useState } from "react";
 import Linkify from "../Linkify";
@@ -38,9 +38,19 @@ export default function Post({ post }: PostProps) {
 
   const [showReplyDialog, setShowReplyDialog] = useState(false);
 
+  function handleNavigation(e: React.MouseEvent) {
+    const target = e.target as HTMLElement;
+
+    if (isInteractiveElement(target)) {
+      return; 
+    }
+
+    router.push(`/posts/${post.id}`);
+  }
+
   return (
     <div
-      onClick={() => router.push(`/posts/${post.id}`)}
+      onClick={handleNavigation}
       className="block cursor-pointer focus:border-transparent focus:outline-none focus:ring-0"
     >
       <article className="group/post select-text border-b bg-card p-4 focus-visible:border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-200 dark:border-[#1F1F22] dark:bg-black">
@@ -146,7 +156,8 @@ export default function Post({ post }: PostProps) {
                   }}
                 />
                 <ReplyButton
-                  repliesCount={post._count.replies}
+                  postId={post.id}
+                  initialState={{ replies: post._count.replies }}
                   onClick={() => setShowReplyDialog(true)}
                 />
                 <ReplyDialog

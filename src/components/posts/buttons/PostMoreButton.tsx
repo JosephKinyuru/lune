@@ -52,6 +52,7 @@ export default function PostMoreButton({
           </Tooltip>
         </TooltipProvider>
         <DropdownMenuContent
+          onClick={(e) => e.stopPropagation()}
           sideOffset={0}
           className="w-40 rounded-xl bg-card text-black shadow-xl dark:border-2 dark:border-[#1F1F22] dark:bg-black dark:text-white xl:w-52"
         >

@@ -11,23 +11,28 @@ import { useToast } from "@/hooks/use-toast";
 
 export function useDeletePostMutation() {
   const { toast } = useToast();
-
   const queryClient = useQueryClient();
-
   const router = useRouter();
   const pathname = usePathname();
 
   const mutation = useMutation({
     mutationFn: deletePost,
     onSuccess: async (deletedPost) => {
-      const queryFilter: QueryFilters = { queryKey: ["post-feed"] };
+      const queryFilter: QueryFilters<
+        InfiniteData<PostsPage, string | null>,
+        Error
+      > = {
+        queryKey: ["post-feed"],
+        predicate: (query) =>
+          Array.isArray(query.queryKey) && query.queryKey.includes("post-feed"),
+      };
 
       await queryClient.cancelQueries(queryFilter);
 
       queryClient.setQueriesData<InfiniteData<PostsPage, string | null>>(
         queryFilter,
         (oldData) => {
-          if (!oldData) return;
+          if (!oldData) return oldData;
 
           return {
             pageParams: oldData.pageParams,
@@ -39,13 +44,15 @@ export function useDeletePostMutation() {
         },
       );
 
+       if (pathname === `/posts/${deletedPost.id}`) {
+         router.push(`/users/${deletedPost.author.username}`);
+       } else {
+         console.log("Not on the post page, staying on current page.");
+       }
+
       toast({
         description: "Post deleted",
       });
-
-      if (pathname === `/posts/${deletedPost.id}`) {
-        router.push(`/users/${deletedPost.author.username}`);
-      }
     },
     onError(error) {
       console.error(error);

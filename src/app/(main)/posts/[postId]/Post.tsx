@@ -125,7 +125,8 @@ export default function Post({ post }: PostProps) {
             />
 
             <ReplyButton
-              repliesCount={post._count.replies}
+              postId={post.id}
+              initialState={{ replies: post._count.replies }}
               onClick={() => setShowReplyDialog(true)}
             />
             <ReplyDialog

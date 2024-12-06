@@ -114,3 +114,11 @@ export async function copyToClipboard({
     return false; 
   }
 }
+
+export function isInteractiveElement(target: HTMLElement): boolean {
+  const interactiveElements = ["BUTTON", "A", "INPUT", "TEXTAREA", "SELECT"];
+  return (
+    interactiveElements.includes(target.tagName) ||
+    !!target.closest("[data-no-navigation]")
+  );
+}

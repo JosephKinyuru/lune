@@ -15,7 +15,6 @@ import { useSession } from "@/app/(main)/SessionProvider";
 import "./styles.css";
 import { AddAttachmentsButton, AttachmentPreviews } from "../media";
 
-
 interface ReplyDialogInputProps {
   className?: string;
   post: PostData;
@@ -86,7 +85,10 @@ export default function ReplyDialogInput({
   }
 
   return (
-    <form className={`flex flex-col gap-4 ${className}`} onSubmit={onSubmit}>
+    <form
+      className={`flex flex-col gap-4 ${className}`}
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="flex gap-5">
         <UserAvatar avatar_url={user.avatar_url} className="inline" />
         <div {...rootProps} className="w-[92%]">

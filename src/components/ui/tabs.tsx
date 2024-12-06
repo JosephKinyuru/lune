@@ -30,7 +30,7 @@ const TabsTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex-1 px-4 py-2 text-sm font-medium tracking-tight transition-colors duration-200",
-      "hover:bg-card/40",
+      "xl:hover:bg-gray-200 dark:xl:hover:bg-[#1F1F22]",
       "data-[state=active]:font-semibold",
       "data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-1/2 data-[state=active]:after:h-[3px] data-[state=active]:after:w-1/3 data-[state=active]:after:-translate-x-1/2 data-[state=active]:after:transform data-[state=active]:after:rounded-2xl data-[state=active]:after:bg-blue-500 data-[state=active]:after:content-['']", // Blue underline for the active tab
       className,

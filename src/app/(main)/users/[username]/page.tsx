@@ -164,7 +164,7 @@ async function UserProfile({ user, loggedInUserId }: UserProfileProps) {
         </div>
 
         <div className="absolute -mt-12 ml-4 md:ml-6">
-          <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-4 border-card bg-background md:h-20 md:w-20 lg:h-24 lg:w-24">
+          <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-4 border-card bg-background md:h-24 md:w-24 lg:h-28 lg:w-28">
             <UserAvatar
               avatar_url={user.avatar_url}
               className="h-full w-full"

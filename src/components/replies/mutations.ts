@@ -12,42 +12,42 @@ export function useSubmitReplyMutation(postId: string) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: submitReply,
-    onSuccess: async (newReply) => {
-      const queryKey: QueryKey = ["replies", postId];
+    onSuccess: (newReply) => {
+      const repliesKey: QueryKey = ["replies", postId];
+      const replyInfoKey: QueryKey = ["reply-info", postId];
 
-      await queryClient.cancelQueries({ queryKey });
+      if (queryClient.isFetching({ queryKey: repliesKey })) {
+        queryClient.cancelQueries({ queryKey: repliesKey });
+      }
+      queryClient.setQueryData<InfiniteData<PostsPage>>(
+        repliesKey,
+        (oldData) => {
+          if (!oldData) return;
 
-      queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (oldData) => {
-        if (!oldData) return;
-
-        return {
-          pageParams: oldData.pageParams,
-          pages: oldData.pages.map((page, index) => {
-            if (index === 0) {
-              return {
-                ...page,
-                posts: [...page.posts, newReply],
-              };
-            }
-            return page;
-          }),
-        };
-      });
-
-      queryClient.invalidateQueries({
-        queryKey,
-        predicate(query) {
-          return !query.state.data;
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page, index) => {
+              if (index === 0) {
+                return {
+                  ...page,
+                  posts: [...page.posts, newReply],
+                };
+              }
+              return page;
+            }),
+          };
         },
-      });
+      );
+
+      queryClient.invalidateQueries({ queryKey: replyInfoKey });
 
       toast({
         description: "Reply created successfully",
       });
     },
-    onError(error) {
+    onError: (error) => {
       console.error(error);
       toast({
         variant: "destructive",
@@ -55,6 +55,4 @@ export function useSubmitReplyMutation(postId: string) {
       });
     },
   });
-
-  return mutation;
 }
