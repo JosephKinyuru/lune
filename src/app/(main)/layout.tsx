@@ -4,7 +4,6 @@ import MenuBar from "./MenuBar";
 import SessionProvider from "./SessionProvider";
 import LeftSidebar from "./LeftSidebar";
 import prisma from "@/lib/prisma";
-import streamServerClient from "@/lib/stream";
 
 export default async function Layout({
   children,
@@ -22,8 +21,7 @@ export default async function Layout({
         read: false,
       },
     }),
-    (await streamServerClient.getUnreadCount(session.user.id))
-      .total_unread_count,
+    0, // UNREAD-MESSAGES COUNT TODO-LATER
   ]);
 
   return (

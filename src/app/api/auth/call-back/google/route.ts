@@ -1,7 +1,6 @@
 import { google, lucia } from "@/auth";
 import kyInstance from "@/lib/ky";
 import prisma from "@/lib/prisma";
-import streamServerClient from "@/lib/stream";
 import { slugify } from "@/lib/utils";
 import { OAuth2RequestError } from "arctic";
 import { cookies } from "next/headers";
@@ -80,11 +79,6 @@ export async function GET(req: NextRequest) {
           avatar_url: googleUser.picture,
           email: googleUser.email,
         },
-      });
-      await streamServerClient.upsertUser({
-        id: userId,
-        username,
-        name: username,
       });
     });
 

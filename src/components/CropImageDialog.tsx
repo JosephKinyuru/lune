@@ -1,3 +1,5 @@
+"use client"
+
 import "cropperjs/dist/cropper.css";
 import { useRef } from "react";
 import { Cropper, ReactCropperElement } from "react-cropper";

@@ -3,7 +3,7 @@ import RightSidebar from "../RightSidebar";
 import PageHeader from "@/components/PageHeader";
 
 export const metadata: Metadata = {
-  title: "VIDEOS",
+  title: "Videos",
 };
 
 export default function Page() {
@@ -13,7 +13,7 @@ export default function Page() {
         <div className="sticky z-20 flex h-16 items-center space-x-16 border-b px-4 backdrop-blur-sm dark:border-b-[#1F1F22]">
           <PageHeader title={"VIDEOS"} />
         </div>
-        VIDEOS
+        Videos
         {/* TO DO MAKE VIDEOS */}
       </div>
 

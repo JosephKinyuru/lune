@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import streamServerClient from "@/lib/stream";
 import { signUpSchema, SignUpValues } from "@/lib/validation";
 import { hash } from "@node-rs/argon2";
 import { isRedirectError } from "next/dist/client/components/redirect";
@@ -56,11 +55,6 @@ export async function signUp(
           dateOfBirth: date_of_birth,
           passwordHash,
         },
-      });
-      await streamServerClient.upsertUser({
-        id: userId,
-        username,
-        name: username,
       });
     });
 
