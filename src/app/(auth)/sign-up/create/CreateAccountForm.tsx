@@ -93,8 +93,7 @@ export default function SignUpForm({ email }: { email: string }) {
     },
   });
 
-  async function onSubmit(values: SignUpFormValues) {
-    setError(undefined);
+  async function handleSignUp(values: SignUpFormValues) {
     const { month, day, year, ...rest } = values;
     const monthNumber = monthMap[month];
     const date_of_birth = new Date(Number(year), monthNumber, Number(day));
@@ -104,11 +103,18 @@ export default function SignUpForm({ email }: { email: string }) {
       return;
     }
 
-    startTransition(async () => {
-      const { error } = await signUp({ ...rest, date_of_birth });
-      if (error) setError(error);
+    const { error } = await signUp({ ...rest, date_of_birth });
+    if (error) setError(error);
+  }
+
+  function onSubmit(values: SignUpFormValues) {
+    setError(undefined);
+
+    startTransition(() => {
+      handleSignUp(values); 
     });
   }
+
 
   return (
     <Form {...form}>

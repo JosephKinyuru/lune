@@ -32,30 +32,35 @@ export default function VerifyAccountForm({
     setOtp(value);
   };
 
-  async function onSubmit() {
+  async function handleVerifyAccount() {
+    const { success, error } = await verifyAccount({ otp, token, email });
+
+    if (error) {
+      setMessage(error);
+      setIsSuccess(false);
+    } else if (success) {
+      const successMessage = typeof success === "string" ? success : "Success";
+      setMessage(successMessage);
+      setIsSuccess(true);
+      toast({
+        title: "OTP Verified",
+        description: "Create your account!!",
+      });
+      setTimeout(() => {
+        window.location.href = "/sign-in/reset-password";
+      }, 1000);
+    }
+  }
+
+  function onSubmit() {
     setMessage(undefined);
     setIsSuccess(false);
 
-    startTransition(async () => {
-      const { success, error } = await verifyAccount({ otp, token, email });
-      if (error) {
-        setMessage(error);
-        setIsSuccess(false);
-      } else if (success) {
-        const successMessage =
-          typeof success === "string" ? success : "Success";
-        setMessage(successMessage);
-        setIsSuccess(true);
-        toast({
-          title: "OTP Verified",
-          description: "Create your account!!",
-        });
-        setTimeout(() => {
-          window.location.href = "/sign-in/reset-password";
-        }, 1000);
-      }
+    startTransition(() => {
+      handleVerifyAccount(); 
     });
   }
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-4">

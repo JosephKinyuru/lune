@@ -30,19 +30,23 @@ export default function ResetPasswordForm({ email }: { email: string }) {
     defaultValues: { password: "", passwordConfirmation: "", email },
   });
 
-  async function onSubmit(values: ResetPasswordValues) {
+  async function handleResetPassword(values: ResetPasswordValues) {
+    const { success, message } = await resetPassword(values);
+    if (message) {
+      setMessage(message);
+      setIsSuccess(false);
+    } else if (success) {
+      setMessage(success);
+      setIsSuccess(true);
+    }
+  }
+
+  function onSubmit(values: ResetPasswordValues) {
     setMessage(undefined);
     setIsSuccess(false);
 
-    startTransition(async () => {
-      const { success, message } = await resetPassword(values);
-      if (message) {
-        setMessage(message);
-        setIsSuccess(false);
-      } else if (success) {
-        setMessage(success);
-        setIsSuccess(true);
-      }
+    startTransition(() => {
+      handleResetPassword(values); // Call the async function without awaiting it
     });
   }
 

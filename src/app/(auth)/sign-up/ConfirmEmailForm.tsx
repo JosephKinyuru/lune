@@ -28,13 +28,19 @@ export default function SignUpForm() {
     },
   });
 
-  async function onSubmit(values: ConfirmEmailValues) {
+  async function handleConfirmEmail(values: ConfirmEmailValues) {
+    const { error } = await confirmEmail(values);
+    if (error) setError(error);
+  }
+
+  function onSubmit(values: ConfirmEmailValues) {
     setError(undefined);
-    startTransition(async () => {
-      const { error } = await confirmEmail(values);
-      if (error) setError(error);
+
+    startTransition(() => {
+      handleConfirmEmail(values); 
     });
   }
+
 
   return (
     <Form {...form}>

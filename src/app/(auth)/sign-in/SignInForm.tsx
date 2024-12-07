@@ -35,17 +35,24 @@ export default function SignInForm() {
     },
   });
 
-  async function onSubmit(values: SigninValues) {
-    setError(undefined);
-    startTransition(async () => {
-      const result = await signIn(values);
-      if (result.success) {
-        redirect("/"); 
-      } else {
-        console.error(result.error);
-      }
-    });
+  async function handleSignIn(values: SigninValues) {
+  const result = await signIn(values);
+  if (result.success) {
+    redirect("/"); 
+  } else {
+    console.error(result.error);
+    setError(result.error);
   }
+}
+
+function onSubmit(values: SigninValues) {
+  setError(undefined);
+
+  startTransition(() => {
+    handleSignIn(values); 
+  });
+}
+
 
   return (
     <Form {...form}>

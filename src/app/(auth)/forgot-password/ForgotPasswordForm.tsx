@@ -18,7 +18,6 @@ import LoadingButton from "@/components/LoadingButton";
 
 export default function ForgotPasswordForm() {
   const [error, setError] = useState<string>();
-
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<ForgotValues>({
@@ -28,11 +27,15 @@ export default function ForgotPasswordForm() {
     },
   });
 
-  async function onSubmit(values: ForgotValues) {
+  async function handleForgotPassword(values: ForgotValues) {
+    const { error } = await forgotPassword(values);
+    if (error) setError(error);
+  }
+
+  function onSubmit(values: ForgotValues) {
     setError(undefined);
-    startTransition(async () => {
-      const { error } = await forgotPassword(values);
-      if (error) setError(error);
+    startTransition(() => {
+      handleForgotPassword(values);
     });
   }
 
