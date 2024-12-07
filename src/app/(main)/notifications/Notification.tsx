@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { NotificationType } from "@prisma/client";
 import { Heart, MessageCircle, Repeat2, User2 } from "lucide-react";
 import Link from "next/link";
+import { JSX } from "react";
 
 interface NotificationProps {
   notification: NotificationData;
