@@ -30,7 +30,7 @@ const ReplyDialog = ({ post, open, onOpenChange }: ReplyDialogProps) => {
         <DialogTitle className="sr-only">
           Replying to post by @{post.author.username}
         </DialogTitle>
-        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-8">
+        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-12">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -38,7 +38,7 @@ const ReplyDialog = ({ post, open, onOpenChange }: ReplyDialogProps) => {
                   className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:bg-accent dark:hover:bg-gray-50/10"
                   onClick={() => onOpenChange(false)}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-6 w-6" />
                 </button>
               </TooltipTrigger>
               <TooltipContent

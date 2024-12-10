@@ -82,7 +82,7 @@ export default function EditProfileDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex h-screen w-screen max-w-full flex-col gap-2 bg-card p-4 dark:bg-black md:h-[500px] md:w-[740px] md:rounded-xl md:dark:border-2 md:dark:border-[#1F1F22] [&>button]:hidden">
         <DialogTitle className="sr-only">Edit your account</DialogTitle>
-        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-8">
+        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-12">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -90,7 +90,7 @@ export default function EditProfileDialog({
                   className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full hover:bg-accent dark:hover:bg-gray-50/10"
                   onClick={() => onOpenChange(false)}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-6 w-6" />
                 </button>
               </TooltipTrigger>
               <TooltipContent
