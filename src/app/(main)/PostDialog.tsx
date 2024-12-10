@@ -25,7 +25,7 @@ const PostDialog = ({ open, onOpenChange }: PostDialogProps) => {
         <DialogTitle className="sr-only">
           What&apos;s happening? (Create your latest post)
         </DialogTitle>
-        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-4">
+        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-8">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

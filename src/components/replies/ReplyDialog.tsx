@@ -30,7 +30,7 @@ const ReplyDialog = ({ post, open, onOpenChange }: ReplyDialogProps) => {
         <DialogTitle className="sr-only">
           Replying to post by @{post.author.username}
         </DialogTitle>
-        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-4">
+        <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-8">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
