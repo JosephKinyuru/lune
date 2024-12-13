@@ -81,7 +81,7 @@ export default function EditProfileDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex h-screen w-screen max-w-full flex-col gap-2 bg-card p-4 dark:bg-black md:h-[500px] md:w-[740px] md:rounded-xl md:dark:border-2 md:dark:border-[#1F1F22] [&>button]:hidden">
-        <DialogTitle className="sr-only">Edit your account</DialogTitle>
+        <DialogTitle className="sr-only">Edit your profile</DialogTitle>
         <DialogHeader className="mb-2 flex items-start justify-between max-md:mt-12">
           <TooltipProvider>
             <Tooltip>

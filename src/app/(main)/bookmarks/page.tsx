@@ -17,7 +17,7 @@ export default function Page() {
         <Bookmarks />
       </div>
 
-      <div className="hidden lg:mx-6 lg:block lg:w-1/3 xl:mx-6 2xl:mx-9 2xl:w-[28rem]">
+      <div className="hidden lg:mx-3 lg:block lg:w-1/3 xl:mx-5 2xl:mx-7 2xl:w-[28rem]">
         <RightSidebar />
       </div>
     </main>

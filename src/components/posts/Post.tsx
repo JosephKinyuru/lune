@@ -62,7 +62,7 @@ export default function Post({ post }: PostProps) {
             >
               <UserAvatar
                 avatar_url={post.author.avatar_url}
-                className="h-9 w-9 xxs:h-12 xxs:w-12"
+                className="h-9 w-9 xxs:h-10 xxs:w-10 md:h-12 md:w-12"
               />
             </Link>
           </UserTooltip>
