@@ -131,3 +131,28 @@ export interface NotificationCountInfo {
 export interface MessageCountInfo {
   unreadCount: number;
 }
+
+export function getMessageDataSelect(loggedInUserId: string) {
+  return {
+    id: true,
+    content: true,
+    createdAt: true,
+    read: true,
+    sender: {
+      select: {
+        id: true,
+        username: true,
+        avatar_url: true,
+      },
+    },
+  } satisfies Prisma.MessageSelect;
+}
+
+export type MessageData = Prisma.MessageGetPayload<{
+  select: ReturnType<typeof getMessageDataSelect>;
+}>;
+
+export interface MessagesPage {
+  messages: MessageData[];
+  nextCursor: string | null;
+}
