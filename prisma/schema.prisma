@@ -43,6 +43,8 @@ model User {
   receivedNotifications Notification[]      @relation("Recipient")
   issuedNotifications   Notification[]      @relation("Issuer")
   resetPasswordToken    ResetPasswordToken?
+  messages              Message[]           @relation("UserMessages")
+  chats                 Chat[]              @relation("UserChats")
 
   createdAt DateTime @default(now())
 
@@ -177,4 +179,23 @@ enum NotificationType {
   FOLLOW
   REPOST
   REPLY
+}
+
+model Chat {
+  id           String    @id @default(cuid())
+  participants User[]    @relation("UserChats")
+  messages     Message[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  sender    User     @relation("UserMessages", fields: [senderId], references: [id])
+  senderId  String
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  chatId    String
+  content   String
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
 }
